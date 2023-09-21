@@ -1,3 +1,4 @@
+const User = require('../models/UserModel');
 async function SignUpHandler(req, res){
     res.send('SignUpHandler');
 }
