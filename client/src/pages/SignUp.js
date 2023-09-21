@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom';
 
 export default function SignUp() {
     const [data,setData] = useState({
-      username:"",
+      email:"",
       password:"",
       firstName:"",
       lastName:""
     })
 
-    const {firstName, lastName, username,password} = data;
+    const {firstName, lastName, email, password} = data;
 
     const changeHandler = e => {
       setData({...data,[e.target.name]:[e.target.value]});
@@ -18,8 +18,8 @@ export default function SignUp() {
     const submitHandler = e => {
       e.preventDefault();
       Array.from(e.target).forEach((i) => (i.value = ""));
-      setData("", "", "", "")
-      console.log("DATA: FIRST  " + firstName + "  LAST  " + lastName + "  USERNAME  " + username + " PASSWORD  " + password);
+      setData({email:"", password:"", firstName:"", lastName:""})
+      console.log("DATA: FIRST  " + firstName + "  LAST  " + lastName + "  email  " + email + " PASSWORD  " + password);
 
     }
 
@@ -32,8 +32,8 @@ export default function SignUp() {
                   <input type="text" name="firstName" value={firstName} onChange={changeHandler} required/><br/>
                   <label>Last Name: </label>
                   <input type="text" name="lastName" value={lastName} onChange={changeHandler} required/><br/>
-                  <label>Username: </label>
-                  <input type="text" name="username" value={username} onChange={changeHandler} required/><br/>
+                  <label>Email: </label>
+                  <input type="text" name="email" value={email} onChange={changeHandler} required/><br/>
                   <label>Password: </label>
                   <input type="password" name="password" value={password} onChange={changeHandler} required/><br/>
                   <input type="submit" name="submit"/>
