@@ -7,15 +7,27 @@ export default function FAQSection() {
   // FAQ data (you can fetch this from an API or define it in your component)
   const faqData = [
     {
-      question: 'What is Lorem Ipsum?',
-      answer: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+      question: 'How can I create notes for a specific lecture session?',
+      answer: 'To create notes for a particular lecture session, log in to your account, select the relevant course, navigate to the lecture schedule, choose the session, and click the "Create Notes" button.',
     },
     {
-      question: 'Why do we use it?',
-      answer: 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.',
+      question: 'Is it possible to share my notes with classmates?',
+      answer: 'Yes, you can easily share your notes with classmates by using the "Share" option. Enter your classmates\' email addresses, and they will gain access to view and collaborate on the notes.',
     },
-    // Add more FAQ items here
+    {
+      question: 'How do I provide feedback on someone else\'s notes?',
+      answer: 'To provide feedback on shared notes, open the notes you want to comment on, and use the "Feedback" or "Comment" feature. Leave comments, ask questions, or suggest improvements to promote collaboration.',
+    },
+    {
+      question: 'Are there features to help me organize and search for my notes efficiently?',
+      answer: 'Absolutely! You can organize notes by course, lecture session, or custom tags. Additionally, our search functionality allows you to quickly locate specific notes based on keywords or topics.',
+    },
+    {
+      question: 'What happens if I need to edit notes after sharing them?',
+      answer: 'If you need to edit shared notes, you can do so. However, it\'s important to communicate any changes with your classmates, as they will be notified of the updates to ensure everyone has access to the latest information.',
+    },
   ];
+  
 
   return (
     <div className="faq-section">
