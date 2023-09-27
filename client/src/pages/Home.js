@@ -24,7 +24,7 @@ export default function Home() {
       <div className="flex flex-row justify-between items-center bg-cyan-500 bg-opacity-50  h-16">
         <div className="flex flex-row justify-between items-center">
           <Link to="/">
-            <p className="text-2xl font-bold text-zinc-500 ml-4">RU Notes</p>
+            <p className="text-gray-600 hover:text-gray-800 mb-5 text-3xl text-center font-bold  bg-gradient-to-r from-blue-900 to-red-900 bg-clip-text text-transparent">RU Notes</p>
           </Link>
 
 
@@ -41,7 +41,7 @@ export default function Home() {
           </div>
           
           <div className="flex flex-col justify-center items-center">
-            <p className="text-6xl font-bold text-gray-900 mt-20">RU Notes</p>
+            <p className="animate-text bg-gradient-to-r from-teal-500 via-purple-500 to-orange-500 bg-clip-text text-transparent text-6xl mt-10 font-black mb-2 hover:text-blue-900">RU Notes</p>
             <p className="text-2xl font-bold text-gray-900 mt-4">The best way to take notes</p>
             <Link to="/signup">
             <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-8">

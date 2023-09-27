@@ -49,7 +49,7 @@ export default function Login() {
     <>
       <div className="bg-zinc-200 min-h-screen flex flex-col">
           <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
-            <a href="/" className=" text-gray-600 hover:text-gray-800 mb-5 text-2xl text-center">RU Notes</a>
+            <a href="/" className="animate-text bg-gradient-to-r from-teal-500 via-purple-500 to-orange-500 bg-clip-text text-transparent text-5xl font-black mb-10 hover:text-blue-900">RU Notes</a>
           <input 
             type="email"
             className="block border border-gray-100 w-full p-3 rounded"

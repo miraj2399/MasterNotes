@@ -57,7 +57,7 @@ export default function SignUp() {
 <div className="bg-zinc-200 min-h-screen flex flex-col">
             <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
                 <div className="bg-white px-6 py-8 rounded shadow-md text-gray-900 w-full">
-                  <div className='text-center mb-8 '> <a href="/" className=" text-gray-600 hover:text-gray-800 mb-5 text-2xl text-center">RU Notes</a></div>
+                  <div className='text-center mb-8 '> <a href="/" className=" animate-text bg-gradient-to-r from-teal-500 via-purple-500 via-red-900 to-orange-500 bg-clip-text text-transparent text-5xl font-black mb-10 hover:text-blue-900">RU Notes</a></div>
                    
                     <div className="mb-4 flex">
                 <div className="w-1/2 pr-2">
