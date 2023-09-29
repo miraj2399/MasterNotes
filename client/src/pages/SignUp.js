@@ -2,6 +2,7 @@ import React,{useState} from 'react';
 import { Link } from 'react-router-dom';
 import {SignUpService} from '../services/AuthService';
 import Snackbar from '@mui/material/Snackbar'
+import { validateEmail, validatePassword, validatePasswordMatch } from "../utilities/ValidateInput";
 
 
 
@@ -25,11 +26,22 @@ export default function SignUp() {
 
     const submitHandler = e => {
       e.preventDefault();
-      if (data.password !== data.confirm_password) {
+      if (!validateEmail(data.email)) {
+        setOpen(true);
+        setMessage("Invalid Email");
+        return;
+      }
+      if (!validatePassword(data.password)) {
+        setOpen(true);
+        setMessage("Password must be at least 8 characters long with at least 1 number and 1 character");
+        return;
+      }
+      if (!validatePasswordMatch(data.password, data.confirm_password)) {
         setOpen(true);
         setMessage("Passwords do not match");
         return;
       }
+
       SignUpService(data).then((res) => {
         setOpen(true);
         setMessage("User Created");
@@ -45,7 +57,8 @@ export default function SignUp() {
 <div className="bg-zinc-200 min-h-screen flex flex-col">
             <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
                 <div className="bg-white px-6 py-8 rounded shadow-md text-gray-900 w-full">
-                    <h1 className="mb-8 text-3xl text-center">Sign up</h1>
+                  <div className='text-center mb-8 '> <a href="/" className=" animate-text bg-gradient-to-r from-teal-500 via-purple-500 via-red-900 to-orange-500 bg-clip-text text-transparent text-5xl font-black mb-10 hover:text-blue-900">RU Notes</a></div>
+                   
                     <div className="mb-4 flex">
                 <div className="w-1/2 pr-2">
                     <input 
@@ -91,14 +104,14 @@ export default function SignUp() {
                         placeholder="Confirm Password" />
 
                    <button
-                   className='bg-green-700 text-white-700 px-4 py-3 rounded font-medium w-full'
+                   className='bg-green-500 hover:bg-green-700 text-white-700 px-4 py-3 rounded font-medium w-full'
                     onClick={submitHandler}
                    >
                     Create Account
                    </button>
 
                     <div className="text-center text-sm text-gray-700 mt-4">
-                        By signing up, you agree to the 
+                        By signing up, you agree to the &nbsp;
                         <a className="no-underline border-b border-gray-700 text-red-700" href="#">
                             Terms of Service&nbsp;
                         </a> and&nbsp;
@@ -109,7 +122,7 @@ export default function SignUp() {
                 </div>
 
                 <div className="text-gray-900 mt-6">
-                    Already have an account? 
+                    Already have an account? &nbsp;
                     <a className="no-underline border-b border-blue-900 text-blue" href="../login/">
                         Log in
                     </a>.
@@ -121,11 +134,6 @@ export default function SignUp() {
                 autoHideDuration={6000}
                 onClose={() => setOpen(false)}
                 message={message}
-                action={
-                    <React.Fragment>
-                    <button className="bg-green-700 text-white-700 px-4 py-3 rounded font-medium w-full" onClick={() => setOpen(false)}>Close</button>
-                    </React.Fragment>
-                }
             />
 
           <div className="text-center">

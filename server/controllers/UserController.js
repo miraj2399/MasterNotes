@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/UserModel');
+const {GenerateToken} = require('../utils/GenerateToken');
 async function SignUpHandler(req, res){
     const {email, password, firstName, lastName} = req.body;
     const hasedPassword = await bcrypt.hash(password, 10);
@@ -27,7 +28,10 @@ async function LoginHandler(req, res){
     }
     try {
         if (await bcrypt.compare(password, user.password)) {
-            res.status(200).json({token:"1234567890"})
+            const token = GenerateToken(user);
+            console.log(token);
+            res.status(200).json({token: token})
+
         }
         else {
             res.status(401).json({message: "Unauthorized"});
