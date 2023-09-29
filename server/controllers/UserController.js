@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/UserModel');
-const {GenerateToken} = require('../utils/GenerateToken');
+const {GenerateToken,ValidateToken} = require('../utils/GenerateToken');
 async function SignUpHandler(req, res){
     const {email, password, firstName, lastName} = req.body;
     const hasedPassword = await bcrypt.hash(password, 10);
@@ -43,7 +43,21 @@ async function LoginHandler(req, res){
 
 }
 
+const AuthenticatedHandler = (req, res) => {
+    const token = req.headers.authorization.split(" ")[1];
+    const {email, userId} = ValidateToken(token);
+    const user = User.findOne({email: email, _id: userId});
+    if (!user) {
+        return res.status(404).json({message: "User not found"});
+    }
+    else {
+        res.status(200).json({message: "Authenticated"});
+    }
+}
+
+
 module.exports = {
     SignUpHandler,
-    LoginHandler
+    LoginHandler,
+    AuthenticatedHandler
 }
