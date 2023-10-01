@@ -41,7 +41,7 @@ export default function Home() {
           </div>
           
           <div className="flex flex-col justify-center items-center">
-            <p className="animate-text bg-gradient-to-r from-teal-500 via-purple-500 to-orange-500 bg-clip-text text-transparent text-6xl mt-10 font-black mb-2 hover:text-blue-900">RU Notes</p>
+            <p className="animate-text bg-gradient-to-r from-teal-500 via-purple-500 to-orange-500 bg-clip-text text-transparent text-6xl mt-10 font-black mb-2 hover:text-blue-900 ">RU Notes</p>
             <p className="text-2xl font-bold text-gray-900 mt-4">The best way to take notes</p>
             <Link to="/signup">
             <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-8">
@@ -50,11 +50,14 @@ export default function Home() {
             </Link>
           </div>
     </div>
-    <div className='grid grid-cols-1 gap-4 mt-20  p-10 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3'
+    <div className='grid grid-cols-1 gap-4 mt-20  p-10 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 mx-6'
     
     >
     <div className='col-span-1'>
-      <div className='flex flex-col justify-center items-center'>
+      <div className='flex flex-col justify-center items-center  border-8 border-red-900 p-10 bg-red-100'
+      style={{
+        clipPath: "polygon(0 20%, 100% 0, 100% 80%, 0 100%)"
+      }}>
         <DescriptionIcon sx={{fontSize:50}}/>
         <p className='text-2xl font-bold text-gray-900 mt-4'>Take Notes</p>
         <p className='text-lg text-gray-900 mt-4'>Take notes in class, at home, or anywhere else</p>
@@ -62,23 +65,32 @@ export default function Home() {
       </div>
 
       <div className='col-span-1'>
-      <div className='flex flex-col justify-center items-center'>
-        <FilterListIcon sx={{fontSize:50}}/>
-        <p className='text-2xl font-bold text-gray-900 mt-4'>Organize Notes</p>
-        <p className='text-lg text-gray-900 mt-4'>Organize your notes by lecture session</p>
-        </div>
-        </div>
-      
+      <div className='flex flex-col justify-center items-center  border-8 border-red-900 p-10 bg-red-100 '
+      style={{
+        clipPath: "polygon(0 20%, 100% 0, 100% 80%, 0 100%)"
+      }}>
+        <DescriptionIcon sx={{fontSize:50}}/>
+        <p className='text-2xl font-bold text-gray-900 mt-4'>Take Notes</p>
+        <p className='text-lg text-gray-900 mt-4'>Take notes in class, at home, or anywhere else</p>
+      </div>
+      </div>
+
+
       <div className='col-span-1'>
-      <div className='flex flex-col justify-center items-center'>
-        <ShareIcon sx={{fontSize:50}}/>
-        <p className='text-2xl  fond-bold text-gray-900 mt-4'>Share Notes</p>
-        <p className='text-lg text-gray-900 mt-4'>Share your notes with your friends and classmates</p>
-        </div>
-        </div>
+      <div className='flex flex-col justify-center items-center  border-8 border-red-900 p-10  bg-red-100'
+      style={{
+        clipPath: "polygon(0 20%, 100% 0, 100% 80%, 0 100%)"
+      }}>
+        <DescriptionIcon sx={{fontSize:50}}/>
+        <p className='text-2xl font-bold text-gray-900 mt-4'>Take Notes</p>
+        <p className='text-lg text-gray-900 mt-4'>Take notes in class, at home, or anywhere else</p>
+      </div>
+      </div>
+      
+      
       </div>
       <div 
-      className='flex flex-col justify-center  bg-zinc-200 p-32 pt-64 rounded-3xl'
+      className='flex flex-col justify-center  bg-orange-100 p-32 pt-64'
       style={{
         clipPath: "polygon(0 20%, 100% 0, 100% 100%, 0 100%)"
       }}
