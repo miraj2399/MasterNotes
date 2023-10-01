@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Typography } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
+import { CreateNoteService } from '../services/SpaceService';
 export default function CreatePersonalNote() {
     const [note, setNote] = useState("");
     return (
@@ -16,7 +17,14 @@ export default function CreatePersonalNote() {
             </div>
             <div className='flex justify-center items-center gap-2 mt-4 flex-1'>
                 <button className="bg-green-400 text-white p-2 rounded-3xl flex justify-center items-center gap-2">
-                    <SaveIcon/>
+                    <SaveIcon onClick={(e)=>{
+                        e.preventDefault()
+                        CreateNoteService({
+                            content:note
+                        })
+                        window.location.href = "/dashboard"
+                    }}
+                        />
                 </button>
                 <button className="bg-red-400 text-white p-2 rounded-3xl flex justify-center items-center gap-2">
                     <CancelIcon/>

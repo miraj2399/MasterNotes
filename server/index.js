@@ -4,13 +4,16 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 const PORT = process.env.PORT || 4000;
 
+const auth = require("./middlewares/auth");
 const app = express();
 app.use(cors());
 app.use(express.json());
 
 
 
-app.use ('/users', require('./routes/UserRoutes'));
+app.use ('/users',  require('./routes/UserRoutes'));
+app.use ('/groups',auth, require('./routes/GroupRoutes'));
+app.use ('/spaces',auth, require('./routes/SpaceRoutes'));
 
 const connection = mongoose.connect(process.env.DATABASE_URL);
 

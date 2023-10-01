@@ -14,6 +14,7 @@ import { Routes, Route } from 'react-router-dom';
 
 
 import './index.css';
+import Group from "./pages/Group";
 
 function App() {
   
@@ -28,9 +29,11 @@ function App() {
         </Route>
         <Route element={<ProtectedRoute/>}>
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/group/:id" element={<Group />} />
           <Route path="/createGroup" element={<CreateGroup />} />
           <Route path="/createPersonalNote" element={<CreatePersonalNote />} />
           <Route path="/settings" element={<Settings />} />
+
         </Route>
       </Routes>
     </>
