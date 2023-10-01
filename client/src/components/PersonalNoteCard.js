@@ -8,7 +8,7 @@ export default function PersonalNoteCard(props) {
             <p className="text-gray-500 text-sm">{new  Date(createdAt).toDateString()}</p>
             <div className='prose  p-5 border border-gray-300 outline-none '>
                 <Markdown className="">{
-                    content.length>200?content.slice(0,200)+"...":content
+                    content.length>100?content.slice(0,100)+"...":content
                 }</Markdown>
             </div>
         </div>
