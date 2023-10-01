@@ -13,6 +13,7 @@ app.use(express.json());
 
 app.use ('/users',  require('./routes/UserRoutes'));
 app.use ('/groups',auth, require('./routes/GroupRoutes'));
+app.use ('/spaces',auth, require('./routes/SpaceRoutes'));
 
 const connection = mongoose.connect(process.env.DATABASE_URL);
 
