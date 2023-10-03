@@ -12,7 +12,8 @@ async function SignUpHandler(req, res){
                 firstName: firstName,
                 lastName: lastName
             }
-        )
+        );
+        user.password = undefined;
         res.status(201).json(user);
     }
     catch (err) {

@@ -1,3 +1,4 @@
+import InviteJoinGroup from "../components/InviteJoinGroup";
 import AxiosInstance from "./AxiosInstance";
 
 async function CreateGroupService(group) {
@@ -27,11 +28,43 @@ async function GetGroupByIdService(id) {
     }
 }
 
+async function JoinGroupService (id) {
+    try {
+        const response = await AxiosInstance.get(`/groups/join/${id}`);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function LeaveGroupService (id) {
+    try {
+        const response = await AxiosInstance.get(`/groups/leave/${id}`);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function InviteJoinGroupService ( groupId, emails, message) {
+    try {
+        const response = await AxiosInstance.post("/groups/invite", {groupId, emails, message});
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+
 
 
 export {
     CreateGroupService,
     GetAllGroupsService,
-    GetGroupByIdService
+    GetGroupByIdService,
+    JoinGroupService,
+    LeaveGroupService,
+    InviteJoinGroupService
 }
 

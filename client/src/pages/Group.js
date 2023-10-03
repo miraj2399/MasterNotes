@@ -3,6 +3,7 @@ import {  Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { GetGroupByIdService } from "../services/GroupServices";
 import { useEffect, useState } from "react";
+import InviteJoinGroup from "../components/InviteJoinGroup";
 
 export default function Group(){
     const {id} = useParams();
@@ -41,6 +42,7 @@ export default function Group(){
             ))
           }
         </Timeline>
+        <InviteJoinGroup group={group}/>
         </div>
     )
 }
