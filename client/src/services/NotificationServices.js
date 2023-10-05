@@ -1,6 +1,6 @@
 import AxiosInstance from "./AxiosInstance";
 
-async function GetAllNotifications() {
+async function GetAllNotificationsService() {
     try {
         const response = await AxiosInstance.get("/notifications");
         return response.data;
@@ -10,6 +10,17 @@ async function GetAllNotifications() {
     }
 }
 
+async function NotificationReadService(id) {
+    try {
+        const response = await AxiosInstance.post(`/notifications/read/${id}`);
+        return response.data;
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
 export {
-    GetAllNotifications
+    GetAllNotificationsService,
+    NotificationReadService,
 }

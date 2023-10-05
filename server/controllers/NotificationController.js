@@ -10,6 +10,19 @@ async function GetAllNotificationsHandler(req,res){
     }
 }
 
+async function NotificationReadHandler(req,res){
+    try{
+        const notification = await Notification.findByIdAndUpdate(req.params.id, {read: true});
+        res.status(200).json(notification);
+    }
+    catch (err) {
+        console.log(err);
+        res.status(500).json({message: err.message});
+    }
+}
+
+
 module.exports = {
-    GetAllNotificationsHandler
+    GetAllNotificationsHandler,
+    NotificationReadHandler
 }
