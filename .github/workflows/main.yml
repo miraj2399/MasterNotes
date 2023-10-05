@@ -18,6 +18,9 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+    - name: switch to client folder
+      run: |
+        cd client
     - name: Yarn Install
       run: |
         yarn install
