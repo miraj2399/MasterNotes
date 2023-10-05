@@ -7,7 +7,7 @@ import {
   Textarea
 } from "@material-tailwind/react";
 import SelectedDatesForGroup from "../components/SelectedDatesForGroup";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import getDatesInRange from "../utilities/GetDatesInRange";
 import { CreateGroupService } from "../services/GroupServices";
@@ -16,6 +16,7 @@ import { Snackbar } from "@mui/material";
 export default function CreateGroup() {
  const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
+  const [checkboxDates, setCheckboxDates] = useState([]);
 
  const emptyGroup = {
     name: "",
@@ -34,26 +35,31 @@ export default function CreateGroup() {
   function handleChange(e) {
     setGroup({ ...group, [e.target.name]: e.target.value });
     if (dates.length > 0 && e.targetName!="startDate" && e.target.name!="endDate") return;
-    if (group.startDate && group.endDate && group.weekdays) {
-      setDates(
-        getDatesInRange(
-          new Date(group.startDate + " EDT"),
-          new Date(group.endDate + " EDT"),
-          group.weekdays
-        )
-      );
-    }
   }
+  
   function handleCheckbox(e) {
     if (e.target.checked) {
       setGroup({ ...group, weekdays: [...group.weekdays, e.target.name] });
+      setCheckboxDates(group.weekdays);
     } else {
       setGroup({
         ...group,
         weekdays: group.weekdays.filter((day) => day !== e.target.name),
       });
+      setCheckboxDates(group.weekdays);
     }
   }
+  
+  useEffect(() => { 
+    setDates(
+      getDatesInRange(
+        new Date(group.startDate + " EDT"),
+        new Date(group.endDate + " EDT"),
+        group.weekdays
+      )
+    );
+  }, [checkboxDates])
+
   function handleSubmit(e) {
     e.preventDefault();
     const newGroup = {
@@ -181,13 +187,7 @@ export default function CreateGroup() {
                 Invite only: Only people who have been invited to the group can join.<br/>
                 Public: Anyone with the link can join.
                 </Typography>
-            </div>
-
-            <div>
-                <Button   type="submit" className="text-white font-light text-sm w-full" onClick={handleSubmit}>
-                Create Group
-                </Button>  
-            </div>      
+            </div>    
           </div>
         </form>
         
@@ -205,6 +205,11 @@ export default function CreateGroup() {
     </div>
 
     <div className="mt-0 m-4">
+          <div className="mb-3">
+              <Button   type="submit" className="text-black font-light text-sm w-full bg-cyan-500 bg-opacity-50" onClick={handleSubmit}>
+                Create Group
+              </Button>  
+            </div>  
         <Link to="/dashboard"><Button className="text-white font-light text-sm w-full" color="red">
             Cancel
         </Button></Link>

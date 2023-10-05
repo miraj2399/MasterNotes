@@ -2,7 +2,7 @@ import { Input } from '@mui/material'
 import {
     Typography,
   } from "@material-tailwind/react";
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Snackbar from '@mui/material/Snackbar'
 export default function SelectedDatesForGroup(props) {
     const {dates, setDates,startDate,endDate} = props
@@ -11,8 +11,8 @@ export default function SelectedDatesForGroup(props) {
     const [dateText, setDateText] = useState("No Dates Selected Yet")
 
     const DateComponent = (props) => {
-        const {date} = props
         setDateText("Selected Dates");
+        const {date} = props
         const weekdays = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
         const handleClick = () => {
             setDates(dates.filter((d)=>d.getTime()!==date.getTime()))
@@ -50,7 +50,7 @@ export default function SelectedDatesForGroup(props) {
 
         return (
             dates.length>0?(
-            <div className="border border-gray-300 rounded-3xl p-2 m-2 flex justify-center items-center gap-2 bg-green-600 hover:bg-green-700 p-3">
+            <div className="border border-gray-300 rounded-3xl p-2 m-2 flex justify-center items-center gap-2 bg-green-400 hover:bg-green-300 p-3">
                 <Input type="date" size='sm' onChange={handleAddDate}/>
             </div>):null
         )
