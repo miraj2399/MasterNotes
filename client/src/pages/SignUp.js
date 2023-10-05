@@ -45,6 +45,9 @@ export default function SignUp() {
       SignUpService(data).then((res) => {
         setOpen(true);
         setMessage("User Created");
+        setTimeout(() => {
+          window.location.href = "/login";
+        }, 1000);
       }).catch((err) => {
         setOpen(true);
         setMessage("User Creation Failed, message: " + err.message);
