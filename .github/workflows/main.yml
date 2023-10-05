@@ -13,6 +13,10 @@ jobs:
     strategy:
       matrix:
         node-version: [14]
+        
+    defaults:
+      run:
+        working-directory: dart_project
 
     steps:
     - name: Checkout code
@@ -22,9 +26,6 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
-
-    - name: Change directory to 'client'
-      working-directory: client
 
     - name: Yarn Install
       run: |
