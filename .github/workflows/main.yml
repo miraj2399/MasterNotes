@@ -24,7 +24,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
 
     - name: Change directory to 'client'
-      run: cd client
+      working-directory: client
 
     - name: Yarn Install
       run: |
