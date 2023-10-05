@@ -1,32 +1,39 @@
-name: Production Build
+name: Production Build for React App in 'client' Folder
+
 on:
   pull_request:
   push:
     branches:
       - main
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     strategy:
       matrix:
-        node-version: [ 20.6.1]
-        
+        node-version: [14]
+
     steps:
-    - uses: actions/checkout@v1
+    - name: Checkout code
+      uses: actions/checkout@v2
+
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
-    - name: switch to client folder
-      run: |
-        cd client
+
+    - name: Change directory to 'client'
+      run: cd client
+
     - name: Yarn Install
       run: |
         yarn install
+
     - name: Production Build
       run: |
         yarn build
+
     - name: Deploy to S3
       uses: jakejarvis/s3-sync-action@master
       with:
