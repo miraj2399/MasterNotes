@@ -1,3 +1,4 @@
+import { InviteJoinGroup } from "./InviteJoinGroup"
 export default function GroupCard(props) {
     const group = props.group
     return (
@@ -19,6 +20,7 @@ export default function GroupCard(props) {
                 ))
                 }
             </p>
+            
             </div>
     )
 }

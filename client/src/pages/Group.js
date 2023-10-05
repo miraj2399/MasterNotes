@@ -1,8 +1,9 @@
 import { Timeline, TimelineItem, TimelineBody, TimelineHeader, TimelineConnector, TimelineIcon} from "@material-tailwind/react";
 import {  Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
-import { GetGroupByIdService } from "../services/GroupServices";
+import { GetGroupByIdService, LeaveGroupService } from "../services/GroupServices";
 import { useEffect, useState } from "react";
+import InviteJoinGroup from "../components/InviteJoinGroup";
 
 export default function Group(){
     const {id} = useParams();
@@ -41,6 +42,14 @@ export default function Group(){
             ))
           }
         </Timeline>
+        <InviteJoinGroup group={group}/>
+        <button 
+        className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded-lg text-sm font-semibold w-32"
+        onClick={() => {
+        LeaveGroupService(group._id) 
+        window.location.href = "/dashboard"
+        }}
+        >Leave Group</button>
         </div>
     )
 }

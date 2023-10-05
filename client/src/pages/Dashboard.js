@@ -1,6 +1,7 @@
 import {Button} from '@material-tailwind/react'
 import GroupSection from '../components/GroupSection'
 import PersonalSpaceSection from '../components/PersonalSpaceSection'
+import NotificationCenter from '../components/NotificationCenter';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { IconButton } from '@mui/material';
 import Cookies from 'js-cookie';
@@ -14,6 +15,7 @@ export default function Dashboard (){
         <div className='grid gap-20'>
         <GroupSection/>
         <PersonalSpaceSection/>
+        <NotificationCenter/>
         <div className='flex  justify-center items-center gap-2' >
             <IconButton onClick={() => window.location.href = "/settings"}>
             <SettingsIcon/> 

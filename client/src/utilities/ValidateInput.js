@@ -5,8 +5,7 @@ function validateEmail(email) {
 }
 
 function validatePassword(password) {
-    // at least 8 characters long with at least 1 number and 1 character
-    const re = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    const re = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,}$/;
     return re.test(password);
 }
 
