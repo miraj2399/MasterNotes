@@ -1,6 +1,6 @@
 import { useState,useEffect } from "react"
 import { GetAllNotifications } from "../services/NotificationServices"
-import { JoinGroupService } from "../services/GroupServices";
+import { JoinGroupService, DeclineGroupInviteService} from "../services/GroupServices";
 import { Typography } from "@mui/material"
 
 export default function NotificationCenter() {
@@ -13,6 +13,11 @@ export default function NotificationCenter() {
 
     function handleAccept(id){
         JoinGroupService(id).then((data) => {
+            window.location.href = "/dashboard"
+        })
+    }
+    function handleDecline(id){
+        DeclineGroupInviteService(id).then((data) => {
             window.location.href = "/dashboard"
         })
     }
@@ -36,6 +41,11 @@ export default function NotificationCenter() {
                                         onClick={() => handleAccept(notification.group)}
                                         >
                                         Accept
+                                    </button>
+                                    <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full"
+                                        onClick={() => handleDecline(notification.group)}
+                                        >
+                                        Decline
                                     </button>
                                     </div>
                                     

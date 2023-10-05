@@ -55,6 +55,15 @@ async function InviteJoinGroupService ( groupId, emails, message) {
     }
 }
 
+async function DeclineGroupInviteService (groupId) {
+    try {
+        const response = await AxiosInstance.post(`/groups/decline/${groupId}`);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 
 
 
@@ -65,6 +74,7 @@ export {
     GetGroupByIdService,
     JoinGroupService,
     LeaveGroupService,
-    InviteJoinGroupService
+    InviteJoinGroupService,
+    DeclineGroupInviteService
 }
 
