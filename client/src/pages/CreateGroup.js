@@ -95,6 +95,27 @@ export default function CreateGroup() {
   const [group, setGroup] = useState(emptyGroup);
   const [dates, setDates] = useState([]);
 
+  useEffect(() => { 
+    setDates(
+      getDatesInRange(
+        new Date(group.startDate + " EDT"),
+        new Date(group.endDate + " EDT"),
+        group.weekdays
+      )
+    );
+  }, [group.startDate])
+
+
+  useEffect(() => { 
+    setDates(
+      getDatesInRange(
+        new Date(group.startDate + " EDT"),
+        new Date(group.endDate + " EDT"),
+        group.weekdays
+      )
+    );
+  }, [group.endDate])
+
   return (
     <>   
     <div class="flex h-64 justify-center items-center bg-cyan-500 bg-opacity-50">
