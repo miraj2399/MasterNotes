@@ -7,7 +7,8 @@ import {
   Textarea
 } from "@material-tailwind/react";
 import SelectedDatesForGroup from "../components/SelectedDatesForGroup";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import getDatesInRange from "../utilities/GetDatesInRange";
 import { CreateGroupService } from "../services/GroupServices";
 import { Snackbar } from "@mui/material";
@@ -17,6 +18,7 @@ import LeftPopUp from '../components/LeftPopUp';
 export default function CreateGroup() {
  const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
+  const [checkboxDates, setCheckboxDates] = useState([]);
 
  const emptyGroup = {
     name: "",
@@ -45,16 +47,30 @@ export default function CreateGroup() {
       );
     }
   }
+
   function handleCheckbox(e) {
     if (e.target.checked) {
       setGroup({ ...group, weekdays: [...group.weekdays, e.target.name] });
+      setCheckboxDates(group.weekdays);
     } else {
       setGroup({
         ...group,
         weekdays: group.weekdays.filter((day) => day !== e.target.name),
       });
+      setCheckboxDates(group.weekdays);
     }
   }
+
+  useEffect(() => {
+    setDates(
+      getDatesInRange(
+        new Date(group.startDate + " EDT"),
+        new Date(group.endDate + " EDT"),
+        group.weekdays
+      )
+    );
+  }, [checkboxDates])
+
   function handleSubmit(e) {
     e.preventDefault();
     const newGroup = {
@@ -81,16 +97,38 @@ export default function CreateGroup() {
   const [group, setGroup] = useState(emptyGroup);
   const [dates, setDates] = useState([]);
 
-  return (
+  useEffect(() => {
+    setDates(
+      getDatesInRange(
+        new Date(group.startDate + " EDT"),
+        new Date(group.endDate + " EDT"),
+        group.weekdays
+      )
+    );
+  }, [group.startDate])
 
+
+  useEffect(() => {
+    setDates(
+      getDatesInRange(
+        new Date(group.startDate + " EDT"),
+        new Date(group.endDate + " EDT"),
+        group.weekdays
+      )
+    );
+  }, [group.endDate])
+
+  return (
+    <>
+    <div class="flex h-64 justify-center items-center bg-cyan-500 bg-opacity-50">
+    <div class="text-center">
+        <h1 color="blue-gray" className="hover:text-gray-600 text-gray-800 text-5xl text-center m-auto font-extralight">Create Group</h1>
+       {/* <p class="mt-1 text-l">Enter the name of the group and the dates class meets on.</p> */}
+    </div>
+  </div>
     <div className="grid md:grid-cols-2 p-2">
-    <div>
-          </div>
-      <Card color="transparent" shadow={false}>
-        <Typography variant="h4" color="blue-gray">
-          Create Group
-        </Typography>
-        <Typography color="gray" className="mt-1 font-normal">
+      <Card className="m-2" color="transparent" shadow={false}>
+      <Typography color="gray" className="mt-1 font-normal">
           Enter the name of the group and the dates class meets on.
         </Typography>
         <form className="mt-8 mb-2 max-w-screen-lg">
@@ -182,20 +220,11 @@ export default function CreateGroup() {
                 Public: Anyone with the link can join.
                 </Typography>
             </div>
-
-            <div>
-                <Button   type="submit" className="w-full" onClick={handleSubmit}>
-                Create Group
-                </Button>
-            </div>
-
-        
-
-            
           </div>
         </form>
         
       </Card>
+
       <div>
         <SelectedDatesForGroup dates={dates} setDates={setDates} startDate={new Date(group.startDate)} endDate={new Date(group.endDate)}/>
       </div>
@@ -206,5 +235,17 @@ export default function CreateGroup() {
         message={message}
         />
     </div>
+
+    <div className="mt-0 m-4">
+          <div className="mb-3">
+              <Button   type="submit" className="text-black font-light text-sm w-full bg-cyan-500 bg-opacity-50" onClick={handleSubmit}>
+                Create Group
+              </Button>
+            </div>
+        <Link to="/dashboard"><Button className="text-white font-light text-sm w-full" color="red">
+            Cancel
+        </Button></Link>
+      </div>
+    </>
   );
 }

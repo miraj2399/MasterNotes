@@ -1,50 +1,29 @@
-import { useState,useEffect } from "react"
-import { GetAllNotifications } from "../services/NotificationServices"
-import { JoinGroupService } from "../services/GroupServices";
-import { Typography } from "@mui/material"
-
+import { useState, useEffect } from "react";
+import { GetAllNotificationsService } from "../services/NotificationServices";
+import GroupInviteNotification from "./Notification/GroupInviteNotification";
 export default function NotificationCenter() {
-    const [notifications, setNotifications] = useState([]);
-    useEffect(() => {
-        GetAllNotifications().then((data) => {
-            setNotifications(data);
-        })
-    }, [])
+    const [readNotifications, setReadNotifications] = useState([]);
+    const [unreadNotifications, setUnreadNotifications] = useState([]);
 
-    function handleAccept(id){
-        JoinGroupService(id).then((data) => {
-            window.location.href = "/dashboard"
-        })
+    useEffect(() => {
+        GetAllNotificationsService().then((notifications) => {
+            setReadNotifications(notifications.filter((notification) => notification.read));
+            setUnreadNotifications(notifications.filter((notification) => !notification.read));
+        });
     }
+    , []);
 
     return (
-        <div>
-            <div className="flex justify-center items-center gap-2 mb-10">
-                <Typography variant="h5">Notifications</Typography>
-            </div>
-            <div className="grid">
-                {
-                    notifications.map((notification) => {
-                        if (notification.type=="GroupInvite"){
-                            return (
-                                <div key={notification._id} className="border border-red-100 border-1 p-4 m-2 ">
-                                    <p className="text-gray-500 text-sm">{new Date(notification.createdAt).toDateString()}</p>
-                                    <div className='prose  p-5 border border-gray-300 outline-none '>
-                                        <p className="text-gray-500 text-sm">{notification.text}: "{notification.message}"</p>
-                                        
-                                        <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full"
-                                        onClick={() => handleAccept(notification.group)}
-                                        >
-                                        Accept
-                                    </button>
-                                    </div>
-                                    
-                                    </div>
 
-                            )
-                        }
-                    })
-                }
+        <div className="flex flex-col items-center">
+            <div className="text-2xl font-semibold mb-2">Notifications</div>
+            <div className="grid w-full">
+                <div className="text-xl font-semibold mb-2">Unread</div>
+                {unreadNotifications.map((notification) => <GroupInviteNotification key={notification._id} notification={notification} />)}
+            </div>
+            <div className="grid w-full">
+                <div className="text-xl font-semibold mb-2">Read</div>
+                {readNotifications.map((notification) => <GroupInviteNotification key={notification._id} notification={notification} />)}
             </div>
         </div>
     )

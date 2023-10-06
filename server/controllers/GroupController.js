@@ -214,6 +214,28 @@ async function JoinGroupHandler(req, res) {
     }
 }
 
+async function DeclineGroupInviteHandler(req, res) {
+    const groupId = req.params.id;
+    const group = await Group.findById(groupId);
+    if (!group){
+        return res.status(404).json({message: "Group not found"});
+    }
+    try{// by email or by user
+        const notification = await Notification.findOne({
+            $or: [{user: req.userId}, {email: req.email}],
+            group: group._id, type: "GroupInvite"});
+        if (!notification){
+            return res.status(404).json({message: "You are not invited to the group"});
+        }
+        await notification.deleteOne();
+        return res.status(200).json({message: "Invite cancelled"});
+    }
+    catch (err) {
+        console.log(err);
+        return res.status(500).json({message: err.message});
+    }
+}
+
 async function LeaveGroupHandler(req, res) {
     const groupId = req.params.id;
     try {
@@ -243,5 +265,6 @@ module.exports = {
     GetGroupByIdHandler,
     CreateGroupInviteHandler,
     JoinGroupHandler,
+    DeclineGroupInviteHandler,
     LeaveGroupHandler
 };
