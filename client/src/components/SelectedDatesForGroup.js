@@ -30,7 +30,7 @@ export default function SelectedDatesForGroup(props) {
         const handleAddDate = (e) => {
             e.preventDefault()
             // check if the date is in the range
-            const date = new Date(e.target.value)
+            const date = new Date(e.target.value + " EDT")
             if (date.getTime()<startDate.getTime() || date.getTime()>endDate.getTime()){
                 setOpen(true)
                 setMessage("Date must be in the range")
