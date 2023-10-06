@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 import { GetGroupByIdService } from "../services/GroupServices";
 import { useEffect, useState } from "react";
 import InviteJoinGroup from "../components/InviteJoinGroup";
+import LeftPopUp from '../components/LeftPopUp';
+
 
 export default function Group(){
     const {id} = useParams();
@@ -18,7 +20,10 @@ export default function Group(){
 
 
     return (
+
         <div className="grid">
+         <div>
+                    </div>
            <div className="flex justify-center items-center gap-2 mb-10">
             <Typography variant="h5">{group.name}</Typography>
             <Typography variant="subtitle1">{group.courseTitle}</Typography>

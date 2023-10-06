@@ -6,6 +6,8 @@ import Dashboard from "./pages/Dashboard";
 import Settings from "./pages/Settings";
 import CreateGroup from "./pages/CreateGroup";
 import CreatePersonalNote from "./pages/CreatePersonalNote";
+import GroupSection from './components/GroupSection'
+import PersonalSpaceSection from './components/PersonalSpaceSection'
 
 
 import ProtectedRoute from "./utilities/ProtectedRoute";
@@ -21,6 +23,7 @@ function App() {
   return (
 
     <>
+
       <Routes>
         <Route element={<PublicRoute/>}>
           <Route path="/" element={<Home />} />

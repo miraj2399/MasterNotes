@@ -11,6 +11,8 @@ import { useState } from "react";
 import getDatesInRange from "../utilities/GetDatesInRange";
 import { CreateGroupService } from "../services/GroupServices";
 import { Snackbar } from "@mui/material";
+import LeftPopUp from '../components/LeftPopUp';
+
 
 export default function CreateGroup() {
  const [open, setOpen] = useState(false);
@@ -80,7 +82,10 @@ export default function CreateGroup() {
   const [dates, setDates] = useState([]);
 
   return (
+
     <div className="grid md:grid-cols-2 p-2">
+    <div>
+          </div>
       <Card color="transparent" shadow={false}>
         <Typography variant="h4" color="blue-gray">
           Create Group

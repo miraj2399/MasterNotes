@@ -4,11 +4,18 @@ import { useState } from 'react';
 import { Typography } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
+import LeftPopUp from '../components/LeftPopUp';
+
 import { CreateNoteService } from '../services/SpaceService';
 export default function CreatePersonalNote() {
     const [note, setNote] = useState("");
     return (
+
         <div className="grid md:grid-cols-2 gap-2">
+<div>
+
+        </div>
+
             <div className="md:col-span-2">
             <div className="flex p-3 flex-wrap">
             <div className='flex-1'>
