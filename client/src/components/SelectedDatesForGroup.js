@@ -20,7 +20,7 @@ export default function SelectedDatesForGroup(props) {
 
         return (
             <div className="border border-gray-300 rounded-3xl p-2 m-2 flex justify-center items-center gap-2 bg-cyan-500 bg-opacity-50 hover:bg-red-200" onClick={handleClick}>
-                <Typography variant="small">{weekdays[date.getDay()]}, {date.getMonth()}/{date.getDate()} [x]</Typography>
+                <Typography variant="small">{weekdays[date.getDay()]}, {date.getMonth()+1}/{date.getDate()} [x]</Typography>
             </div>
         )
 

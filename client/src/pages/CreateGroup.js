@@ -35,6 +35,15 @@ export default function CreateGroup() {
   function handleChange(e) {
     setGroup({ ...group, [e.target.name]: e.target.value });
     if (dates.length > 0 && e.targetName!="startDate" && e.target.name!="endDate") return;
+    if (group.startDate && group.endDate && group.weekdays) {
+      setDates(
+        getDatesInRange(
+          new Date(group.startDate),
+          new Date(group.endDate),
+          group.weekdays
+        )
+      );
+    }
   }
   
   function handleCheckbox(e) {
