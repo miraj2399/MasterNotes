@@ -20,8 +20,8 @@ export default function GroupSection(){
     return (
         <div>
         <div className="flex p-3 flex-wrap">
-        <h1 className="text-3xl font-bold flex-1">Groups</h1>
-        <Button className="mr-3" onClick={handleCreateGroupClick}>
+        <h1 className="text-gray-800 text-3xl flex-1 font-bold"> My Groups</h1>
+        <Button className="mr-3"  style={{width:"150px", height: "50px"}} onClick={handleCreateGroupClick}>
             Create Group
         </Button>
         </div>

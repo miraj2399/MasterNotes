@@ -2,7 +2,7 @@ import * as React from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import { useState,useEffect } from "react"
-
+import { Link } from "react-router-dom";
 import Drawer from '@mui/material/Drawer';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiAppBar from '@mui/material/AppBar';
@@ -22,6 +22,8 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import Cookies from 'js-cookie';
 import SettingsIcon from '@mui/icons-material/Settings';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import {Button} from '@material-tailwind/react'
 import {
   ListItemPrefix,
@@ -105,7 +107,7 @@ function LeftPopUp(props) {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
+      <AppBar position="fixed" open={open} style ={{backgroundColor: "#00BCD4"}}>
         <Toolbar>
           <IconButton
             color="inherit"
@@ -116,17 +118,25 @@ function LeftPopUp(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            RU Notes
+          <Typography variant="h4" component="div" fontWeight={200} sx={{ flexGrow: 1 }}>
+          MasterNotes
           </Typography>
-          <div className='flex  justify-center items-center gap-2' >
               <IconButton onClick={() => window.location.href = "/settings"}>
               <SettingsIcon/>
               </IconButton>
-              <Button color='red' onClick={handleLogout}>Logout</Button>
-          </div>
+              &nbsp; &nbsp;
+              <IconButton>
+              <NotificationsIcon/>
+              </IconButton>
+              &nbsp; &nbsp;
+              <IconButton>
+              <HelpOutlineIcon/>
+              </IconButton>
+              &nbsp;&nbsp;
+              <Button style ={{backgroundColor: "#0097a7"}} onClick={handleLogout}>Logout</Button>
         </Toolbar>
       </AppBar>
+
       <Drawer
         sx={{
           width: drawerWidth,
