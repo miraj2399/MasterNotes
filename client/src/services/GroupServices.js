@@ -1,4 +1,3 @@
-import InviteJoinGroup from "../components/InviteJoinGroup";
 import AxiosInstance from "./AxiosInstance";
 
 async function CreateGroupService(group) {
@@ -64,6 +63,24 @@ async function DeclineGroupInviteService (groupId) {
     }
 }
 
+async function CreateGroupLectureNoteService (group, date, content) {
+    try {
+        const response = await AxiosInstance.post("/groups/notes", {group,date,content});
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function GetGroupLectureNotesByIdService (id) {
+    try {
+        const response = await AxiosInstance.get(`/groups/notes/${id}`);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 
 
 
@@ -75,6 +92,8 @@ export {
     JoinGroupService,
     LeaveGroupService,
     InviteJoinGroupService,
-    DeclineGroupInviteService
+    DeclineGroupInviteService,
+    CreateGroupLectureNoteService,
+    GetGroupLectureNotesByIdService
 }
 

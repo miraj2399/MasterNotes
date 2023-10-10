@@ -5,9 +5,11 @@ const lectureNoteSchema = new Schema({
     group: {
         type: Schema.Types.ObjectId,
         ref: "Group",
+        required: [true, "Group is required"],
     },
     date: {
-        type: Date,
+        type: Schema.Types.ObjectId,
+        ref: "LectureDate",
         required: [true, "Date is required"],
     },
     content: {
