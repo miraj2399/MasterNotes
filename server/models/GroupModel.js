@@ -68,6 +68,10 @@ const groupSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "LectureDate",
     }],
+    notes : [{
+        type: Schema.Types.ObjectId,
+        ref: "LectureNote",
+    }],
     invites: [{
         type: Schema.Types.ObjectId,
         ref: "User",

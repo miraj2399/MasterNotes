@@ -3,6 +3,7 @@ const Group = require('../models/GroupModel');
 const User = require('../models/UserModel');
 const LectureDate = require('../models/LectureDateModel');
 const Notification = require('../models/NotificationModel');
+const LectureNote = require('../models/LectureNoteModel');
 
 async function CreateGroupHandler(req, res) {
     const {name, courseNumber, courseTitle, instructor, location, startTime, endTime, startDate, endDate, weekdays, description, inviteOnly, dates} = req.body;
@@ -54,8 +55,6 @@ async function GetAllGroupsHandler (req, res) {
     const groups = await Group.find({
         '_id': { $in: groupIds.groups}
     });
-
-    console.log(groupIds);
     res.status(200).json(groups);
 
 }
@@ -73,6 +72,11 @@ async function GetGroupByIdHandler (req,res){
         });
         group.dates = lectureDates;
 
+        const notes = await LectureNote.find({
+            '_id': { $in: group.notes}
+        });
+
+        group.notes = notes;
         res.status(200).json(group);
     }
     catch (err) {
@@ -84,7 +88,6 @@ async function GetGroupByIdHandler (req,res){
 async function CreateGroupInviteHandler(req, res) {
     
     const {groupId, emails,message} = req.body
-    console.log(req.body)
     const group = Group.findById(groupId);
     if (!group){
         return res.status(404).json({message: "Group not found"});
@@ -105,7 +108,6 @@ async function CreateGroupInviteHandler(req, res) {
         if (!isMember){
             return res.status(401).json({message: "Unauthorized"});
         }
-        console.log(actor);
         const text = `${actor.firstName} ${actor.lastName} invited you to join ${group.name}`;
 
     /***
@@ -177,7 +179,6 @@ async function CreateGroupInviteHandler(req, res) {
 }
 
 async function JoinGroupHandler(req, res) {
-    console.log(req.params);
     const groupId = req.params.id;
     try {
         const group = await Group.findById(groupId);
@@ -258,6 +259,50 @@ async function LeaveGroupHandler(req, res) {
     }
 }
 
+async function CreateGroupLectureNoteHandler(req, res) {
+    const { group, date, content } = req.body;
+    try {
+        if (!group || !date || !content) {
+            return res.status(400).json({message: "Missing required fields"});
+        }
+        const lectureNote = await LectureNote.create({
+            group: group,
+            date: date,
+            content: content,
+            owner: req.userId
+        });
+        const noteGroup = await Group.findById(group);
+        await noteGroup.updateOne({$push: {notes: lectureNote._id}});
+        return res.status(201).json(lectureNote);
+    }
+    catch (err) {
+        console.log(err);
+        return res.status(500).json({message: err.message});
+}
+}
+
+async function GetGroupLectureNotesByIdHandler(req, res) {
+    const lectureNoteId = req.params.id;
+
+    try{
+
+       const lectureNote = await LectureNote.findById(lectureNoteId);
+       if (!lectureNote){
+           return res.status(404).json({message: "Lecture note not found"});
+       }
+       // check if the user is a member of the group
+       const group = await Group.findById(lectureNote.group);
+       if (group.members.includes(req.userId)){
+           return res.status(200).json(lectureNote);
+       }
+         return res.status(401).json({message: "Unauthorized"});
+    }
+    catch (err) {
+        console.log(err);
+        return res.status(500).json({message: err.message});
+    }
+}
+
 
 module.exports = {
     CreateGroupHandler,
@@ -266,5 +311,7 @@ module.exports = {
     CreateGroupInviteHandler,
     JoinGroupHandler,
     DeclineGroupInviteHandler,
-    LeaveGroupHandler
+    LeaveGroupHandler,
+    CreateGroupLectureNoteHandler,
+    GetGroupLectureNotesByIdHandler
 };
