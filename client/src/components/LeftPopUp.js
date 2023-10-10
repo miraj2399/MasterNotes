@@ -119,7 +119,7 @@ function LeftPopUp(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h4" component="div" fontWeight={200} sx={{ flexGrow: 1 }}>
-          MasterNotes
+          RUNotes
           </Typography>
               <IconButton onClick={() => window.location.href = "/settings"}>
               <SettingsIcon/>
@@ -127,10 +127,6 @@ function LeftPopUp(props) {
               &nbsp; &nbsp;
               <IconButton>
               <NotificationsIcon/>
-              </IconButton>
-              &nbsp; &nbsp;
-              <IconButton>
-              <HelpOutlineIcon/>
               </IconButton>
               &nbsp;&nbsp;
               <Button style ={{backgroundColor: "#0097a7"}} onClick={handleLogout}>Logout</Button>
