@@ -1,26 +1,59 @@
-import { InviteJoinGroup } from "./InviteJoinGroup"
+import {Card, CardBody, CardHeader,Typography } from "@material-tailwind/react";
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import PeopleIcon from '@mui/icons-material/People';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import { Box } from "@mui/material";
+
 export default function GroupCard(props) {
     const group = props.group
     return (
-        <div className="group-card border border-red-100 border-1 p-4  m-2 hover:scale-105 hover:bg-green-100" 
-        onClick={()=>window.location.href=`/group/${group._id}`}
-        >
-            <h1 className="text-2xl font-bold">{group.name}</h1>
-            <div className="flex gap-2">
-            <p className=" text-gray-500 text-sm">{group.courseTitle}</p>
-            <p className=" text-gray-500 text-sm">{group.courseNumber}</p>
-            </div>
-            <p className=" text-gray-500 text-sm">{group.instructor}</p>
-            <p className=" text-gray-500 text-sm">{group.location}</p>
-            <p className=" text-gray-500 text-sm">{group.startTime} - {group.endTime}</p>
-            <p className=" text-gray-500 text-sm">
-                {
-                group.weekdays.map((day)=>(
-                    <span>{day} </span>
-                ))
-                }
-            </p>
-            
-            </div>
+
+        <Card className="w-80 h-64 m-4 bg-green-100 hover:bg-green-300" onClick={
+            () => {
+                window.location.href = `/group/${group._id}`
+            }
+        }>
+            <CardHeader className="p-3 bg-green-200" floated={false}>
+                <Typography  variant="h6">
+                    {group.name}
+                </Typography>
+            </CardHeader>
+            <CardBody className="h-[60%] overflow-auto">
+                <Typography color="black" variant="subtitle1">
+                    {group.courseTitle}
+                </Typography>
+                <Box className="flex justify-between items-center">
+                    <Typography variant="subtitle2">
+                        <PeopleIcon fontSize="small"/>
+                        {group.members.length} Members
+                    </Typography>
+                    <Typography variant="subtitle2">
+                        <AccessTimeIcon fontSize="small"/> {group.startTime} - {group.endTime}
+                    </Typography>
+                </Box>
+                <Box className="flex justify-between items-center">
+                    <Typography variant="subtitle2">
+                        <CheckCircleOutlineIcon fontSize="small"/>
+                        {group.weekdays.map((day) => {
+                            return day + " "
+                        })}
+                    </Typography>
+                    <Typography variant="subtitle2">
+                        <LocationOnIcon fontSize="small"/>
+                        {group.location}
+                    </Typography>
+                </Box>
+
+                <Box className="flex justify-between items-center">
+                    <Typography variant="subtitle2">
+                        <CalendarMonthIcon fontSize="small"/> {new Date(group.startDate).toDateString()} - {new Date(group.endDate).toDateString()}
+                    </Typography>
+                </Box>
+
+            </CardBody>
+        </Card>
+   
     )
 }
