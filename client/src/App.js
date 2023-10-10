@@ -6,7 +6,8 @@ import Dashboard from "./pages/Dashboard";
 import Settings from "./pages/Settings";
 import CreateGroup from "./pages/CreateGroup";
 import CreatePersonalNote from "./pages/CreatePersonalNote";
-
+import CreateGroupNote from "./pages/CreateGroupNote";
+import LectureNote from "./pages/LectureNote"
 
 import ProtectedRoute from "./utilities/ProtectedRoute";
 import PublicRoute from "./utilities/PublicRoute";

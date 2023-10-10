@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { GetGroupByIdService, LeaveGroupService } from "../services/GroupServices";
 import { useEffect, useState } from "react";
 import InviteJoinGroup from "../components/InviteJoinGroup";
+import LectureNotePreview from "../components/LectureNotePreview";
 
 export default function Group(){
     const {id} = useParams();
