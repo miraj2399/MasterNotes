@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom';
 import DescriptionIcon from '@mui/icons-material/Description';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import ShareIcon from '@mui/icons-material/Share';
+import SettingsAccessibilityIcon from '@mui/icons-material/SettingsAccessibility';
+import GroupsIcon from '@mui/icons-material/Groups';
 
 
 import FAQSection from '../components/FAQSection';
@@ -24,7 +26,7 @@ export default function Home() {
       <div className="flex flex-row justify-between items-center bg-cyan-500 bg-opacity-50  h-16">
         <div className="flex flex-row justify-between items-center">
           <Link to="/">
-            <p className="text-gray-600 hover:text-gray-800 mb-5 text-3xl text-center font-bold  bg-gradient-to-r from-blue-900 to-red-900 bg-clip-text text-transparent">RU Notes</p>
+            <p className="text-gray-600 hover:text-blue-900 mb-5 text-3xl text-center font-bold  bg-gradient-to-r from-blue-900 to-purple-500 bg-clip-text text-transparent">RU Notes</p>
           </Link>
 
 
@@ -41,10 +43,10 @@ export default function Home() {
           </div>
           
           <div className="flex flex-col justify-center items-center">
-            <p className="animate-text bg-gradient-to-r from-teal-500 via-purple-500 to-orange-500 bg-clip-text text-transparent text-6xl mt-10 font-black mb-2 hover:text-blue-900 ">RU Notes</p>
-            <p className="text-2xl font-bold text-gray-900 mt-4">The best way to take notes</p>
+            <p className="animate-text bg-gradient-to-r from-teal-500 to-purple-500 bg-clip-text text-transparent text-7xl mt-10 font-black mb-2 hover:text-blue-900 ">RU Notes</p>
+            <p className="text-3xl font-bold text-gray-900 mt-4">The Best Way to Take Notes</p>
             <Link to="/signup">
-            <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-8">
+            <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-5 rounded mt-8">
               Get Started
             </button>
             </Link>
@@ -54,43 +56,43 @@ export default function Home() {
     
     >
     <div className='col-span-1'>
-      <div className='flex flex-col justify-center items-center  border-8 border-red-900 p-10 bg-red-100'
+      <div className='flex flex-col justify-center items-center  border-8 border-green-700 p-10 bg-cyan-500 bg-opacity-50'
       style={{
         clipPath: "polygon(0 20%, 100% 0, 100% 80%, 0 100%)"
       }}>
-        <DescriptionIcon sx={{fontSize:50}}/>
-        <p className='text-2xl font-bold text-gray-900 mt-4'>Take Notes</p>
-        <p className='text-lg text-gray-900 mt-4'>Take notes in class, at home, or anywhere else</p>
+        <GroupsIcon sx={{fontSize:50}}/>
+        <p className='text-2xl font-bold text-gray-900 mt-4'>Join a Group</p>
+        <p className='text-lg text-gray-900 mt-4'>Create or join a group for a class and collaborate with your classmates to take notes</p>
       </div>
       </div>
 
       <div className='col-span-1'>
-      <div className='flex flex-col justify-center items-center  border-8 border-red-900 p-10 bg-red-100 '
+      <div className='flex flex-col justify-center items-center  border-8 border-green-700 p-10 bg-cyan-500 bg-opacity-50'
       style={{
         clipPath: "polygon(0 20%, 100% 0, 100% 80%, 0 100%)"
       }}>
         <DescriptionIcon sx={{fontSize:50}}/>
-        <p className='text-2xl font-bold text-gray-900 mt-4'>Take Notes</p>
-        <p className='text-lg text-gray-900 mt-4'>Take notes in class, at home, or anywhere else</p>
+        <p className='text-2xl font-bold text-gray-900 mt-4'>Master Branch</p>
+        <p className='text-lg text-gray-900 mt-4'>Find the most upvoted note of the day for a specific lecture date</p>
       </div>
       </div>
 
 
       <div className='col-span-1'>
-      <div className='flex flex-col justify-center items-center  border-8 border-red-900 p-10  bg-red-100'
+      <div className='flex flex-col justify-center items-center  border-8 border-green-700 p-10  bg-cyan-500 bg-opacity-50'
       style={{
         clipPath: "polygon(0 20%, 100% 0, 100% 80%, 0 100%)"
       }}>
-        <DescriptionIcon sx={{fontSize:50}}/>
-        <p className='text-2xl font-bold text-gray-900 mt-4'>Take Notes</p>
-        <p className='text-lg text-gray-900 mt-4'>Take notes in class, at home, or anywhere else</p>
+        <SettingsAccessibilityIcon sx={{fontSize:50}}/>
+        <p className='text-2xl font-bold text-gray-900 mt-4'>Personal Collection</p>
+        <p className='text-lg text-gray-900 mt-4'>Design a space to organize your notes and pull notes from the master branch to add to your own collection</p>
       </div>
       </div>
       
       
       </div>
       <div 
-      className='flex flex-col justify-center  bg-orange-100 p-32 pt-64'
+      className='flex flex-col justify-center  bg-green-500 bg-opacity-40 p-32 pt-64'
       style={{
         clipPath: "polygon(0 20%, 100% 0, 100% 100%, 0 100%)"
       }}
