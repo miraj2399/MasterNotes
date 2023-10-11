@@ -8,11 +8,11 @@ export default function FAQSection() {
   const faqData = [
     {
       question: 'How can I create notes for a specific lecture session?',
-      answer: 'To create notes for a particular lecture session, log in to your account, select the relevant course, navigate to the lecture schedule, choose the session, and click the "Create Notes" button.',
+      answer: 'There are 2 ways! Once you log in to your account, you can either click on "Create Note" directly on the dashboard page, or you can navigate to a course and click on the "Create Note" button in the group.',
     },
     {
       question: 'Is it possible to share my notes with classmates?',
-      answer: 'Yes, you can easily share your notes with classmates by using the "Share" option. Enter your classmates\' email addresses, and they will gain access to view and collaborate on the notes.',
+      answer: 'Yes! You can share your notes with classmates by using the "Share" option and entering your classmates\' email addresses. This will give them access to view and collaborate on the note(s).',
     },
     {
       question: 'How do I provide feedback on someone else\'s notes?',
@@ -25,6 +25,14 @@ export default function FAQSection() {
     {
       question: 'What happens if I need to edit notes after sharing them?',
       answer: 'If you need to edit shared notes, you can do so. However, it\'s important to communicate any changes with your classmates, as they will be notified of the updates to ensure everyone has access to the latest information.',
+    },
+    {
+      question: 'How do I join a course?',
+      answer: 'You will need to be invited by any user that has admin rights for the group. Once they send the group invite to your RUNotes account, you will receive a notification on your dashboard page enabling you to either accept, decline, or mark the notification as read.',
+    },
+    {
+      question: 'What makes RUNotes different from other note sharing platforms?',
+      answer: 'Excellent question! RUNotes hyperfocuses on organizing notes based on dates and chronology, which allows users to easily find and access all their content.',
     },
   ];
   
