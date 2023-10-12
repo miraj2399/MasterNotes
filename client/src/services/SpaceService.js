@@ -5,7 +5,7 @@ async function CreateNoteService(note) {
         const response = await AxiosInstance.post("spaces/notes", note);
         return response.data;
     } catch (error) {
-        console.log(error);
+        return {error: error.response.data.message}
     }
     }
 
