@@ -12,7 +12,7 @@ export default function Dashboard (){
     }
     return (
         <>
-        <div className='grid gap-20'>
+        <div className='grid gap-20 bg-white'>
         <GroupSection/>
         <PersonalSpaceSection/>
         <NotificationCenter/>

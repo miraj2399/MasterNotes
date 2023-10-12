@@ -10,6 +10,7 @@ import { Autocomplete, TextField } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { GetGroupByIdService, CreateGroupLectureNoteService} from "../services/GroupServices";
 import { Snackbar } from "@mui/material";
+import remarkGfm from "remark-gfm";
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
   
@@ -158,7 +159,7 @@ export default function CreateGroupNote() {
             overflow: "auto",
           }}
         >
-          <Markdown className="prose">{text}</Markdown>
+          <Markdown className="prose-lg" remarkPlugins={[remarkGfm]}>{text}</Markdown>
         </Box>
         <ButtonBar />
       </CustomTabPanel>
@@ -180,7 +181,7 @@ export default function CreateGroupNote() {
               />
             </Grid>
             <Grid item xs={6}>
-              <Markdown className="prose">{text}</Markdown>
+              <Markdown className="prose" remarkPlugins={[remarkGfm]}>{text}</Markdown>
             </Grid>
             <Grid item xs={12}>
               <ButtonBar />
