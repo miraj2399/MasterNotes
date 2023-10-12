@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import InviteJoinGroup from "../components/InviteJoinGroup";
 import  LectureNotePreview  from "../components/LectureNotePreview";
 import { Link } from "react-router-dom";
+import ButtonGroup from '@mui/material/ButtonGroup';
 
 export default function Group(){
     const {id} = useParams();
@@ -35,6 +36,13 @@ export default function Group(){
               <Button className="text-white font-light text-sm bg-green-500 hover:bg-green-600" buttonType="filled" size="regular" rounded={false} block={false} iconOnly={false} ripple="light" onClick={() => {
                 window.location.href = `/createGroupNote/${group._id}`
             }}> Create Note </Button>
+            
+            </div>
+            <div>
+            <ButtonGroup variant="contained" aria-label="outlined primary button group" className="ml-3">
+                <Button className="text-white font-light text-sm" >Master Branch</Button>
+                <Button className="text-white font-light text-sm ml-2">Personal Collection</Button>
+            </ButtonGroup>
             </div>
 
 
