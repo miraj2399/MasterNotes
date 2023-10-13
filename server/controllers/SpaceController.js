@@ -24,7 +24,25 @@ async function GetAllNotesHandler(req, res) {
     }
 }
 
+async function GetPersonalNoteByHandler(req, res) {
+    try {
+
+        const note = await PersonalNote.findById(req.params.id);
+        if (!note) {
+            return res.status(404).json({message: "Note not found"});
+        }
+        if (note.owner.toString() !== req.userId) {
+            return res.status(401).json({message: "Unauthorized"});
+        }
+        res.status(200).json(note);
+    }
+    catch (err) {
+        res.status(500).json({message: err.message});
+    }
+}
+
 module.exports = {
     CreateNoteHandler,
-    GetAllNotesHandler
+    GetAllNotesHandler,
+    GetPersonalNoteByHandler
 }
