@@ -11,7 +11,7 @@ import LectureNote from "./pages/LectureNote";
 import Groups from "./pages/Groups";
 import PersonalSpaceSection from "./components/PersonalSpaceSection";
 import FAQSection from "./components/FAQSection";
-
+import PersonalNote from "./pages/PersonalNote";
 
 // icons
 import MenuIcon from '@mui/icons-material/Menu';
@@ -102,6 +102,8 @@ function App() {
           <Route path="/FAQ" element={<FAQSection />} />
           <Route path='/createGroupNote/:group' element={<CreateGroupNote />} />
           <Route path="/lectureNote/:id" element={<LectureNote />} />
+          <Route path="/personalNote/:id" element={<PersonalNote />} />
+
         </Route>
       </Routes>
       </Main>

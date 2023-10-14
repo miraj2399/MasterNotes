@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from '@material-tailwind/react';
 import PersonalNoteCard from './PersonalNoteCard';
-import { CreateNoteService, GetAllNotesService } from '../services/SpaceService';
+import { GetAllNotesService } from '../services/SpaceService';
+import { Link } from 'react-router-dom';
 
 export default function PersonalSpaceSection() {
     const handleCreateNoteClick = () => {
@@ -32,7 +33,10 @@ export default function PersonalSpaceSection() {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {notes.map((note) => (
                     <div key={note._id}>
+                        <Link to={`/personalNote/${note._id}`} >
                         <PersonalNoteCard note={note} />
+                        </Link>
+
                     </div>
                 ))}
             </div>

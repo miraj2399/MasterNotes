@@ -5,8 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6711e6f6-643e-4573-b622-7c3d9d16e07f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/client/src/pages/Groups.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/PersonalNote.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/PersonalSpaceSection.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/PersonalSpaceSection.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/CreateGroupNote.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/CreateGroupNote.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/CreatePersonalNote.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/CreatePersonalNote.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/Group.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Group.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/services/SpaceService.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/services/SpaceService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/controllers/SpaceController.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/controllers/SpaceController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/routes/SpaceRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routes/SpaceRoutes.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

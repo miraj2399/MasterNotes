@@ -10,6 +10,9 @@ import { Autocomplete, TextField } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { GetGroupByIdService, CreateGroupLectureNoteService} from "../services/GroupServices";
 import { Snackbar } from "@mui/material";
+import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
+import Fab from '@mui/material/Fab';
+import Modal from "react-modal";
 import remarkGfm from "remark-gfm";
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -62,7 +65,29 @@ export default function CreateGroupNote() {
     setValue(newValue);
   };
 
+  const [modalIsOpen, setIsOpen] = useState(false);
 
+  function openModal() {
+    setIsOpen(true);
+}
+
+function closeModal() {
+    setIsOpen(false);
+}
+
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    width: '80vw',
+    height: '80vw',
+    marginRight: '-50%',
+    maxHeight: '500px',
+    transform: 'translate(-50%, -50%)',
+  },
+};
 
   const ButtonBar = () => {
     const handleCancel = () => {
@@ -88,6 +113,7 @@ export default function CreateGroupNote() {
             });
         };
     return (
+      <>
       <div className="flex justify-end gap-2">
         <Autocomplete
           id="tags-outlined"
@@ -110,7 +136,53 @@ export default function CreateGroupNote() {
         <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" onClick={handlePublish}>
           Publish
         </button>
+        
       </div>
+      <div>
+        <Fab aria-label="question" onClick={openModal}>
+          <QuestionMarkIcon />
+        </Fab>
+        <Modal
+            isOpen={modalIsOpen}
+            onRequestClose={closeModal}
+            contentLabel="Information"
+            style={customStyles}
+        >
+          <div className="font-bold text-center">Markdown Instructions</div><br />
+          <div className="text-center">
+          <b># Heading 1</b> <br />
+          <b>## Heading 2</b> <br />
+          <b>### Heading 3</b> <br />
+          <b>Bold </b>	**bold text**<br />
+          <b>Italic	</b>*italicized text*<br />
+          <b> Autolink literals</b>
+          <br />
+          www.example.com, https://example.com, and contact@example.com.
+          <br />
+          <b>Footnote</b>
+          <br />
+          A note[^1]
+          <br />
+          [^1]: Big note.
+          <br />
+          <b>Strikethrough</b>
+          <br />
+          ~one~ or ~~two~~ tildes.
+          <br />
+          <b>Table</b> 
+          <br />
+          | a | b  |  c |  d  |
+          | - | :- | -: | :-: |
+          <br />
+          <b>Tasklist</b>
+          <br />
+          * [ ] to do
+          <br />
+          * [x] done
+          </div>
+          </Modal>
+      </div>
+      </>
     );
   };
 

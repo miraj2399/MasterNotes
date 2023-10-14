@@ -18,8 +18,19 @@ async function GetAllNotesService() {
     }
 }
 
+async function GetPersonalNoteByIdService(id) {
+    try {
+        const response = await AxiosInstance.get(`spaces/notes/${id}`);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
 export {
     CreateNoteService,
-    GetAllNotesService
+    GetAllNotesService,
+    GetPersonalNoteByIdService
 }
 
