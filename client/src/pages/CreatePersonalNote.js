@@ -1,5 +1,3 @@
-
-
 import { CreateNoteService } from '../services/SpaceService';
 import React, { useEffect, useState } from "react";
 import { Tabs, Tab, Typography } from "@mui/material";
