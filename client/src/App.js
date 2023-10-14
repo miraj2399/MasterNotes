@@ -8,6 +8,7 @@ import CreateGroup from "./pages/CreateGroup";
 import CreatePersonalNote from "./pages/CreatePersonalNote";
 import CreateGroupNote from "./pages/CreateGroupNote";
 import LectureNote from "./pages/LectureNote";
+import PersonalNote from "./pages/PersonalNote";
 
 
 import ProtectedRoute from "./utilities/ProtectedRoute";
@@ -37,6 +38,8 @@ function App() {
           <Route path="/settings" element={<Settings />} />
           <Route path='/createGroupNote/:group' element={<CreateGroupNote />} />
           <Route path="/lectureNote/:id" element={<LectureNote />} />
+          <Route path="/personalNote/:id" element={<PersonalNote />} />
+
         </Route>
       </Routes>
     </>

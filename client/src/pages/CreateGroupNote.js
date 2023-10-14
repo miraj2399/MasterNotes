@@ -13,6 +13,7 @@ import { Snackbar } from "@mui/material";
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import Fab from '@mui/material/Fab';
 import Modal from "react-modal";
+import remarkGfm from "remark-gfm";
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
   
@@ -230,7 +231,7 @@ const customStyles = {
             overflow: "auto",
           }}
         >
-          <Markdown className="prose">{text}</Markdown>
+          <Markdown className="prose-lg" remarkPlugins={[remarkGfm]}>{text}</Markdown>
         </Box>
         <ButtonBar />
       </CustomTabPanel>
@@ -252,7 +253,7 @@ const customStyles = {
               />
             </Grid>
             <Grid item xs={6}>
-              <Markdown className="prose">{text}</Markdown>
+              <Markdown className="prose" remarkPlugins={[remarkGfm]}>{text}</Markdown>
             </Grid>
             <Grid item xs={12}>
               <ButtonBar />
