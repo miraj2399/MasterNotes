@@ -81,6 +81,15 @@ async function GetGroupLectureNotesByIdService (id) {
     }
 }
 
+async function CreateCommentService (id, content) {
+    try {
+        const response = await AxiosInstance.post(`/groups/notes/${id}/comments`, {content});
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 
 
 
@@ -94,6 +103,7 @@ export {
     InviteJoinGroupService,
     DeclineGroupInviteService,
     CreateGroupLectureNoteService,
-    GetGroupLectureNotesByIdService
+    GetGroupLectureNotesByIdService,
+    CreateCommentService
 }
 
