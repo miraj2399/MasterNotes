@@ -1,10 +1,70 @@
 import Cookies from "js-cookie";
 import { Outlet, Navigate } from "react-router-dom";
+// icons
+import MenuIcon from '@mui/icons-material/Menu';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import SettingsIcon from '@mui/icons-material/Settings';
+import GroupIcon from '@mui/icons-material/Group';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import LiveHelpIcon from '@mui/icons-material/LiveHelp';
+import GridViewIcon from '@mui/icons-material/GridView';
+
+import { useState } from "react";
+import { styled } from '@mui/material/styles';
+import { Box, Button, Drawer} from "@mui/material";
+
+
+const drawerWidth=200;
+const Main = styled(Box,{ shouldForwardProp: (prop) => prop !== 'drawerOpen' })(({ theme, drawerOpen }) => ({
+  marginLeft: drawerOpen? `${drawerWidth}px` : '0px',
+  transition: theme.transitions.create(['margin', 'width'], {
+    easing: theme.transitions.easing.easeOut,
+    duration: theme.transitions.duration.enteringScreen,
+  }),
+}));
 
 export default function ProtectedRoute() {
+  const drawerStatusFromLocalStorage = localStorage.getItem('drawerOpen');
+  const [drawerOpen, setDrawerOpen] = useState(drawerStatusFromLocalStorage? drawerStatusFromLocalStorage==='true':false);
+  const handleDrawerToggle = () => {
+    setDrawerOpen(!drawerOpen);
+    localStorage.setItem('drawerOpen',!drawerOpen);
+  }
+
   const token = Cookies.get("token");
   if (!token) {
     return <Navigate to="/login"  exact/>;
   }
-  return <Outlet />;
+  return (
+    <>
+    <Drawer variant="persistent" open={drawerOpen} sx={{width:drawerWidth, flexShrink:0, '& .MuiDrawer-paper':{width:drawerWidth, boxSizing:'border-box'}}}>
+    <div style={{'text-align': 'left', marginTop:"10px"}}>
+          <div className="flex justify-center mb-10">
+        <div style={{'text-align': 'center'}}><Button onClick={handleDrawerToggle}><ArrowBackIosIcon/></Button> </div>
+         <h2 style={{'text-align': 'center', 'color': '#4169e1', 'fontWeight': "bold", 'fontSize': '20px'}}> RU NOTES </h2>
+         
+         </div>
+        {/* Here goes all the tabs (eg. Dashboard, Group, Space, Settings) */}
+        <div style={{'margin-top': '20px', 'padding': '25px'}}>
+          < Button onClick={()=>{window.location.href='/dashboard'}}><GridViewIcon/>     Dashboard</Button>
+        </div>
+        <div style={{'margin-top': '15px', 'padding': '20xpx', 'padding-left': '25px'}}>
+          < Button onClick={()=>{window.location.href='/groups'}}><GroupIcon/>     Groups</Button>
+        </div>
+        <div style={{'margin-top': '15px', 'padding': '20px','padding-left': '22px'}}>
+          < Button onClick={()=>{window.location.href='/spaces'}}><PersonOutlineIcon/>     Spaces</Button>
+        </div>
+        <div style={{'margin-top': '15px', 'padding': '20px','padding-left': '25px'}}>
+          < Button onClick={()=>{window.location.href='/settings'}}><SettingsIcon/>     Settings</Button>
+        </div>
+       
+
+    </div>
+  </Drawer>
+  <Main drawerOpen={drawerOpen}>
+      { !drawerOpen && <Button onClick={handleDrawerToggle}><MenuIcon/></Button>}
+  <Outlet/>
+  </Main>
+  </>
+  )
 }
