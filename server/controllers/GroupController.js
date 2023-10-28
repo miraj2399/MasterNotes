@@ -5,7 +5,10 @@ const LectureDate = require('../models/LectureDateModel');
 const Notification = require('../models/NotificationModel');
 const LectureNote = require('../models/LectureNoteModel');
 const Comment = require('../models/CommentModel');
+
+
 const isMember = require('../utils/IsMember');
+const getUser = require('../utils/GetUser');
 
 async function CreateGroupHandler(req, res) {
     const {name, courseNumber, courseTitle, instructor, location, startTime, endTime, startDate, endDate, weekdays, description, inviteOnly, dates} = req.body;
@@ -293,13 +296,23 @@ async function GetGroupLectureNotesByIdHandler(req, res) {
        }
        // check if the user is a member of the group
        const group = await Group.findById(lectureNote.group);
-       if (group.members.includes(req.userId)){
-        lectureNote.comments = await Comment.find({
-            '_id': { $in: lectureNote.comments}
-        });
+       const userIsMemberOfGroup = await isMember(req.userId, group._id);
+       const comments = await Comment.find({
+              '_id': { $in: lectureNote.comments},
+            }).populate({
+                path: "owner",
+                select: "firstName lastName"
+            });
+        lectureNote.comments = comments;
+
+         if (userIsMemberOfGroup){
         
-           return res.status(200).json(lectureNote);
-       }
+            
+            lectureNote.owner = await getUser(lectureNote.owner);
+            return res.status(200).json(lectureNote);
+        }
+
+
          return res.status(401).json({message: "Unauthorized"});
     }
     catch (err) {
@@ -326,8 +339,7 @@ const CreateCommentHandler = async (req, res) => {
         const newComment = await Comment.create({
             note: noteId,
             owner: userId,
-            content: content,
-            ownerName: user.firstName + " " + user.lastName
+            content: content
         });
         await LectureNote.findByIdAndUpdate(noteId, {$push: {comments: [...note.comments, newComment._id]}});
         return res.status(201).json(newComment);
