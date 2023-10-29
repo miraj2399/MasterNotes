@@ -12,6 +12,7 @@ import Groups from "./pages/Groups";
 import PersonalSpaceSection from "./components/PersonalSpaceSection";
 import FAQSection from "./components/FAQSection";
 import PersonalNote from "./pages/PersonalNote";
+import EditPersonalNote from "./pages/EditPersonalNote";
 
 
 
@@ -57,6 +58,7 @@ function App() {
           <Route path='/createGroupNote/:group' element={<CreateGroupNote />} />
           <Route path="/lectureNote/:id" element={<LectureNote />} />
           <Route path="/personalNote/:id" element={<PersonalNote />} />
+          <Route path="/personalNote/:id/edit" element={<EditPersonalNote />} />
 
         </Route>
       </Routes>
