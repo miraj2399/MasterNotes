@@ -27,10 +27,33 @@ async function GetPersonalNoteByIdService(id) {
     }
 }
 
+async function EditNoteService(id, note) {
+    try {
+        const response = await AxiosInstance.put(`spaces/notes/${id}`, note);
+        return response.data;
+
+    } catch (error) {
+        console.log(error);
+
+    }
+}
+
+async function DeleteNoteService(id) {
+    try {
+        const response = await AxiosInstance.delete(`spaces/notes/${id}`);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
 
 export {
     CreateNoteService,
     GetAllNotesService,
-    GetPersonalNoteByIdService
+    GetPersonalNoteByIdService,
+    EditNoteService,
+    DeleteNoteService
 }
 

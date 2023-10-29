@@ -41,8 +41,48 @@ async function GetPersonalNoteByHandler(req, res) {
     }
 }
 
+async function EditNoteHandler(req, res) {
+    const {content} = req.body;
+    try {
+        const note = await PersonalNote.findById(req.params.id);
+        if (!note) {
+            return res.status(404).json({message: "Note not found"});
+        }
+        if (note.owner.toString() !== req.userId) {
+            return res.status(401).json({message: "Unauthorized"});
+        }
+        note.content = content;
+        const updatedNote = await PersonalNote.findByIdAndUpdate(req.params.id, note, {new: true});
+        res.status(200).json(updatedNote);
+    }
+    catch (err) {
+        console.log(err);
+        res.status(500).json({message: err.message});
+    }
+}
+
+async function DeleteNoteHandler(req, res) {
+    try {
+        const note = await PersonalNote.findById(req.params.id);
+        if (!note) {
+            return res.status(404).json({message: "Note not found"});
+        }
+        if (note.owner.toString() !== req.userId) {
+            return res.status(401).json({message: "Unauthorized"});
+        }
+        await PersonalNote.findByIdAndDelete(req.params.id);
+        res.status(200).json({message: "Note deleted"});
+    }
+    catch (err) {
+        res.status(500).json({message: err.message});
+    }
+}
+
+
 module.exports = {
     CreateNoteHandler,
     GetAllNotesHandler,
-    GetPersonalNoteByHandler
+    GetPersonalNoteByHandler,
+    EditNoteHandler,
+    DeleteNoteHandler
 }
