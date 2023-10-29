@@ -1,5 +1,7 @@
 import { Timeline, Button, TimelineItem, TimelineBody, TimelineHeader, TimelineConnector, TimelineIcon} from "@material-tailwind/react";
-import {  Typography } from "@mui/material";
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import { useParams } from "react-router-dom";
 import { GetGroupByIdService, LeaveGroupService } from "../services/GroupServices";
@@ -7,13 +9,13 @@ import { useEffect, useState } from "react";
 import InviteJoinGroup from "../components/InviteJoinGroup";
 import  LectureNotePreview  from "../components/LectureNotePreview";
 import { Link } from "react-router-dom";
-import ButtonGroup from '@mui/material/ButtonGroup';
 
 export default function Group(){
     const {id} = useParams();
     const [group, setGroup] = useState({});
     const [dates, setDates] = useState([]);
     const [notes, setNotes] = useState([{}]);
+    const [branch, setBranch] = useState("all");
     useEffect(() => {
         GetGroupByIdService(id).then((data) => {
             setGroup(data);
@@ -39,10 +41,55 @@ export default function Group(){
             
             </div>
             <div>
-            <ButtonGroup variant="contained" aria-label="outlined primary button group" className="ml-3">
-                <Button className="text-white font-light text-sm" >Master Branch</Button>
-                <Button className="text-white font-light text-sm ml-2">Personal Collection</Button>
-            </ButtonGroup>
+            <div className="flex gap-2 items-center ">
+                <p className="text-gray-500 
+                text-lg font-extralight italic dark:text-gray-400 ">Filter by:</p>
+                <ToggleButtonGroup size="small">
+                    {/* onclick change the color of the button */}
+                    <ToggleButton value="all" sx={{
+                        color: branch === "all" ? "white" : "black",
+                        backgroundColor: branch === "all" ? "black" : "white",
+                        "&:hover": {
+                            backgroundColor: branch === "all" ? "gray" : "gray",
+                        }
+                    }}
+                    onClick={() => {
+                        setBranch("all");}}>all</ToggleButton>
+                    <ToggleButton 
+                    sx={{
+                        color: branch === "master" ? "white" : "black",
+                        backgroundColor: branch === "master" ? "black" : "white",
+                        "&:hover": {
+                            backgroundColor: branch === "master" ? "gray" : "gray",
+                        }
+                    }}
+
+                    value="master" onClick={() => {
+                        setBranch("master");
+                    }
+                    }>Master</ToggleButton>
+                    <ToggleButton
+                    sx={{
+                        color: branch === "personal" ? "white" : "black",
+                        backgroundColor: branch === "personal" ? "black" : "white",
+                        "&:hover": {
+                            backgroundColor: branch === "personal" ? "gray" : "gray",
+                        }
+                    }}
+                     value="personal" onClick={() => {
+                        setBranch("personal");}
+                    }>Personal
+                    </ToggleButton>
+                </ToggleButtonGroup>
+
+                {/* have a button on the right side for discussion */}
+                <div className="flex-grow"></div>
+                <div className="flex gap-2 items-center mr-5">
+                <Button size="small" color="amber">
+                    discussion
+                </Button>
+                </div>
+            </div>
             </div>
 
 
