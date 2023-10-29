@@ -8,7 +8,7 @@ import {
     const { title, content,id} = props;
 
     return (
-      <Card className="mt-6 w-64 h-64 m-4 bg-purple-200 hover:bg-purple-300" 
+      <Card className="mt-6 w-64 h-64 m-4 bg-gray-200 hover:bg-gray-300" 
       onClick={
         () => {
             window.location.href = `/lectureNote/${id}`
