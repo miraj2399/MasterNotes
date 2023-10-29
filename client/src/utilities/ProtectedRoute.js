@@ -6,8 +6,10 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import SettingsIcon from '@mui/icons-material/Settings';
 import GroupIcon from '@mui/icons-material/Group';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
-import LiveHelpIcon from '@mui/icons-material/LiveHelp';
+import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import GridViewIcon from '@mui/icons-material/GridView';
+import LogoutIcon from '@mui/icons-material/Logout';
+
 
 import { useState } from "react";
 import { styled } from '@mui/material/styles';
@@ -57,9 +59,21 @@ export default function ProtectedRoute() {
         <div style={{'margin-top': '15px', 'padding': '20px','padding-left': '25px'}}>
           < Button onClick={()=>{window.location.href='/settings'}}><SettingsIcon/>     Settings</Button>
         </div>
+        <div style={{'margin-top': '15px', 'padding': '20px','padding-left': '25px'}}>
+          < Button onClick={()=>{window.location.href='/notifications'}}><NotificationsNoneIcon/>     Notifications</Button>
+        </div>
+
+      
        
 
     </div>
+    <div style={{'position': 'absolute', 'bottom': '0', 'width': '100%'}}>
+      <div style={{'margin-top': '15px', 'padding': '20px','padding-left': '25px'}}>
+        < Button color="error" onClick={()=>{Cookies.remove('token'); window.location.href='/login'}}>
+          <LogoutIcon/>     Logout
+        </Button>
+      </div>
+      </div>
   </Drawer>
   <Main drawerOpen={drawerOpen}>
       { !drawerOpen && <Button onClick={handleDrawerToggle}><MenuIcon/></Button>}
