@@ -13,7 +13,7 @@ import PersonalSpaceSection from "./components/PersonalSpaceSection";
 import FAQSection from "./components/FAQSection";
 import PersonalNote from "./pages/PersonalNote";
 import EditPersonalNote from "./pages/EditPersonalNote";
-
+import Notifications from "./pages/Notifications";
 
 
 
@@ -48,6 +48,7 @@ function App() {
         </Route>
         <Route element={<ProtectedRoute/>}>
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/notifications" element={<Notifications />} />
           <Route path="/groups" element={<Groups />} />
           <Route path="/group/:id" element={<Group />} />
           <Route path="/spaces" element={<PersonalSpaceSection />} />
