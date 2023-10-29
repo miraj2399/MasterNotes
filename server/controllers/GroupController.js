@@ -4,6 +4,11 @@ const User = require('../models/UserModel');
 const LectureDate = require('../models/LectureDateModel');
 const Notification = require('../models/NotificationModel');
 const LectureNote = require('../models/LectureNoteModel');
+const Comment = require('../models/CommentModel');
+
+
+const isMember = require('../utils/IsMember');
+const getUser = require('../utils/GetUser');
 
 async function CreateGroupHandler(req, res) {
     const {name, courseNumber, courseTitle, instructor, location, startTime, endTime, startDate, endDate, weekdays, description, inviteOnly, dates} = req.body;
@@ -75,7 +80,6 @@ async function GetGroupByIdHandler (req,res){
         const notes = await LectureNote.find({
             '_id': { $in: group.notes}
         });
-
         group.notes = notes;
         res.status(200).json(group);
     }
@@ -292,9 +296,23 @@ async function GetGroupLectureNotesByIdHandler(req, res) {
        }
        // check if the user is a member of the group
        const group = await Group.findById(lectureNote.group);
-       if (group.members.includes(req.userId)){
-           return res.status(200).json(lectureNote);
-       }
+       const userIsMemberOfGroup = await isMember(req.userId, group._id);
+       const comments = await Comment.find({
+              '_id': { $in: lectureNote.comments},
+            }).populate({
+                path: "owner",
+                select: "firstName lastName"
+            });
+        lectureNote.comments = comments;
+
+         if (userIsMemberOfGroup){
+        
+            
+            lectureNote.owner = await getUser(lectureNote.owner);
+            return res.status(200).json(lectureNote);
+        }
+
+
          return res.status(401).json({message: "Unauthorized"});
     }
     catch (err) {
@@ -302,6 +320,37 @@ async function GetGroupLectureNotesByIdHandler(req, res) {
         return res.status(500).json({message: err.message});
     }
 }
+
+const CreateCommentHandler = async (req, res) => {
+    
+    const noteId = req.params.id
+    const userId = req.userId;
+    const note = await LectureNote.findById(noteId);
+    if (!note) {
+        return res.status(404).json({ message: "Note not found" });
+    }
+    const user = await User.findById(userId);
+    const member = await isMember(userId,note.group);
+    if (!member) {
+        return res.status(401).json({ message: "You are not a member of this group" });
+    }
+    const { content } = req.body;
+    try{
+        const newComment = await Comment.create({
+            note: noteId,
+            owner: userId,
+            content: content
+        });
+        await LectureNote.findByIdAndUpdate(noteId, {$push: {comments: [...note.comments, newComment._id]}});
+        return res.status(201).json(newComment);
+
+    }
+    catch(error){
+        res.status(500).json({ message: error.message });
+    }
+}
+
+
 
 
 module.exports = {
@@ -313,5 +362,6 @@ module.exports = {
     DeclineGroupInviteHandler,
     LeaveGroupHandler,
     CreateGroupLectureNoteHandler,
-    GetGroupLectureNotesByIdHandler
+    GetGroupLectureNotesByIdHandler,
+    CreateCommentHandler
 };

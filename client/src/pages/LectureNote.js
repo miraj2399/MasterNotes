@@ -1,27 +1,59 @@
-import { Link, useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { GetGroupLectureNotesByIdService } from "../services/GroupServices";
 import CircleIcon from "@mui/icons-material/Circle";
 import CommentIcon from "@mui/icons-material/Comment";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
-import ShareIcon from "@mui/icons-material/Share";
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import ImportExportIcon from "@mui/icons-material/ImportExport";
+import CollectionsIcon from '@mui/icons-material/Collections';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import Chip from '@mui/material/Chip';
+import CommentSection from "../components/CommentSection";
+
 
 import Markdown from "react-markdown";
-import { IconButton, Typography } from "@mui/material";
+import { Button, IconButton, Typography } from "@mui/material";
+
+
+const FocusModeButton = (props) => {
+  const { focusMode, setFocusMode } = props;
+  return (
+    <div className="flex gap-2 justify-center items-center" onClick={
+      () => setFocusMode(!focusMode)
+    }>
+      <CircleIcon sx={{ fontSize: 15, color: "green" }} />
+      <Typography variant="h6">Focus Mode</Typography>
+      </div>
+  );
+}
+
+
+
+
 
 export default function LectureNote() {
   const id = useParams().id;
   const [note, setNote] = useState({});
   const [focusMode, setFocusMode] = useState(false);
+  const [showMoreExpand, setShowMoreExpand] = useState(false);
+
+  const handleAddToPersonalBranch = () => {
+    // write the logic here
+    setShowMoreExpand(false);
+    }
+  
+  const handleAddToSpace = () => {
+    // write the logic here
+    setShowMoreExpand(false);
+    }
+
 
   useEffect(() => {
     GetGroupLectureNotesByIdService(id).then((data) => {
-      setNote({
-        title: data.content.split("\n")[0],
-        content: data.content.split("\n").slice(1).join("\n"),
-      });
+      setNote(data)
     });
   }, []);
   return focusMode ? (
@@ -34,10 +66,7 @@ export default function LectureNote() {
         <Typography variant="h6">Exit Focus Mode</Typography>
       </div>
 
-      <div className="mb-10">
-        <Markdown className={"prose-lg"}>{note.title}</Markdown>
-      </div>
-      <Markdown className={"prose-lg"}>{note.content}</Markdown>
+    <Markdown className={"prose-lg"}>{note.content}</Markdown>
     </div>
   ) : (
     <div className="grid md:grid-cols-6 gap-4 p-10">
@@ -48,28 +77,73 @@ export default function LectureNote() {
         <Markdown className={"prose-lg"}>{note.content}</Markdown>
       </div>
       <div className="md:col-span-2">
-        <div className="flex flex-col items-center justify-center gap-4">
-          <div
-            onClick={() => setFocusMode(!focusMode)}
-            className="flex gap-2 justify-center items-center"
-          >
-            <CircleIcon sx={{ fontSize: 15, color: "green" }} />
-            <Typography variant="h6">Focus Mode</Typography>
+        <div className="grid gap-2">
+        <FocusModeButton focusMode={focusMode} setFocusMode={setFocusMode} />
+    
+        <div className="flex gap-2 justify-center items-center m-2">
+          <div  className="flex justify-center items-center gap-2">
+          <PersonOutlineIcon />
+          {note.owner&& note.owner.firstName && note.owner.lastName ? `${note.owner.firstName} ${note.owner.lastName}` : "Anonymous"}
           </div>
-          <div className="flex gap-4 justify-center items-center">
-            <div className="flex gap-2 justify-center items-center">
-              <CommentIcon />
-              <Typography variant="body">Comments</Typography>
-            </div>
-            <div className="flex gap-2 justify-center items-center">
-              <ThumbUpIcon />
-              <Typography variant="body">Like</Typography>
-            </div>
-            <div className="flex gap-2 justify-center items-center">
-              <ThumbDownIcon />
-              <Typography variant="body">Dislike</Typography>
-            </div>
+
+          <div className="flex justify-center items-center gap-2">
+          <CalendarTodayIcon />
+          <p>{new Date(note.createdAt).toLocaleDateString()}</p>
+        </div>
+        </div>
+
+        {/* Make it a component  later */}
+        <div className="grid  grid-cols-4 gap-2 justify-center items-center">
+
+          <div class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">recitation1</div>
+          <div class="bg-gray-100 text-gray-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">tue</div>
+          <div class="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">section3</div>
+          <div class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Green</div>
+</div>
+
+        {/* Make it a component  later */}
+        <div className="flex gap-2 justify-center items-center">
+          <p>23</p>
+          <IconButton>
+            <ThumbUpIcon />
+          </IconButton>
+          <p>23</p>
+          <IconButton>
+            <ThumbDownIcon />
+          </IconButton>
+          <p>23</p>
+          <IconButton>
+            <CommentIcon />
+          </IconButton>
+
+          <IconButton>
+            <MoreVertIcon
+            onClick={() => setShowMoreExpand(!showMoreExpand)}
+            />
+          </IconButton>
+          {
+            showMoreExpand && (
+              // make them abosolute
+              <div className="bg-white rounded-md shadow-md p-2 flex flex-col gap-2">
+                <div className="flex gap-2 justify-center items-center">
+                  <Button variant="text" startIcon={<ImportExportIcon />}
+                  onClick={handleAddToPersonalBranch}
+                  >
+                    Add to Personal branch
+                  </Button>
+                </div>
+                <div className="flex gap-2 justify-center items-center">
+                  <Button variant="text" startIcon={<CollectionsIcon/>}
+                  onClick={handleAddToPersonalBranch}
+                  >
+                    Add to space
+                  </Button>
+                  </div>
+              </div>
+            )
+          }
           </div>
+        <CommentSection comments={note.comments} noteId={note._id}/>
         </div>
       </div>
     </div>

@@ -8,12 +8,14 @@ const {
   JoinGroupHandler,
   LeaveGroupHandler,
   CreateGroupLectureNoteHandler,
-  GetGroupLectureNotesByIdHandler
+  GetGroupLectureNotesByIdHandler,
+  CreateCommentHandler
 } = require("../controllers/GroupController");
 
 router.get("/", GetAllGroupsHandler);
 router.post("/", CreateGroupHandler);
 router.post("/notes", CreateGroupLectureNoteHandler);
+router.post("/notes/:id/comments", CreateCommentHandler);
 router.get("/notes/:id", GetGroupLectureNotesByIdHandler);
 router.post("/invite", CreateGroupInviteHandler);
 router.post("/decline/:id", DeclineGroupInviteHandler);
