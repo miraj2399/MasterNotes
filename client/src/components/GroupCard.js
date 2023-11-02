@@ -10,7 +10,7 @@ export default function GroupCard(props) {
     const group = props.group
     return (
 
-        <Card className="w-64 h-64 m-4 bg-green-100 hover:bg-green-300" onClick={
+        <Card className="w-128 h-64 m-4 bg-green-100 hover:bg-green-300" onClick={
             () => {
                 window.location.href = `/group/${group._id}`
             }

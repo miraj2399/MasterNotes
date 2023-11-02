@@ -155,7 +155,7 @@ export default function Group(){
                         </div>
                     </TimelineHeader>
                     <TimelineBody>
-                        <div className="grid sm:grid-cols-4 gap-2">
+                        <div className="grid sm:grid-cols-2 gap-2">
                         {notes && branch === "all" && notes.map((note) => {
                             if (note.date === date._id) {
                                 return (
