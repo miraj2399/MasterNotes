@@ -1,6 +1,10 @@
 import {  useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { GetGroupLectureNotesByIdService } from "../services/GroupServices";
+import { GetGroupLectureNotesByIdService,
+  DeleteGroupLectureNoteService,
+  UpvoteService,
+  DownvoteService
+ } from "../services/GroupServices";
 import CircleIcon from "@mui/icons-material/Circle";
 import CommentIcon from "@mui/icons-material/Comment";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
@@ -10,7 +14,8 @@ import ImportExportIcon from "@mui/icons-material/ImportExport";
 import CollectionsIcon from '@mui/icons-material/Collections';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
-import Chip from '@mui/material/Chip';
+import Edit from "@mui/icons-material/Edit";
+import Delete from "@mui/icons-material/Delete";
 import CommentSection from "../components/CommentSection";
 
 
@@ -49,6 +54,37 @@ export default function LectureNote() {
     // write the logic here
     setShowMoreExpand(false);
     }
+
+  const handleEditNote = () => {
+    setShowMoreExpand(false);
+    window.location.href = `/lectureNote/${id}/edit`;
+  }
+
+  const handleDeleteNote = () => {
+    setShowMoreExpand(false);
+    DeleteGroupLectureNoteService(id).then((data) => {
+      window.location.href = "/group/" + note.group;
+    })
+  }
+
+  const handleUpvote = () => {
+    UpvoteService(id).then((data) => {
+      window.location.reload();
+    }).catch((err) => {
+      console.log(err);
+    }
+    );
+  }
+
+  const handleDownvote = () => {
+    DownvoteService(id).then((data) => {
+      window.location.reload();
+    }).catch((err) => {
+      console.log(err);
+    }
+    );
+  }
+
 
 
   useEffect(() => {
@@ -103,18 +139,22 @@ export default function LectureNote() {
 
         {/* Make it a component  later */}
         <div className="flex gap-2 justify-center items-center">
-          <p>23</p>
-          <IconButton>
-            <ThumbUpIcon />
+          <p>{note.upvotes}</p>
+          <IconButton onClick={handleUpvote}>
+            {
+              note.upvoted ? <ThumbUpIcon color="primary" /> : <ThumbUpIcon />
+            }
           </IconButton>
-          <p>23</p>
-          <IconButton>
-            <ThumbDownIcon />
+          <p className="ml-8">{note.downvotes}</p>
+          <IconButton onClick={handleDownvote}>
+            {note.downvoted ? <ThumbDownIcon color="primary" /> : <ThumbDownIcon />}
           </IconButton>
-          <p>23</p>
+          
+          <p className="ml-8">{note.comments&& note.comments.length}</p>
           <IconButton>
             <CommentIcon />
           </IconButton>
+  
 
           <IconButton>
             <MoreVertIcon
@@ -134,11 +174,31 @@ export default function LectureNote() {
                 </div>
                 <div className="flex gap-2 justify-center items-center">
                   <Button variant="text" startIcon={<CollectionsIcon/>}
-                  onClick={handleAddToPersonalBranch}
+                  onClick={handleAddToSpace}
                   >
                     Add to space
                   </Button>
                   </div>
+              
+                   {note.owner && note.owner._id === localStorage.getItem("user_id") && 
+                (<>
+                  <div className="flex gap-2 justify-center items-center">
+                  <Button variant="text" startIcon={<Edit/>}
+                  onClick={handleEditNote}
+                  >
+                    Edit
+                  </Button>
+                  </div>
+                  <div className="flex gap-2 justify-center items-center">
+                  <Button variant="text" startIcon={<Delete/>}
+                  onClick={handleDeleteNote}
+                  >
+                    Delete
+                  </Button>
+                  </div>
+                </>
+                )}
+
               </div>
             )
           }

@@ -81,11 +81,12 @@ const groupSchema = new Schema({
         required: [true, "Description is required"],
         trim: true,
         minlength: 3,
-    },
-
-}, {
+    }
+},
+{
     timestamps: true,
 });
+
 
 const Group = mongoose.model("Group", groupSchema);
 module.exports = Group;

@@ -24,6 +24,35 @@ export default function Group(){
         })
     }, [])
 
+    useEffect(() => {
+        if (branch==="all") {
+            setNotes(group.notes);
+        }
+        // master branch contains most upvoted notes for each date 
+
+        else if (branch==="master") {
+            setBranch("master");
+            let masterNotes = [];
+            dates.forEach((date) => {
+                let max = -1;
+                let maxNote = {};
+                notes.forEach((note) => {
+                    console.log(note);
+                    console.log(note.upvotes.length)
+                    if (note.date === date._id && note.upvotes.length> max) {
+                        max = note.upvotes.length;
+                        maxNote = note;
+                    }
+                })
+                if (maxNote._id) {
+                    masterNotes.push(maxNote);
+                }
+            })
+            setNotes(masterNotes);
+        }
+
+    }, [branch])
+
 
     return (
         <div className="grid">
