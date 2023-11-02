@@ -4,6 +4,7 @@ const LectureDate = require("../models/LectureDateModel");
 const Notification = require("../models/NotificationModel");
 const LectureNote = require("../models/LectureNoteModel");
 const Comment = require("../models/CommentModel");
+const PersonalBranch = require("../models/PersonalBranchModel");
 
 const isMember = require("../utils/IsMember");
 const getUser = require("../utils/GetUser");
@@ -542,6 +543,62 @@ const GetAllDatesByGroupIdHandler = async (req, res) => {
   }
 };
 
+const GetPersonBranchHandler = async (req, res) => {
+    try {
+        const group = await Group.findById(req.params.id);
+        if (!group) {
+        return res.status(404).json({ message: "Group not found" });
+        }
+        const noteref = await PersonalBranch.findOne({user: req.userId, group: req.params.id});
+        if (!noteref) {
+            const newNoteRef = await PersonalBranch.create({
+                user: req.userId,
+                group: req.params.id,
+                notes: [],
+            });
+            return res.status(201).json(newNoteRef);
+        }
+        return res.status(200).json(noteref);
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: err.message });
+    }
+    }
+
+const AddNoteToPersonalBranchHandler = async (req, res) => {
+   const noteId = req.params.id
+    console.log(req.body);
+    try {
+        const note = await LectureNote.findById(noteId);
+        if (!note) {
+        return res.status(404).json({ message: "Note not found" });
+        }
+        const groupId = note.group;
+        const group = await Group.findById(groupId);
+        if (!group) {
+        return res.status(404).json({ message: "Group not found" });
+        }
+        const noteref = await PersonalBranch.findOne({user: req.userId, group: groupId});
+        if (!noteref) {
+            const newNoteRef = await PersonalBranch.create({
+                user: req.userId,
+                group: groupId,
+                notes: [noteId],
+            });
+            return res.status(201).json(newNoteRef);
+        }
+        else {
+            await noteref.updateOne({$push: {notes: noteId}});
+            return res.status(200).json(noteref);
+        }
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: err.message });
+    }
+    }
+
+
+
 module.exports = {
   CreateGroupHandler,
   GetAllGroupsHandler,
@@ -558,4 +615,6 @@ module.exports = {
   GetAllDatesByGroupIdHandler,
   UpvoteHandler,
 DownvoteHandler,
+GetPersonBranchHandler,
+AddNoteToPersonalBranchHandler,
 };

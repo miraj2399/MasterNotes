@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import { GetGroupLectureNotesByIdService,
   DeleteGroupLectureNoteService,
   UpvoteService,
-  DownvoteService
+  DownvoteService,
+  AddNoteToPersonalBranchService
  } from "../services/GroupServices";
 import CircleIcon from "@mui/icons-material/Circle";
 import CommentIcon from "@mui/icons-material/Comment";
@@ -46,7 +47,11 @@ export default function LectureNote() {
   const [showMoreExpand, setShowMoreExpand] = useState(false);
 
   const handleAddToPersonalBranch = () => {
-    // write the logic here
+    
+    AddNoteToPersonalBranchService(id).then((data) => {
+      window.location.href = "/group/" + note.group;
+    })
+
     setShowMoreExpand(false);
     }
   

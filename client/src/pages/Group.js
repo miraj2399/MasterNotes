@@ -4,11 +4,13 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import { useParams } from "react-router-dom";
-import { GetGroupByIdService, LeaveGroupService } from "../services/GroupServices";
+import { GetGroupByIdService, LeaveGroupService ,GetPersonBranchService
+} from "../services/GroupServices";
 import { useEffect, useState } from "react";
 import InviteJoinGroup from "../components/InviteJoinGroup";
 import  LectureNotePreview  from "../components/LectureNotePreview";
 import { Link } from "react-router-dom";
+
 
 export default function Group(){
     const {id} = useParams();
@@ -16,12 +18,19 @@ export default function Group(){
     const [dates, setDates] = useState([]);
     const [notes, setNotes] = useState([{}]);
     const [branch, setBranch] = useState("all");
+    const [personalBranch, setPersonalBranch] = useState([]);
+    const [personalNotes, setPersonalNotes] = useState([]);
+    const [masterNotes, setMasterNotes] = useState([]);
     useEffect(() => {
         GetGroupByIdService(id).then((data) => {
             setGroup(data);
             setDates(data.dates);
             setNotes(data.notes);
         })
+        GetPersonBranchService(id).then((data) => {
+            setPersonalBranch(data);
+        })
+
     }, [])
 
     useEffect(() => {
@@ -48,7 +57,17 @@ export default function Group(){
                     masterNotes.push(maxNote);
                 }
             })
-            setNotes(masterNotes);
+            setMasterNotes(masterNotes);
+        }
+         else if (branch==="personal")  {
+            // personal branch contains noteid of notes that user has added to personal branch
+            let personalNotes = [];
+            personalBranch.notes.forEach((noteID) => {
+                personalNotes.push(notes.find((note) => note._id === noteID));
+            })
+           
+            setPersonalNotes(personalNotes);
+
         }
 
     }, [branch])
@@ -137,16 +156,47 @@ export default function Group(){
                     </TimelineHeader>
                     <TimelineBody>
                         <div className="grid sm:grid-cols-4 gap-2">
-                        {notes &&
-                        notes.map((note) => {
+                        {notes && branch === "all" && notes.map((note) => {
                             if (note.date === date._id) {
-                                return <LectureNotePreview key={note._id} 
+                                return (
+                                    <LectureNotePreview key={note._id} 
                                 content = { note.content.split("\n").slice(1).join("\n")}
                                 title = {note.content.split("\n")[0]}
                                 id = {note._id}
                                 />
+                                )
                             }
-                        })}
+                        }
+                        )}
+                        {masterNotes&& branch === "master" && masterNotes.map((note) => {
+                            if (note.date === date._id) {
+                                return (
+                                    
+                                        <LectureNotePreview key={note._id} 
+                                content = { note.content.split("\n").slice(1).join("\n")}
+                                title = {note.content.split("\n")[0]}
+                                id = {note._id}
+                                />
+                                
+                                )
+                            }
+                        }
+                        )}
+
+                        {personalNotes && branch === "personal" && personalNotes.map((note) => {
+                            if (note.date === date._id) {
+                                return (
+                                    
+                                       <LectureNotePreview key={note._id} 
+                                content = { note.content.split("\n").slice(1).join("\n")}
+                                title = {note.content.split("\n")[0]}
+                                id = {note._id}
+                                />
+                                
+                                )
+                            }
+                        }
+                        )}
                         {!notes && <div>No notes yet</div>}
                         </div>
                     </TimelineBody>

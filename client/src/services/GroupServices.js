@@ -136,6 +136,26 @@ async function DownvoteService (id) {
     }
 }
 
+async function GetPersonBranchService (id) {
+    try {
+        const response = await AxiosInstance.get(`/groups/branch/${id}`);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function AddNoteToPersonalBranchService (noteId) {
+    try {
+        const response = await AxiosInstance.post(`/groups/branch/${noteId}`);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+
 
 
 
@@ -158,5 +178,7 @@ export {
     GetAllDatesByGroupIdService,
     UpvoteService,
     DownvoteService,
+    GetPersonBranchService,
+    AddNoteToPersonalBranchService
 }
 

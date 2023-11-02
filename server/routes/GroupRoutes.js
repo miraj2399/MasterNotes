@@ -15,6 +15,9 @@ const {
   GetAllDatesByGroupIdHandler,
   UpvoteHandler,
   DownvoteHandler,
+  GetPersonBranchHandler,
+  AddNoteToPersonalBranchHandler
+
 } = require("../controllers/GroupController");
 
 router.get("/", GetAllGroupsHandler);
@@ -24,6 +27,8 @@ router.delete("/notes/:id", DeleteLectureNoteHandler);
 router.put("/notes/:id", EditLectureNoteHandler)
 router.post("/notes/:id/comments", CreateCommentHandler);
 router.get("/notes/:id", GetGroupLectureNotesByIdHandler);
+router.get("/branch/:id", GetPersonBranchHandler);
+router.post("/branch/:id", AddNoteToPersonalBranchHandler)
 router.post("/notes/:id/upvote", UpvoteHandler);
 router.post("/notes/:id/downvote", DownvoteHandler);
 router.post("/invite", CreateGroupInviteHandler);
