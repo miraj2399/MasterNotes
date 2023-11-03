@@ -534,8 +534,6 @@ const DownvoteHandler = async (req, res) => {
 const GetAllDatesByGroupIdHandler = async (req, res) => {
   try {
     const dates = await LectureDate.find({ group: req.params.id });
-    console.log(req.params.id);
-    console.log(dates);
     res.status(200).json(dates);
   } catch (err) {
     console.log(err);
@@ -567,7 +565,6 @@ const GetPersonBranchHandler = async (req, res) => {
 
 const AddNoteToPersonalBranchHandler = async (req, res) => {
    const noteId = req.params.id
-    console.log(req.body);
     try {
         const note = await LectureNote.findById(noteId);
         if (!note) {
@@ -588,8 +585,13 @@ const AddNoteToPersonalBranchHandler = async (req, res) => {
             return res.status(201).json(newNoteRef);
         }
         else {
+            // check if the note is already in the branch
+            const isNoteInBranch = noteref.notes.includes(noteId);
+            if (isNoteInBranch) {
+                return res.status(200).json({message: "Note already in branch"});
+            }
             await noteref.updateOne({$push: {notes: noteId}});
-            return res.status(200).json(noteref);
+            return res.status(200).json({message: "Note added to branch"});
         }
     } catch (err) {
         console.log(err);

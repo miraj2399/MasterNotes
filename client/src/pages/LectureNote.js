@@ -4,8 +4,10 @@ import { GetGroupLectureNotesByIdService,
   DeleteGroupLectureNoteService,
   UpvoteService,
   DownvoteService,
-  AddNoteToPersonalBranchService
+  AddNoteToPersonalBranchService,
  } from "../services/GroupServices";
+
+ import { CreateNoteService } from "../services/SpaceService";
 import CircleIcon from "@mui/icons-material/Circle";
 import CommentIcon from "@mui/icons-material/Comment";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
@@ -18,10 +20,12 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import Edit from "@mui/icons-material/Edit";
 import Delete from "@mui/icons-material/Delete";
 import CommentSection from "../components/CommentSection";
+import {Snackbar} from "@mui/material";
 
 
 import Markdown from "react-markdown";
 import { Button, IconButton, Typography } from "@mui/material";
+
 
 
 const FocusModeButton = (props) => {
@@ -45,18 +49,21 @@ export default function LectureNote() {
   const [note, setNote] = useState({});
   const [focusMode, setFocusMode] = useState(false);
   const [showMoreExpand, setShowMoreExpand] = useState(false);
+  const [message, setMessage] = useState("");
 
   const handleAddToPersonalBranch = () => {
     
     AddNoteToPersonalBranchService(id).then((data) => {
-      window.location.href = "/group/" + note.group;
+      setMessage(data.message);
     })
 
     setShowMoreExpand(false);
     }
   
   const handleAddToSpace = () => {
-    // write the logic here
+    CreateNoteService({content:note.content}).then((data) => {
+      setMessage("Note added to space");
+    })
     setShowMoreExpand(false);
     }
 
@@ -211,6 +218,13 @@ export default function LectureNote() {
         <CommentSection comments={note.comments} noteId={note._id}/>
         </div>
       </div>
+      <Snackbar
+        open={message !== ""}
+        autoHideDuration={6000}
+        onClose={() => setMessage("")}
+        message={message}
+        />
     </div>
+
   );
 }
