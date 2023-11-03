@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { Textarea } from "@material-tailwind/react";
 import Markdown from "react-markdown";
-import { Grid } from "@mui/material";
+import { Chip, Grid } from "@mui/material";
 import { Autocomplete, TextField } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { GetGroupByIdService, CreateGroupLectureNoteService} from "../services/GroupServices";
@@ -50,6 +50,7 @@ export default function CreateGroupNote() {
   const [date, setDate] = useState("");
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
+  const [tags, setTags] = useState([]);
   const { group: groupId } = useParams();
   useEffect(() => {
     GetGroupByIdService(groupId).then((data) => {
@@ -108,7 +109,7 @@ const customStyles = {
             const lectureDate = group.dates.find((d) => {
                 return new Date(d.date).toDateString() === date;
             });
-            CreateGroupLectureNoteService(group._id, lectureDate._id, text).then((data) => {
+            CreateGroupLectureNoteService(group._id, lectureDate._id, text, tags).then((data) => {
                 window.location.href = `/group/${group._id}`;
             });
         };
@@ -127,9 +128,31 @@ const customStyles = {
           )}
             onChange={(e, value) => {
                 setDate(value);
-                console.log(value);
             }}
         />
+        
+        
+        <Autocomplete
+          id="tags-outlined"
+          options={group.tags}
+          style={{ minWidth: 200 }}
+
+          getOptionLabel={(option) => option.name}
+          filterSelectedOptions
+          renderInput={(params) => (
+            <TextField {...params} variant="filled" placeholder="Tags" />
+          )}
+          onChange={(e, value) => {
+            // if tag already exists, remove it
+            if (tags.find((tag) => tag._id === value._id)) {
+              setTags(tags.filter((tag) => tag._id !== value._id));
+            } else {
+              setTags([...tags, value]);
+            }
+          }}
+          
+        />
+
         <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick={handleCancel}>
           Cancel
         </button>
@@ -181,6 +204,14 @@ const customStyles = {
           * [x] done
           </div>
           </Modal>
+      </div>
+      <div className="flex justify-end gap-2">
+        {tags.map((tag) => (
+          <Chip
+            label={tag.name}
+            sx={{ background: tag.color, color: "white" }}
+          />
+        ))}
       </div>
       </>
     );

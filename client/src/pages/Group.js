@@ -9,7 +9,10 @@ import { GetGroupByIdService, LeaveGroupService ,GetPersonBranchService
 import { useEffect, useState } from "react";
 import InviteJoinGroup from "../components/InviteJoinGroup";
 import  LectureNotePreview  from "../components/LectureNotePreview";
+import Icon from '@mui/material/Icon';
 import { Link } from "react-router-dom";
+import Settings from "@mui/icons-material/Settings";
+import { IconButton } from "@mui/material";
 
 
 export default function Group(){
@@ -132,7 +135,15 @@ export default function Group(){
 
                 {/* have a button on the right side for discussion */}
                 <div className="flex-grow"></div>
-                <div className="flex gap-2 items-center mr-5">
+                <div className="flex gap-2 items-center mr-5 p-5">
+                <IconButton
+                onClick={() => {
+                    window.location.href = `/groupsettings/${group._id}`;
+                }}
+                >
+                    <Settings/>
+                </IconButton>
+                
                 <Button size="small" color="amber">
                     discussion
                 </Button>

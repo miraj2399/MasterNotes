@@ -20,7 +20,7 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import Edit from "@mui/icons-material/Edit";
 import Delete from "@mui/icons-material/Delete";
 import CommentSection from "../components/CommentSection";
-import {Snackbar} from "@mui/material";
+import {Chip, Snackbar} from "@mui/material";
 
 
 import Markdown from "react-markdown";
@@ -141,12 +141,15 @@ export default function LectureNote() {
         </div>
 
         {/* Make it a component  later */}
-        <div className="grid  grid-cols-4 gap-2 justify-center items-center">
-
-          <div class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">recitation1</div>
-          <div class="bg-gray-100 text-gray-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">tue</div>
-          <div class="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">section3</div>
-          <div class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Green</div>
+        <div className="flex  gap-2 justify-center items-center">
+    {
+      note.tags && note.tags.map((tag) => (
+        <div key={tag}>
+          <Chip label={tag.name} sx={{background: tag.color, color:"white" }}/>
+        </div>
+      ))
+    }
+          
 </div>
 
         {/* Make it a component  later */}

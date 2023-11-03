@@ -15,6 +15,7 @@ import PersonalNote from "./pages/PersonalNote";
 import EditPersonalNote from "./pages/EditPersonalNote";
 import Notifications from "./pages/Notifications";
 import EditLectureNote from "./pages/EditLectureNote";
+import GroupSettings from "./pages/GroupSettings";
 
 
 
@@ -62,6 +63,7 @@ function App() {
           <Route path="/lectureNote/:id/edit" element={<EditLectureNote />} />
           <Route path="/personalNote/:id" element={<PersonalNote />} />
           <Route path="/personalNote/:id/edit" element={<EditPersonalNote />} />
+          <Route path="/groupSettings/:id" element={<GroupSettings />} />
 
         </Route>
       </Routes>

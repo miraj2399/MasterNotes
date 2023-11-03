@@ -63,9 +63,10 @@ async function DeclineGroupInviteService (groupId) {
     }
 }
 
-async function CreateGroupLectureNoteService (group, date, content) {
+async function CreateGroupLectureNoteService (group, date, content, tags) {
+    tags = tags.map((tag) => tag._id);
     try {
-        const response = await AxiosInstance.post("/groups/notes", {group,date,content});
+        const response = await AxiosInstance.post("/groups/notes", {group,date,content, tags});
         return response.data;
     } catch (error) {
         console.log(error);
@@ -155,6 +156,26 @@ async function AddNoteToPersonalBranchService (noteId) {
 }
 
 
+async function CreateTagsService (id, tags) {
+    try {
+        const response = await AxiosInstance.post(`/groups/tags/${id}`, {tags});
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function DeleteTagService (id, tagId) {
+    try {
+        const response = await AxiosInstance.delete(`/groups/tags/${id}/${tagId}`);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+
 
 
 
@@ -179,6 +200,8 @@ export {
     UpvoteService,
     DownvoteService,
     GetPersonBranchService,
-    AddNoteToPersonalBranchService
+    AddNoteToPersonalBranchService,
+    CreateTagsService,
+    DeleteTagService
 }
 
