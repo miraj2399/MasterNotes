@@ -15,6 +15,8 @@ app.use ('/users',  require('./routes/UserRoutes'));
 app.use ('/groups',auth, require('./routes/GroupRoutes'));
 app.use ('/spaces',auth, require('./routes/SpaceRoutes'));
 app.use ('/notifications',auth, require('./routes/NotificationRoute'));
+app.use ('/discussions',auth, require('./routes/DiscussionRoutes'));
+
 
 const connection = mongoose.connect(process.env.DATABASE_URL);
 
