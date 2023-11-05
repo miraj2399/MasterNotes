@@ -4,7 +4,8 @@ const Schema = mongoose.Schema;
 const CommentSchema = new Schema({
     note: {
         type: Schema.Types.ObjectId,
-        ref: 'Note'
+        ref: 'Note',
+        required: false
     },
     owner: {
         type: Schema.Types.ObjectId,
@@ -16,6 +17,10 @@ const CommentSchema = new Schema({
     },
     ownerName: {
         type: String
+    },
+    discussionPost: {
+        type: Schema.Types.ObjectId,
+        ref: 'DiscussionPost'
     },
 }, { timestamps: true });
 

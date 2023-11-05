@@ -86,6 +86,11 @@ const groupSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Tag",
     }, ],
+    discussions: [{
+        type: Schema.Types.ObjectId,
+        default: [],
+        ref: "DiscussionPost",
+    }, ],
 },
 {
     timestamps: true,
