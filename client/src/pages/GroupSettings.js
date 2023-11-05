@@ -43,10 +43,10 @@ export default function GroupSettings() {
                             color="red"
                             onClick={() => {
                                 DeleteTagService(id, tag._id).then((data) => {
-                                    setMessage(data.message);
                                     setOpen(true);
-                                    window.location.reload();
+                                    setMessage(data.message);
                                 });
+                                window.location.reload();
                             }}
                             className="px-6 py-2 text-white bg-red-500 hover:bg-red-600 rounded-md">
                             Delete

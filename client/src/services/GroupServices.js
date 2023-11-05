@@ -169,7 +169,8 @@ async function CreateTagsService (id, tag) {
 
 async function DeleteTagService (id, tagId) {
     try {
-        const response = await AxiosInstance.delete(`/groups/tags/${id}/${tagId}`);
+       
+        const response = await AxiosInstance.delete(`/groups/${id}/tags/${tagId}`);
         return response.data;
     } catch (error) {
         console.log(error);
