@@ -1,6 +1,13 @@
 import {  useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { GetGroupLectureNotesByIdService } from "../services/GroupServices";
+import { GetGroupLectureNotesByIdService,
+  DeleteGroupLectureNoteService,
+  UpvoteService,
+  DownvoteService,
+  AddNoteToPersonalBranchService,
+ } from "../services/GroupServices";
+
+ import { CreateNoteService } from "../services/SpaceService";
 import CircleIcon from "@mui/icons-material/Circle";
 import CommentIcon from "@mui/icons-material/Comment";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
@@ -10,12 +17,15 @@ import ImportExportIcon from "@mui/icons-material/ImportExport";
 import CollectionsIcon from '@mui/icons-material/Collections';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
-import Chip from '@mui/material/Chip';
+import Edit from "@mui/icons-material/Edit";
+import Delete from "@mui/icons-material/Delete";
 import CommentSection from "../components/CommentSection";
+import {Chip, Snackbar} from "@mui/material";
 
 
 import Markdown from "react-markdown";
 import { Button, IconButton, Typography } from "@mui/material";
+
 
 
 const FocusModeButton = (props) => {
@@ -39,16 +49,54 @@ export default function LectureNote() {
   const [note, setNote] = useState({});
   const [focusMode, setFocusMode] = useState(false);
   const [showMoreExpand, setShowMoreExpand] = useState(false);
+  const [message, setMessage] = useState("");
 
   const handleAddToPersonalBranch = () => {
-    // write the logic here
+    
+    AddNoteToPersonalBranchService(id).then((data) => {
+      setMessage(data.message);
+    })
+
     setShowMoreExpand(false);
     }
   
   const handleAddToSpace = () => {
-    // write the logic here
+    CreateNoteService({content:note.content}).then((data) => {
+      setMessage("Note added to space");
+    })
     setShowMoreExpand(false);
     }
+
+  const handleEditNote = () => {
+    setShowMoreExpand(false);
+    window.location.href = `/lectureNote/${id}/edit`;
+  }
+
+  const handleDeleteNote = () => {
+    setShowMoreExpand(false);
+    DeleteGroupLectureNoteService(id).then((data) => {
+      window.location.href = "/group/" + note.group;
+    })
+  }
+
+  const handleUpvote = () => {
+    UpvoteService(id).then((data) => {
+      window.location.reload();
+    }).catch((err) => {
+      console.log(err);
+    }
+    );
+  }
+
+  const handleDownvote = () => {
+    DownvoteService(id).then((data) => {
+      window.location.reload();
+    }).catch((err) => {
+      console.log(err);
+    }
+    );
+  }
+
 
 
   useEffect(() => {
@@ -93,28 +141,35 @@ export default function LectureNote() {
         </div>
 
         {/* Make it a component  later */}
-        <div className="grid  grid-cols-4 gap-2 justify-center items-center">
-
-          <div class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">recitation1</div>
-          <div class="bg-gray-100 text-gray-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">tue</div>
-          <div class="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">section3</div>
-          <div class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Green</div>
+        <div className="flex  gap-2 justify-center items-center">
+    {
+      note.tags && note.tags.map((tag) => (
+        <div key={tag}>
+          <Chip label={tag.name} sx={{background: tag.color, color:"white" }}/>
+        </div>
+      ))
+    }
+          
 </div>
 
         {/* Make it a component  later */}
         <div className="flex gap-2 justify-center items-center">
-          <p>23</p>
-          <IconButton>
-            <ThumbUpIcon />
+          <p>{note.upvotes}</p>
+          <IconButton onClick={handleUpvote}>
+            {
+              note.upvoted ? <ThumbUpIcon color="primary" /> : <ThumbUpIcon />
+            }
           </IconButton>
-          <p>23</p>
-          <IconButton>
-            <ThumbDownIcon />
+          <p className="ml-8">{note.downvotes}</p>
+          <IconButton onClick={handleDownvote}>
+            {note.downvoted ? <ThumbDownIcon color="primary" /> : <ThumbDownIcon />}
           </IconButton>
-          <p>23</p>
+          
+          <p className="ml-8">{note.comments&& note.comments.length}</p>
           <IconButton>
             <CommentIcon />
           </IconButton>
+  
 
           <IconButton>
             <MoreVertIcon
@@ -134,11 +189,31 @@ export default function LectureNote() {
                 </div>
                 <div className="flex gap-2 justify-center items-center">
                   <Button variant="text" startIcon={<CollectionsIcon/>}
-                  onClick={handleAddToPersonalBranch}
+                  onClick={handleAddToSpace}
                   >
                     Add to space
                   </Button>
                   </div>
+              
+                   {note.owner && note.owner._id === localStorage.getItem("user_id") && 
+                (<>
+                  <div className="flex gap-2 justify-center items-center">
+                  <Button variant="text" startIcon={<Edit/>}
+                  onClick={handleEditNote}
+                  >
+                    Edit
+                  </Button>
+                  </div>
+                  <div className="flex gap-2 justify-center items-center">
+                  <Button variant="text" startIcon={<Delete/>}
+                  onClick={handleDeleteNote}
+                  >
+                    Delete
+                  </Button>
+                  </div>
+                </>
+                )}
+
               </div>
             )
           }
@@ -146,6 +221,13 @@ export default function LectureNote() {
         <CommentSection comments={note.comments} noteId={note._id}/>
         </div>
       </div>
+      <Snackbar
+        open={message !== ""}
+        autoHideDuration={6000}
+        onClose={() => setMessage("")}
+        message={message}
+        />
     </div>
+
   );
 }

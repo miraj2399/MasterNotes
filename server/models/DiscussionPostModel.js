@@ -1,22 +1,23 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const lectureNoteSchema = new Schema({
+const discussionPostSchema = new Schema({
     group: {
         type: Schema.Types.ObjectId,
         ref: "Group",
         required: [true, "Group is required"],
     },
-    date: {
-        type: Schema.Types.ObjectId,
-        ref: "LectureDate",
-        required: [true, "Date is required"],
+    title: {
+        type: String,
+        required: [true, "Title is required"],
+        trim: true,
+        minlength: 3,
     },
     content: {
         type: String,
-        required: [true, "Note is required"],
+        required: [true, "Content is required"],
         trim: true,
-        minlength: 20,
+        minlength: 3,
     },
     owner: {
         type: Schema.Types.ObjectId,
@@ -33,14 +34,10 @@ const lectureNoteSchema = new Schema({
     downvotes: [{
         type: Schema.Types.ObjectId,
         ref: "User",
-    }, ],
-    tags: [{
-        type: Schema.Types.ObjectId,
-        ref: "Tag",
-    }, ],
+    }, ]
 }, {
     timestamps: true,
 });
 
-const LectureNote = mongoose.model("LectureNote", lectureNoteSchema);
-module.exports = LectureNote;
+const DiscussionPost = mongoose.model("DiscussionPost", discussionPostSchema);
+module.exports = DiscussionPost;

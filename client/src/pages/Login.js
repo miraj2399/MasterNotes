@@ -32,6 +32,10 @@ export default function Login() {
     }
     LoginService(data).then((res) => {
       Cookies.set("token", res.data.token);
+      localStorage.setItem("user_id", res.data.user_id);
+      localStorage.setItem("email", res.data.email);
+      localStorage.setItem("firstName", res.data.firstName);
+      localStorage.setItem("lastName", res.data.lastName);
       setOpen(true);
       setMessage("User Logged In");
       window.location.href = "/dashboard";

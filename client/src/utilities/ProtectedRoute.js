@@ -11,6 +11,7 @@ import GridViewIcon from '@mui/icons-material/GridView';
 import LogoutIcon from '@mui/icons-material/Logout';
 
 
+
 import { useState } from "react";
 import { styled } from '@mui/material/styles';
 import { Box, Button, Drawer} from "@mui/material";
@@ -40,6 +41,7 @@ export default function ProtectedRoute() {
   return (
     <>
     <Drawer variant="persistent" open={drawerOpen} sx={{width:drawerWidth, flexShrink:0, '& .MuiDrawer-paper':{width:drawerWidth, boxSizing:'border-box'}}}>
+
     <div style={{'text-align': 'left', marginTop:"10px"}}>
           <div className="flex justify-center mb-10">
         <div style={{'text-align': 'center'}}><Button onClick={handleDrawerToggle}><ArrowBackIosIcon/></Button> </div>
@@ -47,6 +49,7 @@ export default function ProtectedRoute() {
          
          </div>
         {/* Here goes all the tabs (eg. Dashboard, Group, Space, Settings) */}
+        
         <div style={{'margin-top': '20px', 'padding': '25px'}}>
           < Button onClick={()=>{window.location.href='/dashboard'}}><GridViewIcon/>     Dashboard</Button>
         </div>
@@ -68,6 +71,9 @@ export default function ProtectedRoute() {
 
     </div>
     <div style={{'position': 'absolute', 'bottom': '0', 'width': '100%'}}>
+    <div className="flex flex-row gap-2  ml-10">
+          <p className="text-blue-700">{localStorage.getItem("firstName")} {localStorage.getItem("lastName")}</p>
+        </div>
       <div style={{'margin-top': '15px', 'padding': '20px','padding-left': '25px'}}>
         < Button color="error" onClick={()=>{Cookies.remove('token'); window.location.href='/login'}}>
           <LogoutIcon/>     Logout

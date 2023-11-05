@@ -31,7 +31,13 @@ async function LoginHandler(req, res){
         if (await bcrypt.compare(password, user.password)) {
             const token = GenerateToken(user);
             console.log(token);
-            res.status(200).json({token: token})
+            res.status(200).json({
+                token: token,
+                user_id: user._id,
+                email: user.email,
+                firstName: user.firstName,
+                lastName: user.lastName
+            })
 
         }
         else {
