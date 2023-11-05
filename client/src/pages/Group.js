@@ -4,11 +4,16 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import { useParams } from "react-router-dom";
-import { GetGroupByIdService, LeaveGroupService } from "../services/GroupServices";
+import { GetGroupByIdService, LeaveGroupService ,GetPersonBranchService
+} from "../services/GroupServices";
 import { useEffect, useState } from "react";
 import InviteJoinGroup from "../components/InviteJoinGroup";
 import  LectureNotePreview  from "../components/LectureNotePreview";
+import Icon from '@mui/material/Icon';
 import { Link } from "react-router-dom";
+import Settings from "@mui/icons-material/Settings";
+import { IconButton } from "@mui/material";
+
 
 export default function Group(){
     const {id} = useParams();
@@ -16,13 +21,59 @@ export default function Group(){
     const [dates, setDates] = useState([]);
     const [notes, setNotes] = useState([{}]);
     const [branch, setBranch] = useState("all");
+    const [personalBranch, setPersonalBranch] = useState([]);
+    const [personalNotes, setPersonalNotes] = useState([]);
+    const [masterNotes, setMasterNotes] = useState([]);
     useEffect(() => {
         GetGroupByIdService(id).then((data) => {
             setGroup(data);
             setDates(data.dates);
             setNotes(data.notes);
         })
+        GetPersonBranchService(id).then((data) => {
+            setPersonalBranch(data);
+        })
+
     }, [])
+
+    useEffect(() => {
+        if (branch==="all") {
+            setNotes(group.notes);
+        }
+        // master branch contains most upvoted notes for each date 
+
+        else if (branch==="master") {
+            setBranch("master");
+            let masterNotes = [];
+            dates.forEach((date) => {
+                let max = -1;
+                let maxNote = {};
+                notes.forEach((note) => {
+                    console.log(note);
+                    console.log(note.upvotes.length)
+                    if (note.date === date._id && note.upvotes.length> max) {
+                        max = note.upvotes.length;
+                        maxNote = note;
+                    }
+                })
+                if (maxNote._id) {
+                    masterNotes.push(maxNote);
+                }
+            })
+            setMasterNotes(masterNotes);
+        }
+         else if (branch==="personal")  {
+            // personal branch contains noteid of notes that user has added to personal branch
+            let personalNotes = [];
+            personalBranch.notes.forEach((noteID) => {
+                personalNotes.push(notes.find((note) => note._id === noteID));
+            })
+           
+            setPersonalNotes(personalNotes);
+
+        }
+
+    }, [branch])
 
 
     return (
@@ -84,7 +135,15 @@ export default function Group(){
 
                 {/* have a button on the right side for discussion */}
                 <div className="flex-grow"></div>
-                <div className="flex gap-2 items-center mr-5">
+                <div className="flex gap-2 items-center mr-5 p-5">
+                <IconButton
+                onClick={() => {
+                    window.location.href = `/groupsettings/${group._id}`;
+                }}
+                >
+                    <Settings/>
+                </IconButton>
+                
                 <Button size="small" color="amber">
                     discussion
                 </Button>
@@ -107,17 +166,48 @@ export default function Group(){
                         </div>
                     </TimelineHeader>
                     <TimelineBody>
-                        <div className="grid sm:grid-cols-4 gap-2">
-                        {notes &&
-                        notes.map((note) => {
+                        <div className="grid sm:grid-cols-2 gap-2">
+                        {notes && branch === "all" && notes.map((note) => {
                             if (note.date === date._id) {
-                                return <LectureNotePreview key={note._id} 
+                                return (
+                                    <LectureNotePreview key={note._id} 
                                 content = { note.content.split("\n").slice(1).join("\n")}
                                 title = {note.content.split("\n")[0]}
                                 id = {note._id}
                                 />
+                                )
                             }
-                        })}
+                        }
+                        )}
+                        {masterNotes&& branch === "master" && masterNotes.map((note) => {
+                            if (note.date === date._id) {
+                                return (
+                                    
+                                        <LectureNotePreview key={note._id} 
+                                content = { note.content.split("\n").slice(1).join("\n")}
+                                title = {note.content.split("\n")[0]}
+                                id = {note._id}
+                                />
+                                
+                                )
+                            }
+                        }
+                        )}
+
+                        {personalNotes && branch === "personal" && personalNotes.map((note) => {
+                            if (note.date === date._id) {
+                                return (
+                                    
+                                       <LectureNotePreview key={note._id} 
+                                content = { note.content.split("\n").slice(1).join("\n")}
+                                title = {note.content.split("\n")[0]}
+                                id = {note._id}
+                                />
+                                
+                                )
+                            }
+                        }
+                        )}
                         {!notes && <div>No notes yet</div>}
                         </div>
                     </TimelineBody>

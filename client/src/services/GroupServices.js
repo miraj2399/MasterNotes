@@ -63,14 +63,34 @@ async function DeclineGroupInviteService (groupId) {
     }
 }
 
-async function CreateGroupLectureNoteService (group, date, content) {
+async function CreateGroupLectureNoteService (group, date, content, tags) {
+    tags = tags.map((tag) => tag._id);
     try {
-        const response = await AxiosInstance.post("/groups/notes", {group,date,content});
+        const response = await AxiosInstance.post("/groups/notes", {group,date,content, tags});
         return response.data;
     } catch (error) {
         console.log(error);
     }
 }
+
+async function DeleteGroupLectureNoteService (id) {
+    try {
+        const response = await AxiosInstance.delete(`/groups/notes/${id}`);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function EditGroupLectureNoteService (id, content) {
+    try {
+        const response = await AxiosInstance.put(`/groups/notes/${id}`, {content});
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 
 async function GetGroupLectureNotesByIdService (id) {
     try {
@@ -90,6 +110,78 @@ async function CreateCommentService (id, content) {
     }
 }
 
+async function GetAllDatesByGroupIdService (id) {
+    try {
+        const response = await AxiosInstance.get(`/groups/${id}/dates`);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function UpvoteService (id) {
+    try {
+        const response = await AxiosInstance.post(`/groups/notes/${id}/upvote`);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function DownvoteService (id) {
+    try {
+        const response = await AxiosInstance.post(`/groups/notes/${id}/downvote`);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function GetPersonBranchService (id) {
+    try {
+        const response = await AxiosInstance.get(`/groups/branch/${id}`);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function AddNoteToPersonalBranchService (noteId) {
+    try {
+        const response = await AxiosInstance.post(`/groups/branch/${noteId}`);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+async function CreateTagsService (id, tag) {
+    try {
+        
+        const response = await AxiosInstance.post(`/groups/${id}/tags`, {name: tag.name, color: tag.color});
+        
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function DeleteTagService (id, tagId) {
+    try {
+       
+        const response = await AxiosInstance.delete(`/groups/${id}/tags/${tagId}`);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+
+
+
+
 
 
 
@@ -103,7 +195,16 @@ export {
     InviteJoinGroupService,
     DeclineGroupInviteService,
     CreateGroupLectureNoteService,
+    DeleteGroupLectureNoteService,
+    EditGroupLectureNoteService,
     GetGroupLectureNotesByIdService,
-    CreateCommentService
+    CreateCommentService,
+    GetAllDatesByGroupIdService,
+    UpvoteService,
+    DownvoteService,
+    GetPersonBranchService,
+    AddNoteToPersonalBranchService,
+    CreateTagsService,
+    DeleteTagService
 }
 

@@ -82,10 +82,15 @@ const groupSchema = new Schema({
         trim: true,
         minlength: 3,
     },
-
-}, {
+    tags: [{
+        type: Schema.Types.ObjectId,
+        ref: "Tag",
+    }, ],
+},
+{
     timestamps: true,
 });
+
 
 const Group = mongoose.model("Group", groupSchema);
 module.exports = Group;

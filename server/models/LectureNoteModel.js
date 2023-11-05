@@ -25,7 +25,19 @@ const lectureNoteSchema = new Schema({
     comments: [{
         type: Schema.Types.ObjectId,
         ref: "Comment",
-    }, ]
+    }, ],
+    upvotes: [{
+        type: Schema.Types.ObjectId,
+        ref: "User",
+    }, ],
+    downvotes: [{
+        type: Schema.Types.ObjectId,
+        ref: "User",
+    }, ],
+    tags: [{
+        type: Schema.Types.ObjectId,
+        ref: "Tag",
+    }, ],
 }, {
     timestamps: true,
 });
