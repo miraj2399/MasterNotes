@@ -1,109 +1,106 @@
-import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { GetGroupByIdService,CreateTagsService,DeleteTagService
-} from '../services/GroupServices';
-import DeleteIcon from '@mui/icons-material/Delete';
-import AddIcon from '@mui/icons-material/Add';
+
+import { useState, useEffect } from "react";
+import { useParams } from "react-router";
+import { GetGroupByIdService, CreateTagsService,DeleteTagService } from "../services/GroupServices";
+import { Button} from "@material-tailwind/react";
+import { TextField, Snackbar,Chip } from "@mui/material";
 import { HexColorPicker } from "react-colorful";
 
 
-
-import { Button, Chip, Icon, IconButton } from '@mui/material';
-
 export default function GroupSettings() {
-    const { id } = useParams();
-    const [group, setGroup] = useState();
+
+    const [group, setGroup] = useState({});
     const [tags, setTags] = useState([]);
-    const [tag, setTag] = useState({});
-    const [addTag, setAddTag] = useState(false);
-    const [color, setColor] = useState("#00fef3");
+    const [tag, setTag] = useState({name: "", color: ""});
+    const [message, setMessage] = useState("");
+    const [open, setOpen] = useState(false);
+    const [tagColor, setTagColor] = useState("#f3b3b3");
+    const color = "#fff"
+    const { id } = useParams();
 
     useEffect(() => {
         GetGroupByIdService(id).then((data) => {
             setGroup(data);
-            data.tags? setTags(data.tags): setTags([]);
+            console.log(data);
+            setTags(data.tags);
         });
-    }, []);
-
-    const handleSave = () => {
-        CreateTagsService(id, tags).then((data) => {
-            window.location.href = `/group/${id}`;
-        });
-        window.location.href = `/groupsettings/${id}`;
     }
+    , []);
 
 
-    return (
-        group && (
-            <div className="grid gap-2 w-full">
-                <p className="text-gray-900 font-bold text-2xl mx-5">Tags</p>
-                <div className="grid gap-2 items-center justify-center">
+  return(
+        <>
+        <div className="bg-white p-8 rounded-lg ">
+            <p className="text-4xl font-extrabold text-blue-700 tracking-wide">Group Settings</p>
+            <p className="text-2xl font-extrabold text-blue-700 tracking-wide">Tags</p>
+            <div className="grid grid-cols-1 gap-2">
+                {tags.map((tag) => (
+                    <div className="flex flex-row items-center gap-2">
+                        <Chip label={tag.name} sx={{ backgroundColor: tag.color, color: color }} />
+                        <div className="flex-grow"></div>
+                        <Button
+                            
+                            color="red"
+                            onClick={() => {
+                                DeleteTagService(id, tag._id).then((data) => {
+                                    setMessage(data.message);
+                                    setOpen(true);
+                                    window.location.reload();
+                                });
+                            }}
+                            className="px-6 py-2 text-white bg-red-500 hover:bg-red-600 rounded-md">
+                            Delete
+                        </Button>
+                    </div>
+                ))}
+            </div>
+
+            <div className="flex flex-row items-center gap-2">
+                <TextField
+                    label="New Tag"
+                    variant="outlined"
+                    value={tag.name}
                     
-                    {tag && tags.map((tag) => (
-                        <div className="flex gap-2 items-center justify-center">
-                        <div className="flex-1">
-                        <Chip label={tag.name} 
-                        sx={{background: tag.color, color:"white" }}
-                        />
-                        </div>
-                        <IconButton>
-                            <DeleteIcon color='error'
-                            onClick={() => DeleteTagService(id, tag._id).then((data) => {
-                                window.location.href = `/groupsettings/${id}`;
-
-                            }
-                            )}
-                            />
-                        </IconButton>
-                        </div>
-                    ))}
-                    {addTag && (
-                    <div className="flex gap-2 items-center justify-center">
-                        <input className="border-2 border-gray-300 rounded-lg p-2 w-1/2" placeholder="Tag Name" 
-                        style={{background: color, color:"white"}}
-                        onChange={(e) => setTag({...tag, name: e.target.value})}
-                        />
-                        <HexColorPicker color={color} onChange={setColor}
-                         />
-                        <IconButton 
-                        onClick={() => setTags([...tags, {name: tag.name, color: color}])}
-                        >
-                            <AddIcon color='success'/>
-                        </IconButton>
-
-                    </div>
-                    )}
-                    {!addTag && (
+                    sx={{ background: tagColor,
                         
-                    <div className="flex gap-2 items-center justify-center">
-                        <div className="flex-1">
-                            <p className="text-gray-900 font-semi-bold text-lg mx-5">Add Tag</p>
-                        </div>
-                        <IconButton onClick={
-                            () => setAddTag(!addTag)
-                        }>
-                            <AddIcon color='success'/>
-                        </IconButton>
-                        
-                        </div>
-                    )}
+                    }}
+                    onChange={(e) => {
+                        setTag({...tag, name: e.target.value});
+                    }}
+                />
+                <HexColorPicker color={tagColor} onChange={
+                    (color) => {
+                        setTagColor(color);
+                        setTag({...tag, color: color});
+                    }
+                } />
+                <Button
+                    color="blue"
+                    onClick={() => {
+                        CreateTagsService(id, 
+                            tag
+                            ).then((data) => {
+                            setOpen(true);
+                            setMessage(data.message);
+                            
+                        });
+                        window.location.reload();
+                    }}
+                    className="px-6 py-2 text-white bg-blue-500 hover:bg-blue-600 rounded-md">
+                    Create
+                </Button>
+            </div>
 
-                    {addTag && (
-                    <div className="flex gap-2 items-center justify-center">
-                        <Button variant="contained" color="success"
-                        onClick={() => handleSave()
-                        }
+            <Snackbar
+                open={open}
+                autoHideDuration={6000}
+                onClose={() => setOpen(false)}
+                message={message}
+                key={"top" + "center"}
+            />
+        </div>
 
-                        >Save</Button>
-                        <Button variant="contained" color="error" onClick={() => window.location.href = `/groupsettings/${id}`}>Cancel</Button>
-                    </div>
-
-                    )
-                        }
-
-                    </div>
-                    
-                </div>
-        )
-    )
+        </>
+  )
 }
+

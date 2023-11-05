@@ -81,7 +81,11 @@ const groupSchema = new Schema({
         required: [true, "Description is required"],
         trim: true,
         minlength: 3,
-    }
+    },
+    tags: [{
+        type: Schema.Types.ObjectId,
+        ref: "Tag",
+    }, ],
 },
 {
     timestamps: true,

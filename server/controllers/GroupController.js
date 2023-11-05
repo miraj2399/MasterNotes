@@ -4,6 +4,7 @@ const LectureDate = require("../models/LectureDateModel");
 const Notification = require("../models/NotificationModel");
 const LectureNote = require("../models/LectureNoteModel");
 const Comment = require("../models/CommentModel");
+const Tag = require("../models/TagModel");
 const PersonalBranch = require("../models/PersonalBranchModel");
 
 const isMember = require("../utils/IsMember");
@@ -85,7 +86,10 @@ async function GetAllGroupsHandler(req, res) {
 
 async function GetGroupByIdHandler(req, res) {
   try {
-    const group = await Group.findById(req.params.id);
+    const group = await Group.findById(req.params.id).populate({
+      path:"tags",
+      select: "name color _id",
+    });
     const lectureDates = await LectureDate.find({
       _id: { $in: group.dates },
     });
@@ -299,7 +303,7 @@ async function LeaveGroupHandler(req, res) {
 }
 
 async function CreateGroupLectureNoteHandler(req, res) {
-  const { group, date, content } = req.body;
+  const { group, date, content, tags } = req.body;
   try {
     if (!group || !date || !content) {
       return res.status(400).json({ message: "Missing required fields" });
@@ -309,6 +313,7 @@ async function CreateGroupLectureNoteHandler(req, res) {
       date: date,
       content: content,
       owner: req.userId,
+      tags: tags
     });
     const noteGroup = await Group.findById(group);
     await noteGroup.updateOne({ $push: { notes: lectureNote._id } });
@@ -367,7 +372,10 @@ async function GetGroupLectureNotesByIdHandler(req, res) {
   const lectureNoteId = req.params.id;
 
   try {
-    const lectureNote = await LectureNote.findById(lectureNoteId);
+    const lectureNote = await LectureNote.findById(lectureNoteId).populate({
+      path:"tags",
+      select: "name color _id",
+    });
     if (!lectureNote) {
       return res.status(404).json({ message: "Lecture note not found" });
     }
@@ -381,6 +389,10 @@ async function GetGroupLectureNotesByIdHandler(req, res) {
       select: "firstName lastName",
     });
     lectureNote.comments = comments;
+    
+
+    
+
 
     if (userIsMemberOfGroup) {
       lectureNote.owner = await getUser(lectureNote.owner);
@@ -599,6 +611,59 @@ const AddNoteToPersonalBranchHandler = async (req, res) => {
     }
     }
 
+const AddTagToGroupHander = async (req, res) => {
+  const groupId = req.params.id;
+  
+  try {
+    const { name, color } = req.body;
+    const group = await Group.findById(groupId);
+    if (!group) {
+      return res.status(404).json({ message: "Group not found" });
+    }
+    // first check if tag already exists with the same name and group
+    const tagExists = await Tag.findOne({ name: name, group: groupId });
+    if (tagExists) {
+      return res.status(200).json({ message: "Tag already exists" });
+    }
+
+    const tag = await Tag.create({
+      name: name,
+      color: color,
+      group: groupId,
+    });
+    await group.updateOne({ $push: { tags: tag._id } });
+    return res.status(201).json(tag);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: err.message });
+  }
+}
+
+const DeleteTagFromGroupHandler = async (req, res) => {
+  const groupId = req.params.id;
+  const tagId = req.params.tagId;
+  try {
+    const group = await Group.findById(groupId);
+    if (!group) {
+      return res.status(404).json({ message: "Group not found" });
+    }
+    const tag = Tag.findById(tagId);
+    if (!tag) {
+      return res.status(404).json({ message: "Tag not found" });
+    }
+    await group.updateOne({ $pull: { tags: tagId } });
+    const deletedTag = await Tag.findByIdAndDelete(tagId);
+    return res.status(200).json({ message: "Tag deleted" });
+
+  }
+  catch (err) {
+    console.log(err);
+    res.status(500).json({ message: err.message });
+  }
+}
+
+
+
 
 
 module.exports = {
@@ -619,4 +684,6 @@ module.exports = {
 DownvoteHandler,
 GetPersonBranchHandler,
 AddNoteToPersonalBranchHandler,
+AddTagToGroupHander,
+DeleteTagFromGroupHandler,
 };

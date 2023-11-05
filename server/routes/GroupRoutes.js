@@ -16,7 +16,9 @@ const {
   UpvoteHandler,
   DownvoteHandler,
   GetPersonBranchHandler,
-  AddNoteToPersonalBranchHandler
+  AddNoteToPersonalBranchHandler,
+  AddTagToGroupHander,
+  DeleteTagFromGroupHandler
 
 } = require("../controllers/GroupController");
 
@@ -37,6 +39,10 @@ router.get("/join/:id", JoinGroupHandler);
 router.get("/leave/:id", LeaveGroupHandler);
 router.get("/:id", GetGroupByIdHandler);
 router.get("/:id/dates", GetAllDatesByGroupIdHandler);
+router.post("/:id/tags", AddTagToGroupHander);
+router.delete("/:id/tags/:tagId", DeleteTagFromGroupHandler);
+
+
 
 
 

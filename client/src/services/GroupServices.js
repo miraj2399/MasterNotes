@@ -156,9 +156,11 @@ async function AddNoteToPersonalBranchService (noteId) {
 }
 
 
-async function CreateTagsService (id, tags) {
+async function CreateTagsService (id, tag) {
     try {
-        const response = await AxiosInstance.post(`/groups/tags/${id}`, {tags});
+        
+        const response = await AxiosInstance.post(`/groups/${id}/tags`, {name: tag.name, color: tag.color});
+        
         return response.data;
     } catch (error) {
         console.log(error);

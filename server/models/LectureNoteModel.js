@@ -34,6 +34,10 @@ const lectureNoteSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "User",
     }, ],
+    tags: [{
+        type: Schema.Types.ObjectId,
+        ref: "Tag",
+    }, ],
 }, {
     timestamps: true,
 });
