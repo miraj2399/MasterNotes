@@ -19,11 +19,11 @@ export default function GroupSection() {
     return (
         <div className="bg-white p-8 rounded-lg ">
             <div className="flex items-center justify-between mb-4">
-                <h1 className="text-4xl font-extrabold text-blue-700 tracking-wide">Groups</h1>
+                <h1 className="hover:text-green-500 text-gray-800 text-4xl text-center font-extralight">Groups</h1>
                 <Button
-                    color="blue"
+                    color="green"
                     onClick={handleCreateGroupClick}
-                    className="px-6 py-2 text-white bg-blue-500 hover:bg-blue-600 rounded-md">
+                    className="px-6 py-2 text-white bg-green-500 hover:bg-green-600 rounded-md text-md font-light">
                     Create Group
                 </Button>
             </div>

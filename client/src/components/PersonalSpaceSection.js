@@ -22,11 +22,11 @@ export default function PersonalSpaceSection() {
     return (
         <div className="bg-white p-8 rounded-lg ">
             <div className="flex items-center justify-between mb-4">
-                <h1 className="text-4xl font-extrabold text-green-700 tracking-wide">Personal Space</h1>
+                <h1 className="hover:text-blue-500 text-gray-800 text-4xl text-center font-extralight">Personal Space</h1>
                 <Button
-                    color="green"
+                    color="blue"
                     onClick={handleCreateNoteClick}
-                    className="px-6 py-2 text-white bg-green-500 hover:bg-green-600 rounded-md">
+                    className="px-6 py-2 text-white bg-blue-500 hover:bg-blue-600 rounded-md text-md font-light">
                     Create Note
                 </Button>
             </div>

@@ -85,7 +85,8 @@ export default function Group(){
                 {/* have a button on the right side for discussion */}
                 <div className="flex-grow"></div>
                 <div className="flex gap-2 items-center mr-5">
-                <Button size="small" color="amber">
+                <Button size="small" color="amber" onClick={() => {
+                window.location.href = `/discussion/${group._id}`}}>
                     discussion
                 </Button>
                 </div>
