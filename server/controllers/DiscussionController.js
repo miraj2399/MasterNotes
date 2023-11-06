@@ -57,17 +57,33 @@ const createDiscussionPost = async (req, res) => {
 }
 
 const getAllDiscussionPosts = async (req, res) => {
+    
    try{
     const group = await Group.findById(req.params.groupId).populate("discussions");
+
+    
+    
     if (!group) {
         return res.status(404).json({
             message: "Group not found",
         });
     }
     const discussions = group.discussions;
-    return res.status(200).json(discussions);
-   }
+    // return discussions with populated comments and owner with exclude password
+    const populatedDiscussions = await DiscussionPost.populate(discussions, [{
+        path: "comments",
+        populate: {
+            path: "owner",
+            select: "-password -verified -email -createdAt -updatedAt -__v -groups",
+        }
+    }, {
+        path: "owner",
+        select: "-password -verified -email -createdAt -updatedAt -__v -groups",
+    }, ]);
+    return res.status(200).json(populatedDiscussions);
+    }
     catch (error) {
+       
         res.status(500).json({
             message: "Error getting discussion posts",
             error: error.message,
@@ -78,7 +94,18 @@ const getAllDiscussionPosts = async (req, res) => {
 
 const getDiscussionPostById = async (req, res) => {
    try{
-    const discussionPost = await DiscussionPost.findById(req.params.id).populate("comments");
+    const discussionPost = await DiscussionPost.findById(req.params.id).populate([{
+        path: "comments",
+        populate: {
+            path: "owner",
+            select: "-password -verified -email -createdAt -updatedAt -__v -groups",
+        }
+    }, {
+        path: "owner",
+        select: "-password -verified -email -createdAt -updatedAt -__v -groups",
+    }, ]);
+
+        
     if (!discussionPost) {
         return res.status(404).json({
             message: "Discussion post not found",
