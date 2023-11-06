@@ -74,7 +74,7 @@ export default function Discussion(props) {
         </div>
 
         <div className="text-center m-5">
-            <Button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick={handleCancel}>
+            <Button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded font-light text-sm" onClick={handleCancel}>
             Cancel
             </Button>
         </div>
