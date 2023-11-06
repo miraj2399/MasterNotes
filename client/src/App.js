@@ -66,7 +66,7 @@ function App() {
           <Route path="/personalNote/:id" element={<PersonalNote />} />
           <Route path="/personalNote/:id/edit" element={<EditPersonalNote />} />
           <Route path='/discussion/:groupId' element={<Discussion />} />
-          <Route path='/createDiscussionPost' element={<CreateDiscussionPost />} />
+          <Route path='/createDiscussionPost/:groupId' element={<CreateDiscussionPost />} />
           <Route path="/groupSettings/:id" element={<GroupSettings />} />
 
         </Route>

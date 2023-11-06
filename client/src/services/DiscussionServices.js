@@ -19,7 +19,20 @@ async function GetAllDiscussionPostsService(groupID) {
     }
 }
 
+async function CreateDiscussionCommentService(id, content){
+    try {
+        const response = await AxiosInstance.post(`/discussions/comment/${id}`, {content});
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        console.log(id);
+    }
+}
+
+
+
     export {
         CreateDiscussionPostService,
-        GetAllDiscussionPostsService
+        GetAllDiscussionPostsService,
+        CreateDiscussionCommentService
     }

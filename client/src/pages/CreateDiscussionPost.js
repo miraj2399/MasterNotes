@@ -38,23 +38,26 @@ function a11yProps(index) {
   };
 }
 
-export default function CreateDiscussionPost() {
+export default function CreateDiscussionPost(props) {
   const [value,setValue] = useState(0);
   const [text, setText] = useState("");
   const [title, setTitle] = useState("");
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
+  const id = useParams().groupId;
+  const { groupId } = useParams();
   const [group, setGroup] = useState({});
-  const { group: groupId } = useParams();
+
+  useEffect(() => {
+  GetGroupByIdService(groupId).then((data) => {
+    setGroup(data);
+  });
+}, [groupId]);
+
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  useEffect(() => {
-    GetGroupByIdService(groupId).then((data) => {
-      setGroup(data);
-    });
-  }, [groupId]);
 
   const ButtonBar = () => {
     const handleCancel = () => {
