@@ -66,7 +66,11 @@ export default function Group(){
             // personal branch contains noteid of notes that user has added to personal branch
             let personalNotes = [];
             personalBranch.notes.forEach((noteID) => {
-                personalNotes.push(notes.find((note) => note._id === noteID));
+                const note = notes.find((note) => note._id === noteID);
+                if (note){
+                    personalNotes.push(notes.find((note) => note._id === noteID));
+                }
+                
             })
            
             setPersonalNotes(personalNotes);
