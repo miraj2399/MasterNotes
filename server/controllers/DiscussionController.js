@@ -57,17 +57,23 @@ const createDiscussionPost = async (req, res) => {
 }
 
 const getAllDiscussionPosts = async (req, res) => {
+    
    try{
     const group = await Group.findById(req.params.groupId).populate("discussions");
+
+    
+    
     if (!group) {
         return res.status(404).json({
             message: "Group not found",
         });
     }
     const discussions = group.discussions;
-    return res.status(200).json(discussions);
+    const discussionPosts = await DiscussionPost.find({group: group._id}).populate("comments");
+    return res.status(200).json(discussionPosts);
    }
     catch (error) {
+       
         res.status(500).json({
             message: "Error getting discussion posts",
             error: error.message,
