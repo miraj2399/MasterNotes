@@ -69,9 +69,19 @@ const getAllDiscussionPosts = async (req, res) => {
         });
     }
     const discussions = group.discussions;
-    const discussionPosts = await DiscussionPost.find({group: group._id}).populate("comments");
-    return res.status(200).json(discussionPosts);
-   }
+    // return discussions with populated comments and owner with exclude password
+    const populatedDiscussions = await DiscussionPost.populate(discussions, [{
+        path: "comments",
+        populate: {
+            path: "owner",
+            select: "-password -verified -email -createdAt -updatedAt -__v -groups",
+        }
+    }, {
+        path: "owner",
+        select: "-password -verified -email -createdAt -updatedAt -__v -groups",
+    }, ]);
+    return res.status(200).json(populatedDiscussions);
+    }
     catch (error) {
        
         res.status(500).json({
