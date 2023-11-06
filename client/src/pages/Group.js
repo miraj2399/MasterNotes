@@ -134,7 +134,7 @@ export default function Group(){
                 </ToggleButtonGroup>
 
                 {/* have a button on the right side for discussion */}
-                <div className="flex-grow"></div>
+                <div className="flex-grow"></div>                
                 <div className="flex gap-2 items-center mr-5 p-5">
                 <IconButton
                 onClick={() => {
@@ -144,9 +144,8 @@ export default function Group(){
                     <Settings/>
                 </IconButton>
                 
-                <Button size="small" color="amber">
-                    discussion
-                </Button>
+              <Button size="small" color="amber" onClick={() => {
+                window.location.href = `/discussion/${group._id}`}}> discussion </Button> 
                 </div>
             </div>
             </div>

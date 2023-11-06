@@ -14,6 +14,8 @@ import FAQSection from "./components/FAQSection";
 import PersonalNote from "./pages/PersonalNote";
 import EditPersonalNote from "./pages/EditPersonalNote";
 import Notifications from "./pages/Notifications";
+import Discussion from "./pages/Discussion";
+import CreateDiscussionPost from "./pages/CreateDiscussionPost";
 import EditLectureNote from "./pages/EditLectureNote";
 import GroupSettings from "./pages/GroupSettings";
 
@@ -63,6 +65,8 @@ function App() {
           <Route path="/lectureNote/:id/edit" element={<EditLectureNote />} />
           <Route path="/personalNote/:id" element={<PersonalNote />} />
           <Route path="/personalNote/:id/edit" element={<EditPersonalNote />} />
+          <Route path='/discussion/:group' element={<Discussion />} />
+          <Route path='/createDiscussionPost' element={<CreateDiscussionPost />} />
           <Route path="/groupSettings/:id" element={<GroupSettings />} />
 
         </Route>

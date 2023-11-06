@@ -9,7 +9,8 @@ export default function Dashboard (){
     }
     return (
         <>
-        <div className='grid gap-20 bg-white'>
+        <div className='grid gap-10 divide-y'> {/* cyan background? */}
+            <h1 className='hover:text-gray-600 text-gray-800 text-4xl text-center font-extralight m-10'>RU NOTES</h1>
         <GroupSection/>
         <PersonalSpaceSection/>
         </div>
