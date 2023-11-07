@@ -31,7 +31,11 @@ async function CreateDiscussionCommentService(id, content){
 
 async function DeleteDiscussionPostService(id) {
     try {
-        const response = await AxiosInstance.delete(`/discussions/${id}`);
+        const response = await AxiosInstance.delete(`/discussions/thread/${id}`).then((res) => {
+            window.location.reload();
+        }
+        );
+        
         return response.data;
     } catch (error) {
         console.log(error);
