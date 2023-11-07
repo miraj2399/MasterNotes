@@ -5,6 +5,7 @@ import { DiscussionCommentSection } from "../components/DiscussionCommentSection
 import { useParams } from "react-router-dom";
 import { Button } from "@material-tailwind/react";
 import DeleteIcon from '@mui/icons-material/Delete';
+import { IconButton } from "@mui/material";
 
 export default function Discussion(props) {
     const id = useParams().id;
@@ -53,8 +54,8 @@ export default function Discussion(props) {
         </div>
 
 
-        <div className="grid grid-cols-3 gap-4 text-center divide-x">
-            <div className="divide-y"> 
+        <div className="grid grid-cols-3 gap-4 divide-x">
+            <div className="text-center divide-y"> 
             <div className="mt-5">
             <h1 className="text-black text-2xl font-regular mb-4 inline mr-5 pr-2">Discussion Posts</h1> 
             <Button className="text-white bg-black hover:bg-gray-700 rounded-md font-light mb-2" onClick={handleCreateDiscussionPost}>New Post</Button>
@@ -73,21 +74,20 @@ export default function Discussion(props) {
                 
             </div>
             <div className="col-span-2">
-                <div className="">
-                <div className="inline-block text-gray-800 text-2xl text-left font-regular pl-5 mt-5">{selectedPost.title}</div>
+                <div className="flex justify-between">
+                <div className=" text-gray-800 text-2xl text-left font-regular pl-5 mt-5">{selectedPost.title}</div>
                 {selectedPost.owner && selectedPost.owner._id === localStorage.getItem("user_id") &&
             <>
-                  <div className="inline-block gap-2">
-                  <Button className=""
+                  <div className="pl-5 mt-4 mr-5">
+                  <IconButton className="text-right"
                   onClick={handleDeleteNote}
-                  ><DeleteIcon>
-                    Delete
-                 </DeleteIcon> </Button>
+                  >
+                 <DeleteIcon /> </IconButton>
                   </div>
               </>
             }
                 </div>
-                <div className="text-gray-800 text-lg text-left font-extralight pl-5 mt-3 mb-3 mr-5">{selectedPost.content}</div>
+                <div className="text-gray-800 text-lg text-left font-extralight pl-5 mt-1 mb-3 mr-5">{selectedPost.content}</div>
             
                 {selectedPost.owner && 
                 <>

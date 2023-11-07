@@ -1,5 +1,12 @@
-import { CreateDiscussionCommentService } from "../services/DiscussionServices";
+import { CreateDiscussionCommentService, DeleteDiscussionCommentService } from "../services/DiscussionServices";
 import { useState } from "react";
+import { Button } from "@material-tailwind/react";
+import DeleteIcon from '@mui/icons-material/Delete';
+import { IconButton } from "@mui/material";
+
+function handleDeleteComment(comment) {
+    DeleteDiscussionCommentService(comment._id);
+};
 
 
 const DiscussionCommentSection = (props) => {
@@ -35,7 +42,20 @@ const DiscussionCommentSection = (props) => {
                                 })
                         }
                             </time></p>
-            </div>
+                </div>
+
+
+            {comment.owner && comment.owner._id === localStorage.getItem("user_id") &&
+            <>
+                  <div className="inline-block gap-2">
+                  <IconButton className=""
+                    onClick={() => { DeleteDiscussionCommentService(comment._id) }}
+                  >
+                    <DeleteIcon/>
+                 </IconButton>
+                  </div>
+              </>
+            }
             
             
         </footer>
