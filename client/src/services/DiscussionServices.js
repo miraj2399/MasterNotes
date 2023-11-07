@@ -29,10 +29,20 @@ async function CreateDiscussionCommentService(id, content){
     }
 }
 
+async function DeleteDiscussionPostService(id) {
+    try {
+        const response = await AxiosInstance.delete(`/discussions/${id}`);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 
 
     export {
         CreateDiscussionPostService,
         GetAllDiscussionPostsService,
-        CreateDiscussionCommentService
+        CreateDiscussionCommentService,
+        DeleteDiscussionPostService
     }

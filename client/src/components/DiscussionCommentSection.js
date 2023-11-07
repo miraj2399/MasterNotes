@@ -50,7 +50,6 @@ const DiscussionCommentSection = (props) => {
     const handleCommentSubmit = () => {
         CreateDiscussionCommentService(id, comment).then((data) => {
             setComment("");
-            console.log(data);
             //window.location.reload();
         }).catch((err) => {
             console.log(err);
