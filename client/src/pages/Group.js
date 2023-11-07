@@ -148,7 +148,7 @@ export default function Group(){
                     <Settings/>
                 </IconButton>
                 
-              <Button size="small" color="amber" onClick={() => {
+              <Button size="small" color="amber" className="font-light" onClick={() => {
                 window.location.href = `/discussion/${group._id}`}}> discussion </Button> 
                 </div>
             </div>

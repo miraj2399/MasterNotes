@@ -1,4 +1,3 @@
-import { CreateNoteService } from '../services/SpaceService';
 import React, { useEffect, useState } from "react";
 import { Tabs, Tab, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
@@ -8,6 +7,10 @@ import { Grid } from "@mui/material";
 import { Snackbar } from "@mui/material";
 import AllowTab from '../utilities/AllowTabinTextArea';
 import remarkGfm from 'remark-gfm'
+import { CreateDiscussionPostService } from '../services/DiscussionServices';
+import { GetGroupByIdService} from "../services/GroupServices";
+import { useParams } from "react-router-dom";
+
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -35,12 +38,23 @@ function a11yProps(index) {
   };
 }
 
-export default function CreateDiscussionPost() {
+export default function CreateDiscussionPost(props) {
   const [value,setValue] = useState(0);
   const [text, setText] = useState("");
   const [title, setTitle] = useState("");
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
+  const id = useParams().groupId;
+  const { groupId } = useParams();
+  const [group, setGroup] = useState({});
+
+  useEffect(() => {
+  GetGroupByIdService(groupId).then((data) => {
+    setGroup(data);
+  });
+}, [groupId]);
+
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -50,7 +64,7 @@ export default function CreateDiscussionPost() {
         window.history.back();
       };
     const handlePublish = () => {
-        CreateNoteService({content: text}).then((data) => { // create discussion post service 
+        CreateDiscussionPostService(group._id, title, text).then((data) => { // create discussion post service 
             if(data.error) {
                 setMessage(data.error);
                 setOpen(true);
