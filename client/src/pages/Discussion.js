@@ -3,7 +3,7 @@ import { GetGroupByIdService} from "../services/GroupServices";
 import { DeleteDiscussionPostService, GetAllDiscussionPostsService } from "../services/DiscussionServices";
 import { DiscussionCommentSection } from "../components/DiscussionCommentSection";
 import { useParams } from "react-router-dom";
-import { Button } from "@material-tailwind/react";
+import { Button, select } from "@material-tailwind/react";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { IconButton } from "@mui/material";
 
@@ -36,9 +36,7 @@ export default function Discussion(props) {
         setDiscussionPosts(data);
         console.log(data);
     });
-  }, [groupId]);
-
-  
+  }, [groupId]); 
 
     return (
         <>
@@ -62,9 +60,11 @@ export default function Discussion(props) {
             </div>
                 {
                     discussionPosts&&discussionPosts.map((discussionPost) => (
-                        <div className="flex items-center justify-center pt-5 pb-5 pl-5 pr-5">
-                        <div className="bg-white rounded-lg max-h-32 overflow-clip" >
-                            <div className="hover:underline font-regular decoration-1 underline-offset-4 text-gray-800 text-xl text-center" onClick={() => setSelectedPost(discussionPost) }>{discussionPost.title}</div>
+                        <div className="flex items-center justify-center pt-5 pb-5 pl-5 pr-5 hover:bg-gray-400" 
+                        onClick={() => setSelectedPost(discussionPost)}
+                        >
+                        <div className="hover:bg-gray-400 rounded-lg max-h-32 overflow-clip">
+                            <div className="hover:underline font-regular decoration-1 underline-offset-4 text-gray-800 text-xl text-center" >{discussionPost.title}</div>
                             <h1 className="text-gray-800 text-md text-center font-extralight">{discussionPost.content}</h1>
                             {/*{JSON.stringify(discussionPost.comments)}*/}
                         </div>
@@ -74,8 +74,10 @@ export default function Discussion(props) {
                 
             </div>
             <div className="col-span-2">
-                <div className="flex justify-between">
-                <div className=" text-gray-800 text-2xl text-left font-regular pl-5 mt-5">{selectedPost.title}</div>
+                <div className="flex justify-between"
+                >
+                <div className=" text-gray-800 text-2xl text-left font-regular pl-5 mt-5"
+                >{selectedPost.title}</div>
                 {selectedPost.owner && selectedPost.owner._id === localStorage.getItem("user_id") &&
             <>
                   <div className="pl-5 mt-4 mr-5">

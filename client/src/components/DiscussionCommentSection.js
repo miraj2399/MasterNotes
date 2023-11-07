@@ -12,7 +12,7 @@ function handleDeleteComment(comment) {
 const DiscussionCommentSection = (props) => {
     const { comments, id } = props;
     return (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 divide-y">
             <CommentInput id={id}/>
             {comments&& comments.length>0 && comments.map((comment) => {
                 return <Comment key={comment._id} comment={comment}/>
