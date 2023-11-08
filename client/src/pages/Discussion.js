@@ -3,18 +3,21 @@ import { GetGroupByIdService} from "../services/GroupServices";
 import { DeleteDiscussionPostService, GetAllDiscussionPostsService, DeleteDiscussionCommentService , CreateDiscussionCommentService} from "../services/DiscussionServices";
 
 import { useParams } from "react-router-dom";
-import { Button, select } from "@material-tailwind/react";
+import { Button } from "@material-tailwind/react";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { IconButton } from "@mui/material";
 import Markdown from "react-markdown";
 import remarkGfm from 'remark-gfm'
 import ReplyIcon from '@mui/icons-material/Reply';
+import {Snackbar} from "@mui/material";
 
 export default function Discussion(props) {
     const { groupId } = useParams();
     const [group, setGroup] = useState({});
     const [discussionPosts, setDiscussionPosts] = useState([]);
     const [selectedPost, setSelectedPost] = useState([]);
+    const [open, setOpen] = useState(false);
+    const [message, setMessage] = useState("");
     
     
     
@@ -88,6 +91,9 @@ export default function Discussion(props) {
                     return discussionPost;
                 }
                 ))
+                setMessage("Comment added successfully");
+                setOpen(true);
+                
                 
             }).catch((err) => {
                 console.log(err);
@@ -231,6 +237,12 @@ export default function Discussion(props) {
             Back
             </Button>
         </div>
+        <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        onClose={() => setOpen(false)}
+        message={message}
+        />
         </>
     )
 }
