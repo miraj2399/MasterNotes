@@ -26,7 +26,7 @@ export default function PersonalSpaceSection() {
                 <Button
                     color="blue"
                     onClick={handleCreateNoteClick}
-                    className="px-6 py-2 text-white bg-blue-500 hover:bg-blue-600 rounded-md text-md font-light">
+                    className="px-6 py-2 text-white bg-cyan-500  hover:bg-cyan-600  rounded-md text-md font-light">
                     Create Note
                 </Button>
             </div>

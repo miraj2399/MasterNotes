@@ -10,7 +10,7 @@ import {
     const content = note.content.split("\n").slice(1).join("\n");
     const id = note._id;
     return (
-      <Card className="w-128 h-64 m-4 bg-blue-200 hover:bg-blue-300">
+      <Card className="w-128 h-64 m-4 bg-cyan-500 bg-opacity-50 hover:bg-opacity-100">
         <CardBody className=" overflow-auto">
           <Markdown className={"prose"} remarkPlugins={[remarkGfm]}>{title.length>30?title.slice(0,30)+"...":title}</Markdown>
           <Markdown className={"prose"} remarkPlugins={[remarkGfm]}>

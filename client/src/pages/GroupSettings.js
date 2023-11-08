@@ -3,8 +3,11 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { GetGroupByIdService, CreateTagsService,DeleteTagService } from "../services/GroupServices";
 import { Button} from "@material-tailwind/react";
+import {IconButton} from "@mui/material";
 import { TextField, Snackbar,Chip } from "@mui/material";
 import { HexColorPicker } from "react-colorful";
+import DeleteIcon from '@mui/icons-material/DeleteOutlined';
+
 
 
 export default function GroupSettings() {
@@ -32,33 +35,34 @@ export default function GroupSettings() {
         <>
         <div className="bg-white p-8 rounded-lg ">
             <p className="text-4xl font-extrabold text-blue-700 tracking-wide">Group Settings</p>
-            <p className="text-2xl font-extrabold text-blue-700 tracking-wide">Tags</p>
-            <div className="grid grid-cols-1 gap-2">
+            <p className="text-2xl font-extrabold text-blue-700 tracking-wide mt-20 mb-10">Tags</p>
+            <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
+                <div>
                 {tags.map((tag) => (
-                    <div className="flex flex-row items-center gap-2">
+                    <div className="flex  items-center gap-2">
                         <Chip label={tag.name} sx={{ backgroundColor: tag.color, color: color }} />
                         <div className="flex-grow"></div>
-                        <Button
-                            
-                            color="red"
-                            onClick={() => {
-                                DeleteTagService(id, tag._id).then((data) => {
-                                    setOpen(true);
-                                    setMessage(data.message);
-                                });
-                                window.location.reload();
-                            }}
-                            className="px-6 py-2 text-white bg-red-500 hover:bg-red-600 rounded-md">
-                            Delete
-                        </Button>
+                        <div className="mr-64">
+                        <IconButton onClick={() => {
+                            DeleteTagService(id, tag._id).then((data) => {
+                                setOpen(true);
+                                setMessage(data.message);
+                            });
+                            window.location.reload();
+                        }
+                        }>
+                            <DeleteIcon color="error"/>
+                        </IconButton>
+                        </div>
+
                     </div>
                 ))}
-            </div>
+                </div>
 
-            <div className="flex flex-row items-center gap-2">
+<div className="flex flex-row items-center gap-2">
                 <TextField
-                    label="New Tag"
-                    variant="outlined"
+                    label= " tag name"
+                    variant="standard"
                     value={tag.name}
                     
                     sx={{ background: tagColor,
@@ -75,7 +79,7 @@ export default function GroupSettings() {
                     }
                 } />
                 <Button
-                    color="blue"
+                    color= "green"
                     onClick={() => {
                         CreateTagsService(id, 
                             tag
@@ -86,10 +90,13 @@ export default function GroupSettings() {
                         });
                         window.location.reload();
                     }}
-                    className="px-6 py-2 text-white bg-blue-500 hover:bg-blue-600 rounded-md">
+                    className="px-6 py-2 text-white bg-green-500 hover:bg-green-600 rounded-md">
                     Create
                 </Button>
             </div>
+            </div>
+
+           
 
             <Snackbar
                 open={open}

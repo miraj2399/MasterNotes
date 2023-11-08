@@ -82,7 +82,7 @@ export default function Group(){
 
     return (
         <div className="grid">
-            <div className="flex h-72 justify-center items-center gap-2 mb-10 bg-cyan-500 bg-opacity-50">
+            <div className="flex h-72 justify-center items-center gap-2 mb-10 bg-green-500 bg-opacity-50">
             <div class="text-center">
            <h1 color="blue-gray" className="hover:text-gray-600 text-gray-800 text-4xl text-center font-extralight mb-5">{group.name}</h1>
            <h1 color="blue-gray" className="hover:text-gray-600 text-gray-800 text-xl text-center font-extralight mb-5">{group.courseTitle}</h1>
@@ -161,9 +161,9 @@ export default function Group(){
                 <div key={date.date} className="mb-24">
                 <TimelineItem>
                     <TimelineHeader>
-                        <div className="flex justify-center items-center gap-2 p-3 bg-cyan-500 bg-opacity-50 rounded-xl">
-                        <TimelineIcon color="black" />
-                        <CalendarTodayIcon/>
+                        <div className="flex justify-center items-center gap-2 py-3 bg-green-500 bg-opacity-50 rounded-xl pr-3">
+                        <TimelineIcon color="green" />
+                        <CalendarTodayIcon size="sm"/>
                         <p className="text-black text-lg font-extralight">{new Date(date.date).toDateString()}</p>
                        
                         </div>
