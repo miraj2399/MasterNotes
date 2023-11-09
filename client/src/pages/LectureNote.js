@@ -119,10 +119,8 @@ export default function LectureNote() {
   ) : (
     <div className="grid md:grid-cols-6 gap-4 p-10">
       <div className="md:col-span-4">
-        <div className="m-10">
-          <Markdown className={"prose-lg"}>{note.title}</Markdown>
-        </div>
-        <Markdown className={"prose-lg"}>{note.content}</Markdown>
+        
+        <Markdown className={"prose"}>{note.content}</Markdown>
       </div>
       <div className="md:col-span-2 ">
         <div className="grid gap-2 mt-16 ml-2">

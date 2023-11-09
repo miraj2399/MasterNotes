@@ -24,6 +24,7 @@ export default function Group(){
     const [personalBranch, setPersonalBranch] = useState([]);
     const [personalNotes, setPersonalNotes] = useState([]);
     const [masterNotes, setMasterNotes] = useState([]);
+ 
     useEffect(() => {
         GetGroupByIdService(id).then((data) => {
             setGroup(data);
@@ -61,7 +62,9 @@ export default function Group(){
                 }
             })
             setMasterNotes(masterNotes);
+           
         }
+
          else if (branch==="personal")  {
             // personal branch contains noteid of notes that user has added to personal branch
             let personalNotes = [];
@@ -76,13 +79,15 @@ export default function Group(){
             setPersonalNotes(personalNotes);
 
         }
+        
 
     }, [branch])
 
+    
 
     return (
         <div className="grid">
-            <div className="flex h-72 justify-center items-center gap-2 mb-10 bg-green-500 bg-opacity-50">
+            <div className="flex h-72  justify-center items-center gap-2 mb-10 bg-green-500 bg-opacity-50">
             <div class="text-center">
            <h1 color="blue-gray" className="hover:text-gray-600 text-gray-800 text-4xl text-center font-extralight mb-5">{group.name}</h1>
            <h1 color="blue-gray" className="hover:text-gray-600 text-gray-800 text-xl text-center font-extralight mb-5">{group.courseTitle}</h1>
@@ -169,28 +174,38 @@ export default function Group(){
                         </div>
                     </TimelineHeader>
                     <TimelineBody>
-                        <div className="grid sm:grid-cols-2 gap-2">
-                        {notes && branch === "all" && notes.map((note) => {
+                        <div className="grid sm:grid-cols-2 gap-2 sm:min-w-[800px]  md:min-w-[900px] lg:min-w-[1000px] ">
+                        {personalBranch&&notes && branch === "all" && notes.map((note) => {
                             if (note.date === date._id) {
                                 return (
                                     <LectureNotePreview key={note._id} 
                                 content = { note.content.split("\n").slice(1).join("\n")}
                                 title = {note.content.split("\n")[0]}
                                 id = {note._id}
+                                author = {note.owner.firstName + " " + note.owner.lastName}
+                                upvotes = {note.upvotes.length}
+                                downvotes = {note.downvotes.length}
+                                inPersonalBranch = {personalBranch && personalBranch.notes&& personalBranch.notes.includes(note._id)}
+                                
                                 />
                                 )
                             }
                         }
                         )}
-                        {masterNotes&& branch === "master" && masterNotes.map((note) => {
+                        {personalBranch&&masterNotes&& branch === "master" && masterNotes.map((note) => {
                             if (note.date === date._id) {
                                 return (
-                                    
                                         <LectureNotePreview key={note._id} 
                                 content = { note.content.split("\n").slice(1).join("\n")}
                                 title = {note.content.split("\n")[0]}
                                 id = {note._id}
+                                author = {note.owner.firstName + " " + note.owner.lastName}
+                                upvotes = {note.upvotes.length}
+                                downvotes = {note.downvotes.length}
+                                inPersonalBranch = {personalBranch && personalBranch.notes&& personalBranch.notes.includes(note._id)}
+
                                 />
+                            
                                 
                                 )
                             }
@@ -205,6 +220,10 @@ export default function Group(){
                                 content = { note.content.split("\n").slice(1).join("\n")}
                                 title = {note.content.split("\n")[0]}
                                 id = {note._id}
+                                author = {note.owner.firstName + " " + note.owner.lastName}
+                                upvotes = {note.upvotes.length}
+                                downvotes = {note.downvotes.length}
+                                
                                 />
                                 
                                 )
