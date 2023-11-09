@@ -87,7 +87,16 @@ async function GetAllGroupsHandler(req, res) {
 async function GetGroupByIdHandler(req, res) {
   try {
 
-    const group = await Group.findById(req.params.id).populate("owner", "firstName lastName _id");
+    const group = await Group.findById(req.params.id).populate([
+      {
+        path: "owner",
+        select: "firstName lastName _id",
+      },
+      {
+        path: "tags",
+        select: "name color _id",
+      },
+    ]);
     const lectureDates = await LectureDate.find({
       _id: { $in: group.dates },
     });
@@ -373,10 +382,13 @@ async function GetGroupLectureNotesByIdHandler(req, res) {
   const lectureNoteId = req.params.id;
 
   try {
-    const lectureNote = await LectureNote.findById(lectureNoteId).populate({
-      path:"tags",
-      select: "name color _id",
-    });
+    const lectureNote = await LectureNote.findById(lectureNoteId).populate(
+      {
+        path:"tags",
+        select: "name color _id",
+
+      }
+    );
     if (!lectureNote) {
       return res.status(404).json({ message: "Lecture note not found" });
     }
