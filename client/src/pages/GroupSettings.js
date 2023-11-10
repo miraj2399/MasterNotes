@@ -1,8 +1,8 @@
 
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
-import { GetGroupByIdService, CreateTagsService,DeleteTagService } from "../services/GroupServices";
-import { Button} from "@material-tailwind/react";
+import { GetGroupByIdService, CreateTagsService,DeleteTagService, EditGroupInviteOnlyService } from "../services/GroupServices";
+import { Button, Checkbox} from "@material-tailwind/react";
 import {IconButton} from "@mui/material";
 import { TextField, Snackbar,Chip } from "@mui/material";
 import { HexColorPicker } from "react-colorful";
@@ -18,6 +18,7 @@ export default function GroupSettings() {
     const [message, setMessage] = useState("");
     const [open, setOpen] = useState(false);
     const [tagColor, setTagColor] = useState("#f3b3b3");
+
     const color = "#fff"
     const { id } = useParams();
 
@@ -30,12 +31,46 @@ export default function GroupSettings() {
     }
     , []);
 
+    const initialInviteOnly = group.inviteOnly;
+    const [inviteOnly, setStatus] = useState(initialInviteOnly);
+
+
+    useEffect(() => {
+        console.log(group.inviteOnly);
+        handleCheckboxChange();  
+        console.log(group.inviteOnly);
+    }, [inviteOnly]);
+ 
+
+    const handleCheckboxChange = async () => {
+        try {
+          await EditGroupInviteOnlyService(group._id, inviteOnly);
+          console.log("Group invite-only setting updated successfully");
+        } catch (error) {
+          console.error("Error updating group invite-only setting", error);
+          // Handle the error in your application (e.g., show an error message to the user)
+        }
+      };
 
   return(
         <>
         <div className="bg-white p-8 rounded-lg ">
             <p className="text-4xl font-extrabold text-blue-700 tracking-wide">Group Settings</p>
             <p className="text-2xl font-extrabold text-blue-700 tracking-wide mt-20 mb-10">Tags</p>
+            <div>
+              <Checkbox
+                label="Invite only"
+                name="inviteOnly"
+                checked={inviteOnly === true}
+                onChange={() => setStatus(true)}
+                />
+              <Checkbox
+                label="Public"
+                name="public"
+                checked={inviteOnly === false}
+                onChange={() => setStatus(false)}
+                />
+            </div>
             <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
                 <div>
                 {tags.map((tag) => (

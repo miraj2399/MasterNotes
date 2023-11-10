@@ -655,6 +655,7 @@ const AddTagToGroupHander = async (req, res) => {
 const DeleteTagFromGroupHandler = async (req, res) => {
   const groupId = req.params.id;
   const tagId = req.params.tagId;
+  console.log("deleting tag");
   try {
     const group = await Group.findById(groupId);
     if (!group) {
@@ -674,6 +675,28 @@ const DeleteTagFromGroupHandler = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 }
+
+async function EditGroupInviteOnlyHandler(req, res) {
+  const groupId = req.params.id;
+  const inviteOnly = req.body.inviteOnly; // Assuming the inviteOnly value is in the request body
+
+  console.log("EditGroupInviteOnlyHandler - groupId:", groupId);
+  console.log("EditGroupInviteOnlyHandler - inviteOnly:", inviteOnly);
+
+  try {
+    const group = await Group.findByIdAndUpdate(groupId, { inviteOnly: inviteOnly });
+
+    if (!group) {
+      return res.status(404).json({ message: "Group not found" });
+    }
+
+    return res.status(200).json({ message: "Group inviteOnly updated successfully" });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ message: err.message });
+  }
+}
+
 
 
 
@@ -699,4 +722,5 @@ GetPersonBranchHandler,
 AddNoteToPersonalBranchHandler,
 AddTagToGroupHander,
 DeleteTagFromGroupHandler,
+EditGroupInviteOnlyHandler,
 };

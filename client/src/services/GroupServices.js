@@ -178,12 +178,15 @@ async function DeleteTagService (id, tagId) {
 }
 
 
-
-
-
-
-
-
+async function EditGroupInviteOnlyService(id, inviteOnly) {
+    try {
+        const response = await AxiosInstance.put(`/groups/${id}`, {inviteOnly });
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        throw new Error("Error editing group invite-only setting");
+    }
+}
 
 
 export {
@@ -205,6 +208,7 @@ export {
     GetPersonBranchService,
     AddNoteToPersonalBranchService,
     CreateTagsService,
-    DeleteTagService
+    DeleteTagService,
+    EditGroupInviteOnlyService
 }
 
