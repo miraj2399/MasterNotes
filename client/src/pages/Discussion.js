@@ -10,6 +10,8 @@ import Markdown from "react-markdown";
 import remarkGfm from 'remark-gfm'
 import ReplyIcon from '@mui/icons-material/Reply';
 import {Snackbar} from "@mui/material";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+
 
 export default function Discussion(props) {
     const { groupId } = useParams();
@@ -147,17 +149,25 @@ export default function Discussion(props) {
                 <h1 color="blue-gray" className="hover:text-gray-600 text-gray-800 text-4xl text-center font-extralight mb-3">{group.name}</h1>
                 <h1 color="blue-gray" className="hover:text-gray-600 text-gray-800 text-xl text-center font-extralight mb-3">{group.courseTitle}</h1>
                 <h1 color="blue-gray" className="hover:text-gray-600 text-gray-900 text-xl text-center  ">Discussion</h1>
+                <Button  onClick={() => window.location.href = "/group/" + group._id} 
+                className="bg-green-400 hover:bg-green-700 mt-4 text-white font-bold py-2 px-4 rounded font-light text-sm"
+                >
+            <ArrowBackIcon />
+          &nbsp;Back to group
+        </Button>
             </div>
             }
         </div>
 
 
         <div className="grid grid-cols-3 gap-4 divide-x mt-8 gap-8">
-            <div className="col-span-3 text-center"> 
-            <div className="flex flex-col items-center justify-center">
-            <Button className="text-black bg-amber-500 hover:bg-amber-600 rounded-md font-light" onClick={handleCreateDiscussionPost}>New Post</Button>
+            <div className="col-span-3  mr-8 flex justify-end items-center">
+                <Button className="bg-amber-500 hover:bg-amber-700 text-black font-bold py-2 px-4 rounded font-light text-sm" onClick={handleCreateDiscussionPost}>
+                Create Discussion Post
+                </Button>
             </div>
-            </div>
+
+
             
             <div className="text-center col-span-1">
                 
