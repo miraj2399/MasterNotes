@@ -150,7 +150,9 @@ export default function Discussion(props) {
                 <h1 color="blue-gray" className="hover:text-gray-600 text-gray-800 text-xl text-center font-extralight mb-3">{group.courseTitle}</h1>
                 <h1 color="blue-gray" className="hover:text-gray-600 text-gray-900 text-xl text-center  ">Discussion</h1>
                 <Button  onClick={() => window.location.href = "/group/" + group._id} 
-                className="bg-green-400 hover:bg-green-700 mt-4 text-white font-bold py-2 px-4 rounded font-light text-sm"
+                className=" text-green-700  font-bold  hover:text-white hover:bg-green-700 mt-4  font-bold py-2 px-4 rounded hover:font-normal text-sm"
+                variant="text"
+
                 >
             <ArrowBackIcon />
           &nbsp;Back to group
