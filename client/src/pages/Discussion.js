@@ -93,7 +93,7 @@ export default function Discussion(props) {
                 ))
                 setMessage("Comment added successfully");
                 setOpen(true);
-                
+
                 
             }).catch((err) => {
                 console.log(err);
@@ -164,11 +164,11 @@ export default function Discussion(props) {
                 {
                     
                     discussionPosts&&discussionPosts.map((discussionPost) => (
-                        <div className="flex items-center justify-center pt-5 pb-5 pl-5 pr-5 hover:bg-gray-400" 
+                        <div className="flex items-center justify-center ml-2 p-4 hover:bg-gray-400 border-b-2 hover:border-none" 
                         onClick={() => setSelectedPost(discussionPost)}
                         >
                         {discussionPost.comments.length>0&&
-                        <div className=" relative w-10 h-10  overflow-hidden ">
+                        <div className=" relative w-10 h-10  overflow-hidden  ">
                             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-green-800 text-lg font-extralight">
                             <ReplyIcon size="sm"/>
                             {discussionPost.comments.length}
@@ -176,7 +176,7 @@ export default function Discussion(props) {
                         </div>
                         }
 
-                        <div className="hover:bg-gray-400 w-full h-24 overflow-y-auto border-b-2 hover:border-none">
+                        <div className="hover:bg-gray-400 w-full h-24 overflow-y-auto ">
                             <div className=" font-regular decoration-1 underline-offset-4 text-gray-800 text-xl text-center" >{discussionPost.title}</div>
                             <div className="text-gray-800 text-lg text-center font-extralight mt-1 mb-3 ">{discussionPost.content}</div>
                         </div>
