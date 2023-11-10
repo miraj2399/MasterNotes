@@ -17,6 +17,13 @@ export default function CreateGroup() {
  const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [checkboxDates, setCheckboxDates] = useState([]);
+  const [inviteOnly, setStatus] = useState(true);
+
+  useEffect(() => {
+    console.log(inviteOnly);
+    setGroup({ ...group, inviteOnly:inviteOnly});
+}, [inviteOnly]);
+ 
 
  const emptyGroup = {
     name: "",
@@ -209,10 +216,19 @@ export default function CreateGroup() {
             </div>
 
             <div>
-                <div>
-                <Checkbox  label="Invite only" name="inviteOnly"/>
-                <Checkbox  label="Public"/>
-                </div>
+            <div>
+              <Checkbox
+                label="Invite only"
+                name="inviteOnly"
+                checked={inviteOnly === true}
+                onChange={() => setStatus(true)}
+                />
+              <Checkbox
+                label="Public"
+                checked={inviteOnly === false}
+                onChange={() => setStatus(false)}
+                />
+            </div>
                 <Typography className="ml-3 text-gray-500 text-sm">
                 Invite only: Only people who have been invited to the group can join.<br/>
                 Public: Anyone with the link can join.

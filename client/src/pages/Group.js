@@ -26,16 +26,35 @@ export default function Group(){
     const [masterNotes, setMasterNotes] = useState([]);
  
     useEffect(() => {
-        GetGroupByIdService(id).then((data) => {
-            setGroup(data);
-            setDates(data.dates);
-            setNotes(data.notes);
-        })
-        GetPersonBranchService(id).then((data) => {
-            setPersonalBranch(data);
-        })
-
-    }, [])
+        GetGroupByIdService(id)
+            .then((data) => {
+                console.log('Group data:', data);
+                setGroup(data);
+                setDates(data.dates);
+                setNotes(data.notes);
+            })
+            .catch((error) => {
+                console.error('Error fetching group data:', error);
+            });
+    
+        GetPersonBranchService(id)
+            .then((data) => {
+                console.log('Personal branch data:', data);
+                setPersonalBranch(data);
+            })
+            .catch((error) => {
+                console.error('Error fetching personal branch data:', error);
+            });
+    }, [id]);
+    
+    useEffect(() => {
+        console.log('Group:', group);
+        if (group && group.inviteOnly !== undefined) {
+            console.log('Invite only:', group.inviteOnly);
+        }
+    }, [group, group.inviteOnly]);
+    
+    
 
     useEffect(() => {
         if (branch==="all") {
@@ -91,7 +110,16 @@ export default function Group(){
             <div class="text-center">
            <h1 color="blue-gray" className="hover:text-gray-600 text-gray-800 text-4xl text-center font-extralight mb-5">{group.name}</h1>
            <h1 color="blue-gray" className="hover:text-gray-600 text-gray-800 text-xl text-center font-extralight mb-5">{group.courseTitle}</h1>
-           <InviteJoinGroup group={group}/>
+           {group.inviteOnly === true && <InviteJoinGroup group={group}/>}
+           {!group.inviteOnly && 
+           <>
+                 <Button
+                   // onClick={handleCreateGroupClick} opens modal that displays share link
+                    className="bg-white hover:bg-white bg-opacity-50 border text-black font-light text-sm border-black border-2">
+                    Share
+                </Button>
+           </>
+           }
            </div>
            </div>
               <div className="flex justify-center items-center gap-2 mb-10">
