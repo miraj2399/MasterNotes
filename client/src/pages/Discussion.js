@@ -103,7 +103,7 @@ export default function Discussion(props) {
             <div className="grid gap-2 p-3">
                 <textarea className="border-2 border-gray-200 rounded-md p-2 w-full flex" value={comment} onChange={(e) => setComment(e.target.value)}></textarea>
                 <button className=" 
-                bg-cyan-500 hover:bg-cyan-400 bg-opacity-50 text-black font-light font-bold py-2 px-4 rounded
+                bg-yellow-600 hover:bg-yellow-700  text-black font-light font-bold py-2 px-4 rounded
                 " onClick={handleCommentSubmit}>Add Comment</button>
             </div>
         )
@@ -141,7 +141,7 @@ export default function Discussion(props) {
     return (
         <>
         
-         <div class="flex h-52 justify-center items-center bg-cyan-500 bg-opacity-50">
+         <div class="flex h-52 justify-center items-center bg-amber-500 bg-opacity-50">
             {group&&
             <div class="text-center">
                 <h1 color="blue-gray" className="hover:text-gray-600 text-gray-800 text-4xl text-center font-extralight mb-3">{group.name}</h1>
@@ -155,7 +155,7 @@ export default function Discussion(props) {
         <div className="grid grid-cols-3 gap-4 divide-x mt-8 gap-8">
             <div className="col-span-3 text-center"> 
             <div className="flex flex-col items-center justify-center">
-            <Button className="text-white bg-green-500 hover:bg-green-600 rounded-md font-light" onClick={handleCreateDiscussionPost}>New Post</Button>
+            <Button className="text-black bg-amber-500 hover:bg-amber-600 rounded-md font-light" onClick={handleCreateDiscussionPost}>New Post</Button>
             </div>
             </div>
             
