@@ -41,7 +41,17 @@ const createDiscussionPost = async (req, res) => {
     }, {new:true});
 
     // return all discussion posts
-    const discussions = await DiscussionPost.find({group: group._id});
+    const discussions = await DiscussionPost.find({group: group._id}).populate([{
+        path: "comments",
+        populate: {
+            path: "owner",
+            select: "-password -verified -email -createdAt -updatedAt -__v -groups",
+        }
+    }, {
+        path: "owner",
+        select: "-password -verified -email -createdAt -updatedAt -__v -groups",
+    }, ]);
+
     return res.status(200).json(discussions);
 
 
@@ -205,7 +215,20 @@ const AddCommentHandler = async (req, res) => {
             comments: comment._id,
         }
     });
-    const newDiscussionPost = await DiscussionPost.findById(discussionPost._id).populate("comments");
+    const newDiscussionPost = await DiscussionPost.findById(discussionPost._id).
+    populate([{
+        path: "comments",
+        populate: {
+            path: "owner",
+            select: "-password -verified -email -createdAt -updatedAt -__v -groups",
+        }
+    }, {
+        path: "owner",
+        select: "-password -verified -email -createdAt -updatedAt -__v -groups",
+    }, ]);
+    
+        
+
     return res.status(200).json(newDiscussionPost);
 }
 

@@ -82,7 +82,9 @@ export default function ProtectedRoute() {
       </div>
   </Drawer>
   <Main drawerOpen={drawerOpen}>
+    <div className="absolute top-0 left-0">
       { !drawerOpen && <Button onClick={handleDrawerToggle}><MenuIcon/></Button>}
+    </div>
   <Outlet/>
   </Main>
   </>

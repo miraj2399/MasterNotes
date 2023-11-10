@@ -26,11 +26,11 @@ export default function PersonalSpaceSection() {
                 <Button
                     color="blue"
                     onClick={handleCreateNoteClick}
-                    className="px-6 py-2 text-white bg-blue-500 hover:bg-blue-600 rounded-md text-md font-light">
+                    className="px-6 py-2 text-white bg-cyan-500  hover:bg-cyan-600  rounded-md text-md font-light">
                     Create Note
                 </Button>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2  gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2  gap-4 sm:min-w-[800px]  md:min-w-[900px] lg:min-w-[1000px]">
                 {notes.map((note) => (
                     <div key={note._id}>
                         <Link to={`/personalNote/${note._id}`} >
