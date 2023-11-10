@@ -308,6 +308,7 @@ export default function Group() {
                                 personalBranch.notes &&
                                 personalBranch.notes.includes(note._id)
                               }
+                              tags={ tags.filter((tag) => note.tags.includes(tag._id))}
                             />
                           );
                         }
@@ -336,6 +337,7 @@ export default function Group() {
                                 personalBranch.notes &&
                                 personalBranch.notes.includes(note._id)
                               }
+                              tags={ tags.filter((tag) => note.tags.includes(tag._id))}
                             />
                           );
                         }
@@ -359,6 +361,7 @@ export default function Group() {
                               }
                               upvotes={note.upvotes.length}
                               downvotes={note.downvotes.length}
+                              tags={ tags.filter((tag) => note.tags.includes(tag._id))}
                             />
                           );
                         }
@@ -381,6 +384,7 @@ export default function Group() {
                               }
                               upvotes={note.upvotes.length}
                               downvotes={note.downvotes.length}
+                              tags={ tags.filter((tag) => note.tags.includes(tag._id))}
                             />
                           );
                         }
