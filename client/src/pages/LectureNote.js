@@ -21,6 +21,7 @@ import Edit from "@mui/icons-material/Edit";
 import Delete from "@mui/icons-material/Delete";
 import CommentSection from "../components/CommentSection";
 import {Chip, Snackbar} from "@mui/material";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 
 import Markdown from "react-markdown";
@@ -119,7 +120,13 @@ export default function LectureNote() {
   ) : (
     <div className="grid md:grid-cols-6 gap-4 p-10">
       <div className="md:col-span-4">
-        
+        <div className="mb-8">
+        <Button variant="text" onClick={() => window.location.href = "/group/" + note.group} 
+        startIcon={<ArrowBackIcon/>}
+         >
+          Back to group
+        </Button>
+        </div>
         <Markdown className={"prose"}>{note.content}</Markdown>
       </div>
       <div className="md:col-span-2 ">
