@@ -99,8 +99,8 @@ export default function CreateDiscussionPost(props) {
 
   return (
     <Box sx={{ width: "100%" }}>
-        <h1 className="text-4xl font-extrabold text-green-700 tracking-wide text-center">Create Discussion Post</h1>
-        <p className="text-gray-500 text-center">Write your question here</p>
+        <h1 className="text-4xl font-regular text-green-700 tracking-wide text-center mt-5 mb-2">Create Discussion Post</h1>
+        <p className="text-gray-600 text-center font-light mb-5 text-lg">Write your question here</p>
         <br />
         <div className="w-full flex justify-center items-center pl-5 mb-5 pr-5">
         <Input 

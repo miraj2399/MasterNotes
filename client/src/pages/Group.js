@@ -142,7 +142,7 @@ export default function Group() {
         <div className="flex gap-2 items-center ">
           <p
             className="text-gray-500 
-                text-lg font-extralight italic dark:text-gray-400 "
+                text-lg font-extralight italic dark:text-gray-400 ml-3"
           >
             Filter by:
           </p>

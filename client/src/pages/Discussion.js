@@ -26,7 +26,7 @@ export default function Discussion(props) {
     const DiscussionCommentSection = (props) => {
         const { comments, id } = props;
         return (
-            <div className="flex flex-col gap-2 mt-8">
+            <div className="flex flex-col gap-2 mt-1">
                 <CommentInput id={id}/>
                 {comments&& comments.length>0 && comments.map((comment) => {
                     return <Comment key={comment._id} comment={comment}/>
@@ -176,7 +176,7 @@ export default function Discussion(props) {
                 {
                     
                     discussionPosts&&discussionPosts.map((discussionPost) => (
-                        <div className="flex items-center justify-center ml-2 p-4 hover:bg-gray-400 border-b-2 hover:border-none" 
+                        <div className="flex items-center justify-center ml-2 p-4 hover:bg-gray-400 border-b hover:border-none" 
                         onClick={() => setSelectedPost(discussionPost)}
                         >
                         {discussionPost.comments.length>0&&
@@ -188,7 +188,7 @@ export default function Discussion(props) {
                         </div>
                         }
 
-                        <div className="hover:bg-gray-400 w-full h-24 overflow-y-auto ">
+                        <div className="hover:bg-gray-400 w-full h-24 overflow-y-auto">
                             <div className=" font-regular decoration-1 underline-offset-4 text-gray-800 text-xl text-center" >{discussionPost.title}</div>
                             <div className="text-gray-800 text-lg text-center font-extralight mt-1 mb-3 ">{discussionPost.content}</div>
                         </div>
@@ -215,7 +215,7 @@ export default function Discussion(props) {
               </>
             }
                 </div>
-                <div className="ml-4">
+                <div className="ml-5 font-light mt-2">
                 <Markdown className={"prose-lg"} 
                 remarkPlugins={[remarkGfm]}
                 >{selectedPost.content}</Markdown>
@@ -223,7 +223,7 @@ export default function Discussion(props) {
             
                 {selectedPost.owner && 
                 <>
-                <div className="flex items-left ml-5 mt-8">
+                <div className="flex items-left ml-5 mt-5">
                 <p className="inline-block items-left mr-3 text-sm text-gray-900 dark:text-white font-semibold">
                     {selectedPost.owner.firstName} {selectedPost.owner.lastName}</p>
                 <p class="inline-block items-left text-sm text-gray-600 dark:text-gray-400"><time pubdate datetime="2022-02-08"

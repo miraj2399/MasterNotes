@@ -55,8 +55,8 @@ export default function GroupSettings() {
 
   return(
         <>
-        <div className="bg-white p-4 rounded-lg">
-            <p className="text-4xl font-normal text-blue-700 tracking-wide border-b border-b pb-4 pt-4">Group Settings</p>
+        <div className="bg-white p-4 rounded-lg ml-5 mr-5">
+            <p className="text-4xl font-normal text-blue-700 tracking-wide border-b border-b mt-5 pb-4 pt-4">Group Settings</p>
             <p className="text-2xl font-light text-blue-700 tracking-wide mt-10 mb-5 border-b pb-5 pt-5">Visibility</p>
             <div>
               <Checkbox
