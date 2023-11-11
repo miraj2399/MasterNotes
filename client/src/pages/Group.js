@@ -113,7 +113,12 @@ export default function Group() {
           >
             {group.courseTitle}
           </h1>
-          <InviteJoinGroup group={group} />
+          {group.inviteOnly === true && <InviteJoinGroup group={group}/>}
+           {!group.inviteOnly && 
+           <>
+                <ShareGroup group={group}/>
+           </>
+           }
         </div>
       </div>
       <div className="flex justify-center items-center gap-2 mb-10">
