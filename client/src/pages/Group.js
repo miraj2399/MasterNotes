@@ -13,6 +13,7 @@ import Icon from '@mui/material/Icon';
 import { Link } from "react-router-dom";
 import Settings from "@mui/icons-material/Settings";
 import { IconButton } from "@mui/material";
+import ShareGroup from "../components/ShareGroup";
 
 
 export default function Group(){
@@ -113,11 +114,7 @@ export default function Group(){
            {group.inviteOnly === true && <InviteJoinGroup group={group}/>}
            {!group.inviteOnly && 
            <>
-                 <Button
-                   // onClick={handleCreateGroupClick} opens modal that displays share link
-                    className="bg-white hover:bg-white bg-opacity-50 border text-black font-light text-sm border-black border-2">
-                    Share
-                </Button>
+                <ShareGroup group={group}/>
            </>
            }
            </div>
