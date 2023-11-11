@@ -10,6 +10,8 @@ import Markdown from "react-markdown";
 import remarkGfm from 'remark-gfm'
 import ReplyIcon from '@mui/icons-material/Reply';
 import {Snackbar} from "@mui/material";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+
 
 export default function Discussion(props) {
     const { groupId } = useParams();
@@ -93,7 +95,7 @@ export default function Discussion(props) {
                 ))
                 setMessage("Comment added successfully");
                 setOpen(true);
-                
+
                 
             }).catch((err) => {
                 console.log(err);
@@ -103,7 +105,7 @@ export default function Discussion(props) {
             <div className="grid gap-2 p-3">
                 <textarea className="border-2 border-gray-200 rounded-md p-2 w-full flex" value={comment} onChange={(e) => setComment(e.target.value)}></textarea>
                 <button className=" 
-                bg-cyan-500 hover:bg-cyan-400 bg-opacity-50 text-black font-light font-bold py-2 px-4 rounded
+                bg-yellow-600 hover:bg-yellow-700  text-black font-light font-bold py-2 px-4 rounded
                 " onClick={handleCommentSubmit}>Add Comment</button>
             </div>
         )
@@ -141,34 +143,44 @@ export default function Discussion(props) {
     return (
         <>
         
-         <div class="flex h-52 justify-center items-center bg-cyan-500 bg-opacity-50">
+         <div class="flex h-52 justify-center items-center bg-amber-500 bg-opacity-50">
             {group&&
             <div class="text-center">
                 <h1 color="blue-gray" className="hover:text-gray-600 text-gray-800 text-4xl text-center font-extralight mb-3">{group.name}</h1>
                 <h1 color="blue-gray" className="hover:text-gray-600 text-gray-800 text-xl text-center font-extralight mb-3">{group.courseTitle}</h1>
                 <h1 color="blue-gray" className="hover:text-gray-600 text-gray-900 text-xl text-center  ">Discussion</h1>
+                <Button  onClick={() => window.location.href = "/group/" + group._id} 
+                className=" text-green-700  font-bold  hover:text-white hover:bg-green-700 mt-4  font-bold py-2 px-4 rounded hover:font-normal text-sm"
+                variant="text"
+
+                >
+            <ArrowBackIcon />
+          &nbsp;Back to group
+        </Button>
             </div>
             }
         </div>
 
 
         <div className="grid grid-cols-3 gap-4 divide-x mt-8 gap-8">
-            <div className="col-span-3 text-center"> 
-            <div className="flex flex-col items-center justify-center">
-            <Button className="text-white bg-green-500 hover:bg-green-600 rounded-md font-light" onClick={handleCreateDiscussionPost}>New Post</Button>
+            <div className="col-span-3  mr-8 flex justify-end items-center">
+                <Button className="bg-amber-500 hover:bg-amber-700 text-black font-bold py-2 px-4 rounded font-light text-sm" onClick={handleCreateDiscussionPost}>
+                Create Discussion Post
+                </Button>
             </div>
-            </div>
+
+
             
             <div className="text-center col-span-1">
                 
                 {
                     
                     discussionPosts&&discussionPosts.map((discussionPost) => (
-                        <div className="flex items-center justify-center pt-5 pb-5 pl-5 pr-5 hover:bg-gray-400" 
+                        <div className="flex items-center justify-center ml-2 p-4 hover:bg-gray-400 border-b-2 hover:border-none" 
                         onClick={() => setSelectedPost(discussionPost)}
                         >
                         {discussionPost.comments.length>0&&
-                        <div className=" relative w-10 h-10  overflow-hidden ">
+                        <div className=" relative w-10 h-10  overflow-hidden  ">
                             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-green-800 text-lg font-extralight">
                             <ReplyIcon size="sm"/>
                             {discussionPost.comments.length}
@@ -176,7 +188,7 @@ export default function Discussion(props) {
                         </div>
                         }
 
-                        <div className="hover:bg-gray-400 w-full h-24 overflow-y-auto border-b-2 hover:border-none">
+                        <div className="hover:bg-gray-400 w-full h-24 overflow-y-auto ">
                             <div className=" font-regular decoration-1 underline-offset-4 text-gray-800 text-xl text-center" >{discussionPost.title}</div>
                             <div className="text-gray-800 text-lg text-center font-extralight mt-1 mb-3 ">{discussionPost.content}</div>
                         </div>
