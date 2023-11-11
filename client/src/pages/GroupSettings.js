@@ -55,9 +55,9 @@ export default function GroupSettings() {
 
   return(
         <>
-        <div className="bg-white p-8 rounded-lg ">
-            <p className="text-4xl font-extrabold text-blue-700 tracking-wide">Group Settings</p>
-            <p className="text-2xl font-extrabold text-blue-700 tracking-wide mt-20 mb-10">Visibility</p>
+        <div className="bg-white p-4 rounded-lg">
+            <p className="text-4xl font-normal text-blue-700 tracking-wide border-b border-b pb-4 pt-4">Group Settings</p>
+            <p className="text-2xl font-light text-blue-700 tracking-wide mt-10 mb-5 border-b pb-5 pt-5">Visibility</p>
             <div>
               <Checkbox
                 label="Invite only"
@@ -80,7 +80,7 @@ export default function GroupSettings() {
                 }
                 />
             </div>
-            <p className="text-2xl font-extrabold text-blue-700 tracking-wide mt-20 mb-10">Tags</p>
+            <p className="text-2xl font-light text-blue-700 tracking-wide mt-10 mb-5 border-b pb-5 pt-5">Tags</p>
             <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
                 <div>
                 {tags.map((tag) => (
