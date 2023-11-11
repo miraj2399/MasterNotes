@@ -684,13 +684,13 @@ async function EditGroupInviteOnlyHandler(req, res) {
   console.log("EditGroupInviteOnlyHandler - inviteOnly:", inviteOnly);
 
   try {
-    const group = await Group.findByIdAndUpdate(groupId, { inviteOnly: inviteOnly });
+    const group = await Group.findByIdAndUpdate(groupId, { inviteOnly: inviteOnly }, { new: true });
 
     if (!group) {
       return res.status(404).json({ message: "Group not found" });
     }
 
-    return res.status(200).json({ message: "Group inviteOnly updated successfully" });
+    return res.status(200).json({ message: "Group is now " + (group.inviteOnly ? "invite-only. Only invited users can join the group" : "public. Anyone with the link can join the group") });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ message: err.message });
