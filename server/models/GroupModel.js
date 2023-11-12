@@ -19,6 +19,11 @@ const groupSchema = new Schema({
         trim: true,
         minlength: 3,
     },
+    inviteOnly: {
+        type: Boolean,
+        required: [true, "Public status is required"],
+        default: true, 
+    },
     instructor: {
         type: String,
         required: [true, "Instructor is required"],

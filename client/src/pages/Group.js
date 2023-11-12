@@ -25,6 +25,7 @@ import Icon from "@mui/material/Icon";
 import { Link } from "react-router-dom";
 import Settings from "@mui/icons-material/Settings";
 import { IconButton } from "@mui/material";
+import ShareGroup from "../components/ShareGroup";
 import DoneIcon from "@mui/icons-material/Done";
 import AddIcon from "@mui/icons-material/Add";
 
@@ -112,7 +113,12 @@ export default function Group() {
           >
             {group.courseTitle}
           </h1>
-          <InviteJoinGroup group={group} />
+          {group.inviteOnly === true && <InviteJoinGroup group={group}/>}
+           {!group.inviteOnly && 
+           <>
+                <ShareGroup group={group}/>
+           </>
+           }
         </div>
       </div>
       <div className="flex justify-center items-center gap-2 mb-10">
@@ -136,7 +142,7 @@ export default function Group() {
         <div className="flex gap-2 items-center ">
           <p
             className="text-gray-500 
-                text-lg font-extralight italic dark:text-gray-400 "
+                text-lg font-extralight italic dark:text-gray-400 ml-3"
           >
             Filter by:
           </p>

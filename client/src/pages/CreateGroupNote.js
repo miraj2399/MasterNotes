@@ -82,7 +82,7 @@ const customStyles = {
     left: '50%',
     right: 'auto',
     bottom: 'auto',
-    width: '80vw',
+    width: '60vw',
     height: '80vw',
     marginRight: '-50%',
     maxHeight: '500px',
@@ -219,9 +219,21 @@ const customStyles = {
 
   function GroupInfo(group) {
     return (
-      <div className="flex justify-center items-center gap-2 mb-10">
-        <Typography variant="h5">{group.name}</Typography>
-        <Typography variant="subtitle1">{group.courseTitle}</Typography>
+      <div className="flex justify-center items-center gap-2 mt-5">
+       <div class="text-center">
+          <h1
+            color="blue-gray"
+            className="hover:text-gray-600 text-gray-800 text-4xl text-center font-extralight mb-3"
+          >
+            {group.name}
+          </h1>
+          <h1
+            color="blue-gray"
+            className="hover:text-gray-600 text-gray-800 text-xl text-center font-extralight"
+          >
+            {group.courseTitle}
+          </h1>
+        </div>
       </div>
     );
   }

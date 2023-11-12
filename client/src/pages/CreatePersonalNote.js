@@ -88,8 +88,8 @@ export default function CreatePersonalNote() {
 
   return (
     <Box sx={{ width: "100%" }}>
-        <h1 className="text-4xl font-extrabold text-green-700 tracking-wide text-center">Create Personal Note</h1>
-        <p className="text-gray-500 text-center">Write your note here</p>
+        <h1 className="text-4xl font-regular text-green-700 tracking-wide text-center mt-10 mb-2">Create Personal Note</h1>
+        <p className="text-gray-600 text-center font-light text-lg">Write your note here</p>
         <br />
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
