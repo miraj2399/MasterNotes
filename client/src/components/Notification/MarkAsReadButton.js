@@ -6,6 +6,6 @@ export default function MarkAsReadButton(props){
         window.location.reload();
     }
     return (
-        <button onClick={handleMarkAsRead} className="mx-2 bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded-lg text-sm font-semibold mr-2">Mark as read</button>
+        <button onClick={handleMarkAsRead} className="mx-2 bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded-lg text-sm font-light mr-2">Mark as read</button>
     )
 }

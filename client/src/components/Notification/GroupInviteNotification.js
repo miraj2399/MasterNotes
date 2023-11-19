@@ -30,8 +30,8 @@ export default function GroupInviteNotification(props) {
                     <div className="text-gray-600 font-semibold text-sm">{notification.text}{notification.message?":"+notification.message:""}</div>
                 </div>
                 <div className="flex items-center">
-                    <button onClick={handleAccept} className="bg-green-500 hover:bg-green-600 text-white px-2 py-1 rounded-lg text-sm font-semibold mr-2">Accept</button>
-                    <button onClick={handleDecline} className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded-lg text-sm font-semibold">Decline</button>
+                    <button onClick={handleAccept} className="bg-green-500 hover:bg-green-600 text-white px-2 py-1 rounded-lg text-sm font-light mr-2">Accept</button>
+                    <button onClick={handleDecline} className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded-lg text-sm font-light">Decline</button>
                     <MarkAsReadButton id={notification._id}/>
                 </div>
             </div>
