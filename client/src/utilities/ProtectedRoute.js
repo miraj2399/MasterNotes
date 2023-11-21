@@ -15,6 +15,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { useState } from "react";
 import { styled } from '@mui/material/styles';
 import { Box, Button, Drawer} from "@mui/material";
+import Person from "@mui/icons-material/Person";
 
 
 const drawerWidth=200;
@@ -50,24 +51,18 @@ export default function ProtectedRoute() {
          </div>
         {/* Here goes all the tabs (eg. Dashboard, Group, Space, Settings) */}
         
-        <div style={{'margin-top': '20px', 'padding': '25px'}}>
+        <div style={{'margin-top': '20px', 'padding': '20px'}}>
           < Button onClick={()=>{window.location.href='/dashboard'}}><GridViewIcon/>     Dashboard</Button>
         </div>
-        <div style={{'margin-top': '15px', 'padding': '20xpx', 'padding-left': '25px'}}>
+        <div style={{'margin-top': '20px', 'padding': '20px'}}>
           < Button onClick={()=>{window.location.href='/groups'}}><GroupIcon/>     Groups</Button>
         </div>
-        <div style={{'margin-top': '15px', 'padding': '20px','padding-left': '22px'}}>
+        <div style={{'margin-top': '20px', 'padding': '20px'}}>
           < Button onClick={()=>{window.location.href='/spaces'}}><PersonOutlineIcon/>     Spaces</Button>
         </div>
-        <div style={{'margin-top': '15px', 'padding': '20px','padding-left': '25px'}}>
-          < Button onClick={()=>{window.location.href='/settings'}}><SettingsIcon/>     Settings</Button>
-        </div>
-        <div style={{'margin-top': '15px', 'padding': '20px','padding-left': '25px'}}>
+        <div style={{'margin-top': '20px', 'padding': '20px'}}>
           < Button onClick={()=>{window.location.href='/notifications'}}><NotificationsNoneIcon/>     Notifications</Button>
         </div>
-
-      
-       
 
     </div>
     <div style={{'position': 'absolute', 'bottom': '0', 'width': '100%'}}>

@@ -153,10 +153,10 @@ const customStyles = {
           
         />
 
-        <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick={handleCancel}>
+        <button className="bg-red-500 hover:bg-red-700 text-white font-light py-2 px-4 rounded" onClick={handleCancel}>
           Cancel
         </button>
-        <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" onClick={handlePublish}>
+        <button className="bg-green-500 hover:bg-green-700 text-white font-light py-2 px-4 rounded" onClick={handlePublish}>
           Publish
         </button>
         
