@@ -207,8 +207,8 @@ export default function CreateGroup() {
             </div>
             <div>
                 <div className="grid grid-cols-2 gap-4">
-              <Input size="lg" label="Start Date" type="date" name="startDate" onChange={handleChange} className={dateError!='' ? 'text-red-600 focus:ring-red-500"/>  ' : ''}/>       
-              <Input size="lg" label="End Date" type="Date" name="endDate" onChange={handleChange}  className={dateError!='' ? 'text-red-600 focus:ring-red-500"/>  ' : ''}/>
+              <Input size="lg" label="Start Date" type="Date" min="2023-01-01" max="2024-12-30" name="startDate" onChange={handleChange} className={dateError!='' ? 'text-red-600 focus:ring-red-500"/>  ' : ''}/>       
+              <Input size="lg" label="End Date" type="Date" min="2023-01-02" max="2024-12-31" name="endDate" onChange={handleChange}  className={dateError!='' ? 'text-red-600 focus:ring-red-500"/>  ' : ''}/>
               </div>
 
               {dateError &&  
