@@ -613,7 +613,9 @@ const AddNoteToPersonalBranchHandler = async (req, res) => {
             // check if the note is already in the branch
             const isNoteInBranch = noteref.notes.includes(noteId);
             if (isNoteInBranch) {
-                return res.status(200).json({message: "Note already in branch"});
+                // remove the note from the branch
+                await noteref.updateOne({$pull: {notes: noteId}});
+                return res.status(200).json({message: "Note removed from branch"});
             }
             await noteref.updateOne({$push: {notes: noteId}});
             return res.status(200).json({message: "Note added to branch"});
