@@ -18,12 +18,13 @@ export default function CreateGroup() {
   const [message, setMessage] = useState("");
   const [checkboxDates, setCheckboxDates] = useState([]);
   const [inviteOnly, setStatus] = useState(true);
+  const [dateError, setDateError] = useState('');
+  const [timeError, setTimeError] = useState('');
 
   useEffect(() => {
     console.log(inviteOnly);
     setGroup({ ...group, inviteOnly:inviteOnly});
 }, [inviteOnly]);
- 
 
  const emptyGroup = {
     name: "",
@@ -110,6 +111,12 @@ export default function CreateGroup() {
         group.weekdays
       )
     );
+    if (group.startDate && group.endDate && (group.endDate <= group.startDate)){
+      setDateError('Please enter a valid date range');
+    }
+    if (group.startDate && group.endDate && (group.endDate > group.startDate)){
+      setDateError('');
+    }
   }, [group.startDate])
 
 
@@ -121,7 +128,22 @@ export default function CreateGroup() {
         group.weekdays
       )
     );
+    if (group.startDate && group.endDate && (group.endDate <= group.startDate)){
+      setDateError('Please enter a valid date range');
+    }
+    if (group.startDate && group.endDate && (group.endDate > group.startDate)){
+      setDateError('');
+    }
   }, [group.endDate])
+
+  useEffect(() => { 
+    if (group.startTime && group.endTime && (group.endTime <= group.startTime)){
+      setTimeError('Please enter a valid time range');
+    }
+    if (group.startTime && group.endTime && (group.endTime > group.startTime)){
+      setTimeError('');
+    }
+  }, [group.startTime, group.endTime])
 
   return (
     <>   
@@ -170,23 +192,33 @@ export default function CreateGroup() {
             </div>
             <div>
                 <div className="grid grid-cols-2 gap-4">
-              <Input size="lg" label="Start time" type="time" name="startTime" onChange={handleChange} />
-              <Input size="lg" label="End time" type="time" name="endTime" onChange={handleChange}/>
+              <Input size="lg" label="Start time" type="time" name="startTime" onChange={handleChange} className={timeError!='' ? 'text-red-600 focus:ring-red-500"/>  ' : ''}/>
+              <Input size="lg" label="End time" type="time" name="endTime" onChange={handleChange} className={timeError!='' ? 'text-red-600 focus:ring-red-500"/>  ' : ''}/>
               </div>
 
+              {timeError &&  
+              <Typography className="ml-3 text-red-500 text-sm">
+                {timeError}
+              </Typography>} 
+              {!timeError && 
               <Typography className="ml-3 text-gray-500 text-sm">
                 eg. 1:40pm - 3:00pm
-              </Typography>
+              </Typography>}
             </div>
             <div>
                 <div className="grid grid-cols-2 gap-4">
-              <Input size="lg" label="Start Date" type="date" name="startDate" onChange={handleChange}/>
-              <Input size="lg" label="End Date" type="Date" name="endDate" onChange={handleChange}/>
+              <Input size="lg" label="Start Date" type="Date" min="2023-01-01" max="2024-12-30" name="startDate" onChange={handleChange} className={dateError!='' ? 'text-red-600 focus:ring-red-500"/>  ' : ''}/>       
+              <Input size="lg" label="End Date" type="Date" min="2023-01-02" max="2024-12-31" name="endDate" onChange={handleChange}  className={dateError!='' ? 'text-red-600 focus:ring-red-500"/>  ' : ''}/>
               </div>
 
-              <Typography className="ml-3 text-gray-500 text-sm">
+              {dateError &&  
+              <Typography className="ml-3 text-red-500 text-sm">
+                {dateError}
+              </Typography>} 
+             {!dateError && 
+             <Typography className="ml-3 text-gray-500 text-sm">
                 eg. 09/05/2023 - 12/22/2023
-              </Typography>
+              </Typography>}
             </div>
 
             <div>

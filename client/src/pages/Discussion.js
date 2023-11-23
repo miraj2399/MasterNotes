@@ -12,6 +12,10 @@ import ReplyIcon from '@mui/icons-material/Reply';
 import {Snackbar} from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
+const useForceUpdate = () => {
+    const [, setValue] = useState(0);
+    return () => setValue((value) => ++value);
+  };
 
 export default function Discussion(props) {
     const { groupId } = useParams();
@@ -21,7 +25,7 @@ export default function Discussion(props) {
     const [open, setOpen] = useState(false);
     const [message, setMessage] = useState("");
     
-    
+    const forceUpdate = useForceUpdate();
     
     const DiscussionCommentSection = (props) => {
         const { comments, id } = props;
@@ -63,7 +67,29 @@ export default function Discussion(props) {
                 <>
                       <div className="inline-block gap-2">
                       <IconButton className=""
-                        onClick={() => { DeleteDiscussionCommentService(comment._id) }}
+                        onClick={() => { DeleteDiscussionCommentService(comment._id).then((data) => {
+                            setOpen(true);
+                            setMessage("Comment deleted successfully");
+                            // Update comments after successful deletion
+                            const commentId = comment._id;
+                            const updatedComments = selectedPost.comments.filter(
+                              (comment) => comment._id !== commentId
+                            );
+                            setSelectedPost((prevPost) => ({
+                              ...prevPost,
+                              comments: updatedComments,
+                            }));
+                      
+                            setDiscussionPosts((prevPosts) =>
+                              prevPosts.map((post) =>
+                                post._id === selectedPost._id
+                                  ? { ...post, comments: updatedComments }
+                                  : post
+                              )
+                            );
+                        }).catch((err) => {
+                            console.log(err);
+                        }) }}
                       >
                         <DeleteIcon/>
                      </IconButton>

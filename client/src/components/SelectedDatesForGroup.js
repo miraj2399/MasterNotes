@@ -19,9 +19,9 @@ export default function SelectedDatesForGroup(props) {
         }
 
         return (
-            <div className="border border-gray-300 rounded-3xl p-2 m-2 flex justify-center items-center gap-2 bg-cyan-500 bg-opacity-50 hover:bg-red-200" onClick={handleClick}>
-                <Typography variant="small">{weekdays[date.getDay()]}, {date.getMonth()+1}/{date.getDate()} [x]</Typography>
-            </div>
+            <div className="border h-14 border-gray-300 rounded-3xl p-2 m-2 flex justify-center items-center gap-2 bg-cyan-500 bg-opacity-50 hover:bg-red-200" onClick={handleClick}>
+            <Typography variant="small">{weekdays[date.getDay()]}, {date.getMonth()+1}/{date.getDate()} [x]</Typography>
+          </div>
         )
 
     }
@@ -50,9 +50,9 @@ export default function SelectedDatesForGroup(props) {
 
         return (
             dates.length>0?(
-            <div className="border border-gray-300 rounded-3xl p-2 m-2 flex justify-center items-center gap-2 bg-green-400 hover:bg-green-300 p-3">
+                <div className="border h-14 border-gray-300 rounded-3xl p-2 m-2 flex justify-center items-center gap-2 bg-green-400 hover:bg-green-300 p-3">
                 <Input type="date" size='sm' onChange={handleAddDate}/>
-            </div>):null
+              </div>):null
         )
     }
 
