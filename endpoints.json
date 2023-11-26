@@ -1,0 +1,921 @@
+{
+	"info": {
+		"_postman_id": "41c73027-4229-45a8-a948-045b210609de",
+		"name": "MasterNotes",
+		"description": "Masternotes is a platform to share and organize class notes chronologically. At the end of the semester, if you're trying to figure out what was the topic the professor disscussed 5 weeks ago, Our platform is for you!",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20101626",
+		"_collection_link": "https://www.postman.com/lunar-module-engineer-90854621/workspace/masternotes/collection/20101626-41c73027-4229-45a8-a948-045b210609de?action=share&source=collection_link&creator=20101626"
+	},
+	"item": [
+		{
+			"name": "UserRoutes",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "6948~rsuGwe6vHHfOhG4o0YeUEHkatUIW3IBnCmk7BFmVTDy7sMYXWaiKUXTPQIPZpxmg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"miraj@gmail.com\",\n    \"password\":\"rutgers1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"miraj3@gmail.com\",\n    \"firstName\":\"Miraj\",\n    \"lastName\":\"Hossain 3\",\n    \"password\":\"rutgers1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/users/signup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"users",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check token validity",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/users/authenticated",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"users",
+								"authenticated"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Master notes use JWT authentication to authenticate and authorize all HTTP requests from the client. All the routes except the routes that start with base_url/users/, require the user to add a bearer token to the header of the request. Failing to do so will produce a 401 error.\n\nUsers can sign up in Masternotes providing email and basic profile information. Once signed up, with successful login, the user will receive a token which needs to be provided to the server with all subsequent requests.\n\nIn the backend, Masternotes uses middleware to validate and determine user identity for every API call (except for /users routes). On the client side, we use cookies along with Axios interceptors to meet that requirement which can be achieved in several other ways.\n\n_**Beware, intruders will be greeted with a 401 handshake and escorted through the virtual door. No cookies for you!**_"
+		},
+		{
+			"name": "SpaceRoutes",
+			"item": [
+				{
+					"name": "get all notes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/spaces/notes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"spaces",
+								"notes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create personal note",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"content\":\"whatever note is it blah blah blah\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/spaces/notes/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"spaces",
+								"notes",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get a note by id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"_id\": \"655da3b6e130872b9a7c5b53\",\n    \"content\": \"# (EDITED) Enumerate in python\\n```\\nfor i,num in enumerate(nums):\\n    print(num)\\n```\\n\\nEnumerate gives access the element along with the index in a much simpler way\",\n    \"owner\": \"651c6fc9d87be2aad3939ab0\",\n    \"createdAt\": \"2023-11-22T06:46:14.874Z\",\n    \"updatedAt\": \"2023-11-22T06:46:14.874Z\",\n    \"__v\": 0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/spaces/notes/655da3b6e130872b9a7c5b53",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"spaces",
+								"notes",
+								"655da3b6e130872b9a7c5b53"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit a note by id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n \"content\":\"updated content\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/spaces/notes/655da3b6e130872b9a7c5b53",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"spaces",
+								"notes",
+								"655da3b6e130872b9a7c5b53"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a note by id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/spaces/notes/655022dbf7da2a675e3aa4ba",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"spaces",
+								"notes",
+								"655022dbf7da2a675e3aa4ba"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Space is a place that is very personal to Masternotes users. Think of it as a beautiful note app that allows you to gather all your ideas/notes that you don't intend to share with your classmates. Only you can create, view, update, and delete notes.\n\n_**In space, you don't follow rules, you make your own!**_"
+		},
+		{
+			"name": "Notifications",
+			"item": [
+				{
+					"name": "get all notifications",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/notifications",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"notifications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mark a notification as read by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/notifications/read/655022dbf7da2a675e3aa4ba",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"notifications",
+								"read",
+								"655022dbf7da2a675e3aa4ba"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Notification is, as the name suggests, to notify the user of events. Currently, Masternotes supports one kind of notification - the invitation to join a group.\n\nWe know you hate notifications, and so do we, that is why we have only 1 kind of notification.  \n  \n_**Notifications are like clingy exes – always buzzing, rarely important, and often interrupting your dinner.**_"
+		},
+		{
+			"name": "Group",
+			"item": [
+				{
+					"name": "Group CRUD operations",
+					"item": [
+						{
+							"name": "Get all groups",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:4000/groups/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"groups",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get group by id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:4000/groups/651e28d91cf765c12ce48d40",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"groups",
+										"651e28d91cf765c12ce48d40"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "toggle group visiblility",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"inviteOnly\":\"false\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:4000/groups/651e28d91cf765c12ce48d40",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"groups",
+										"651e28d91cf765c12ce48d40"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create a group",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": " \n {\n        \"inviteOnly\": true,\n        \"name\": \"TEST GROUP 1(MIRAJ)\",\n        \"courseNumber\": \"01:198:404\",\n        \"courseTitle\": \"XYZ Engineering\",\n        \"instructor\": \"Bobby Rob\",\n        \"location\": \"Hill 114\",\n        \"startTime\": \"11:16\",\n        \"endTime\": \"11:18\",\n        \"startDate\": \"2023-09-06T00:00:00.000Z\",\n        \"endDate\": \"2023-12-19T00:00:00.000Z\",\n        \"weekdays\": [\n            \"Tue\",\n            \"Thu\"\n        ],\n        \n        \"dates\": [\n            \"2023-09-06T00:00:00.000Z\",\n            \"2023-09-08T00:00:00.000Z\",\n            \"2023-09-10T00:00:00.000Z\"\n        ],\n        \n        \"description\": \"This course is an introduction to the principles and practice of software engineering and the software development process. Topics include software life cycle models, requirements analysis, software design, implementation, testing, maintenance, and project management. Students will work in teams to develop a software project.\"\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:4000/groups",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"groups"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "In MasterNotes, we allow users to create a group. However, the user cannot delete a group as it may cause harm to all other members. We decided the group would be archived( after a certain time from the end date of the semester), so users(if public group)/members won't be able to interact with the group but can view it after that period. FYI, the archive feature is not implemented but it explains why we don't have a delete operation for the group entity."
+				},
+				{
+					"name": "Group Invite/Join",
+					"item": [
+						{
+							"name": "Create invite to join group",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"groupId\":\"651b2ee2331e654bdb6801e5\",\n    \"emails\":[\n        \"jarim@gmail.com\",\n        \"miraj@gmail.com\",\n        \"anonymous@gmail.com\",\n        \"miraj3@gmail.com\"\n    ],\n    \"message\":\"Please please join in my group!\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:4000/groups/invite",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"groups",
+										"invite"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "join group",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:4000/groups/join/651b2ee2331e654bdb6801e5",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"groups",
+										"join",
+										"651b2ee2331e654bdb6801e5"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "leave a group",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:4000/groups/leave/651b2ee2331e654bdb6801e5",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"groups",
+										"leave",
+										"651b2ee2331e654bdb6801e5"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Decline group invite",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:4000/groups/decline/651b2ee2331e654bdb6801e5",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"groups",
+										"decline",
+										"651b2ee2331e654bdb6801e5"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "For public groups anybody with the link to the group can join. But for Invite only groups, an existing member/owner can invite other people to join a group by providing the emails of the intended users.  \n  \nOnce the users email is added to invitation list, a notification is created for existing user, or if the email is not registered to an account, if the email account owner decide to regiester to Masternotes platform in a later time, will be able to see the invitaion to join to that group as a notification.\n\nA member can leave a group anytime."
+				},
+				{
+					"name": "Group Note",
+					"item": [
+						{
+							"name": "get lecture note by id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:4000/groups/notes/653f33c95e60a2c210d435f5",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"groups",
+										"notes",
+										"653f33c95e60a2c210d435f5"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create note",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n     \"_id\": \"6545185ab2e4dc82620f91f1\",\n    \"group\": \"651e28d91cf765c12ce48d40\",\n    \"date\": \"651e28d91cf765c12ce48d46\",\n    \"content\": \"#test test test test 3\\nfdfasdasdasd dfasd\\nfasdfasdasdfasd\"\n\n\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:4000/groups/notes",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"groups",
+										"notes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "upvote note",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:4000/groups/notes/654aaaf71f9fc279731cda4f/upvote",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"groups",
+										"notes",
+										"654aaaf71f9fc279731cda4f",
+										"upvote"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "downvote a note",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:4000/groups/notes/653ef60ddc9e06c25ab7f308/downvote",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"groups",
+										"notes",
+										"653ef60ddc9e06c25ab7f308",
+										"downvote"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create comment",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"content\":\"my very 4th commment, woohooo!\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:4000/groups/notes/65217c671fb1737c6fc40974/comments",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"groups",
+										"notes",
+										"65217c671fb1737c6fc40974",
+										"comments"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "Group note is the heart of our product. Member can create group note with lots of customization (thanks to Markdown editor), tags and a specific date. Choosing a date for a note is crucial as our product intend to orgainze notes inside a group chronologically.  \n  \nMembers can also comment, upvote, downvote a note to provide feedback and collaborate with classmates. Most upvoted note for a specific date is shown as a part of master branch in client UI by performing in browser sorting techniques. Also, user can add any number of note to their personal branch to visit later. The Client side UI also provide an option to add a note to personal space (which copy the content and make a post request to create a new space note on client's behalf)."
+				},
+				{
+					"name": "Group tags",
+					"item": [
+						{
+							"name": "Add tags to group",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\":\"important\",\n    \"color\":\"#ffeffe\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:4000/groups/651e28d91cf765c12ce48d40/tags",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"groups",
+										"651e28d91cf765c12ce48d40",
+										"tags"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete a tag by id",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:4000/groups/651e28d91cf765c12ce48d40/tags/655ea3bf889ccc6b7a1d8ead",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"groups",
+										"651e28d91cf765c12ce48d40",
+										"tags",
+										"655ea3bf889ccc6b7a1d8ead"
+									]
+								},
+								"description": "/groups/{groupID}/tags/{tagID}"
+							},
+							"response": []
+						}
+					],
+					"description": "Members can add tag to a group. Once a tag is added to a group, it can be selected while creating a group note. Tag allows note to have useful metadata and organization with customization.\n\nWe choose to allow all members to add/delete tags from a group. Based on user feedback and requirements it can be modified to allow only the owner/creator of the group to perform those operation."
+				},
+				{
+					"name": "Personal Branch",
+					"item": [
+						{
+							"name": "Toggle(add/delete) note from personal branch",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:4000/groups/branch/654aaaf71f9fc279731cda4f",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"groups",
+										"branch",
+										"654aaaf71f9fc279731cda4f"
+									]
+								},
+								"description": "This endpoint allows you to add note to a personal branch or delete it from presonal branch (if already in it). It is an HTTP POST request that should be made to the URL `http://localhost:4000/groups/branch/{noteID}`\n\n### Response\n\nIf the note is not currently in personal branch:\n\n{ \"message\": \"Note added to branch\"}\n\nIf it is already in personal branch:\n\n{ \"message\": \"Note removed from branch\"}"
+							},
+							"response": []
+						},
+						{
+							"name": "get personal branch",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:4000/groups/branch/651e28d91cf765c12ce48d40",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"groups",
+										"branch",
+										"651e28d91cf765c12ce48d40"
+									]
+								},
+								"description": "This API endpoint is used to retrieve information about a specific group branch. The branch ID is provided as a parameter in the URL.\n\nTo make a GET request to this endpoint, use the following URL:\n\n```\nhttp://localhost:4000/groups/branch/{groupID}\n\n ```\n\nThe response from the last execution of this request had a status code of 200, indicating a successful response. The response body contained the following information:\n\n- `_id`: The unique identifier of the group branch.\n- `user`: The user associated with the group branch.\n- `group`: The group associated with the branch.\n- `notes`: An array of notes associated with the branch. In the last execution, there was one empty note.\n- `createdAt`: The timestamp indicating when the branch was created.\n- `updatedAt`: The timestamp indicating when the branch was last updated.\n- `__v`: The version number of the branch.\n    \n\nPlease note that specific values such as names and emails have been omitted for security and privacy reasons.\n\nPlease refer to the API documentation for more information on how to use this endpoint."
+							},
+							"response": []
+						}
+					],
+					"description": "Personal branch is a collection of references to note(s) in a group by individual user. User can add/delete the reference of a note from his personal branch of a specific group. It allows the user to revisit useful notes later.\n\nIt can be thought as a bookmark of notes from a group by an individual user. Unlike master notes, personal branch is personal to every user."
+				}
+			],
+			"description": "Group is one of the building blocks of our product. Our aim is to allow people to share and organize notes in a group for a specific class. A group has features like creating a note, upvoting/downvoting/commenting on a note, and organizing notes using optional features like tags and branching(master/personal).\n\n_**Groups are like mystery boxes – you join for the intrigue, stay for the chaos, and leave because someone keeps spamming photos of their cat.**_"
+		},
+		{
+			"name": "Discusison",
+			"item": [
+				{
+					"name": "create a discussion",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n     \"title\": \"Very first dicussin\",\n    \"content\": \"when do we fall asleep where do we go?\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/discussions/651e28d91cf765c12ce48d40",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"discussions",
+								"651e28d91cf765c12ce48d40"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all discussion",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/discussions/651e28d91cf765c12ce48d40",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"discussions",
+								"651e28d91cf765c12ce48d40"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get discussion thread by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/discussions/thread/654825cd9dd929fa6b93aa34",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"discussions",
+								"thread",
+								"654825cd9dd929fa6b93aa34"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a thread",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/discussions/thread/65481f873b15ac1126e462cd",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"discussions",
+								"thread",
+								"65481f873b15ac1126e462cd"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create comment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"content\": \"Bloomed into emojis on phones, sprouting likes in digital zones!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/discussions/comment/6548527e111070a16e7fb802",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"discussions",
+								"comment",
+								"6548527e111070a16e7fb802"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Comment from discussion thread",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/discussions/comment/654825fa9dd929fa6b93aa3f",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"discussions",
+								"comment",
+								"654825fa9dd929fa6b93aa3f"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Masternotes intend to follow strict organization of notes by requiring user to specify a date during a note creation. But not all the ideas and colloboration need a structured way, for that we have a discussion board for each group. Member can ask questions, share random thoughts and colloboarte by commenting to the threads.\n\nA group has a discussion board and a discussion board can contain multiple threads. Members can create a thread by asking question or sharing opinion with classmates. And the other members can answer/feedback by commeting on the thread.\n\n  \n**Its like piazza with a significant difference- It is not cluttred and ancient looking!**"
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{mn-token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "mn-token",
+			"value": "{token-you-got-from-login}",
+			"type": "string"
+		}
+	]
+}
