@@ -4,13 +4,20 @@ import Modal from "react-modal";
 import { Button, Input } from "@material-tailwind/react";
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { IconButton } from "@mui/material";
-
+/**
+ * Functional component representing the ShareGroup feature for a group.
+ * 
+ * @param {Object} props - The properties passed to the component.
+ * @param {Object} group - The group information.
+ */
 export default function ShareGroup(props){
     const {group} = props;
     const [modalIsOpen, setIsOpen] = useState(false);
     const [isCopied, setIsCopied] = useState(false);
 
-   
+    /**
+     * Handles the copy action for the invite link.
+     */
     const handleCopy = async () => {
         const inputElement = document.getElementById('inviteLinkInput');
       
@@ -53,7 +60,11 @@ export default function ShareGroup(props){
     }
 
     const inviteLink = `http://localhost:3000/group/${group._id}`
-
+    
+    /**
+     * ShareGroup component
+     * Displays a button to trigger sharing, a modal with the group link, and the option to copy the link to the clipboard.
+     */
     return (
         <div className="text-center">
         <div>

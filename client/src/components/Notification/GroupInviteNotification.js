@@ -1,8 +1,19 @@
 import { JoinGroupService, DeclineGroupInviteService } from "../../services/GroupServices";
 import { NotificationReadService } from "../../services/NotificationServices";
 import MarkAsReadButton from "./MarkAsReadButton";
+/**
+ * Functional component representing a notification for a group invitation.
+ * 
+ * @param {Object} props - The properties passed to the component.
+ *   @param {Object} notification - The notification object containing details about the group invitation.
+ */
+
 export default function GroupInviteNotification(props) {
     const {notification} = props;
+    /**
+     * Handles the acceptance of a group invitation.
+     * Invokes JoinGroupService to join the group and updates the notification status.
+     */
     function handleAccept(){
         JoinGroupService(notification.group).then((response)=>{
             NotificationReadService(notification._id);
@@ -10,7 +21,10 @@ export default function GroupInviteNotification(props) {
         }
         );
     }
-
+   /**
+     * Handles the decline of a group invitation.
+     * Invokes DeclineGroupInviteService to decline the group invitation and updates the notification status.
+     */
     function handleDecline(){
         DeclineGroupInviteService(notification.group).then((response)=>{
             NotificationReadService(notification._id);
@@ -19,7 +33,10 @@ export default function GroupInviteNotification(props) {
         );
     }
     
-
+    /**
+     * Group invitation notification component
+     * Displays information about the notification, timestamp, and provides buttons for acceptance, decline, and marking as read.
+     */
 
     return (
         

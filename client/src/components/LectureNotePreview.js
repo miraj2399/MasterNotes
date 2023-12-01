@@ -9,10 +9,28 @@ import {
   import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
   import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
   import { Chip } from "@mui/material";
+/**
+ * Functional component representing a preview of a lecture note.
+ * 
+ * @param {Object} props - The properties passed to the component.
+ *   @param {string} title - The title of the lecture note.
+ *   @param {string} content - The content of the lecture note.
+ *   @param {string} id - The unique identifier of the lecture note.
+ *   @param {string} author - The author of the lecture note.
+ *   @param {number} upvotes - The number of upvotes for the lecture note.
+ *   @param {number} downvotes - The number of downvotes for the lecture note.
+ *   @param {boolean} inPersonalBranch - Whether the lecture note is in the personal branch.
+ *   @param {Array} tags - An array of tags associated with the lecture note.
+ */
+
   export default function LectureNotePreview(props) {
     const { title, content,id,author, upvotes,downvotes, inPersonalBranch=false, tags
     } = props;
-
+    
+    /**
+     * LectureNotePreview component.
+     * Displays a preview of the lecture note with information such as title, content, tags, author, upvotes, downvotes, and personal branch status.
+     */
     return (
       <Card className="mt-6  h-80 group  m-4 bg-gray-200 hover:bg-gray-300  " 
       onClick={
