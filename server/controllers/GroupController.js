@@ -70,9 +70,6 @@ async function CreateGroupHandler(req, res) {
 
 async function GetAllGroupsHandler(req, res) {
   try {
-    // user stores the group ids, the user is a member of
-    // return the groups that the user is a member of
-
     const groupIds = await User.findById(req.userId).select("groups");
     const groups = await Group.find({
       _id: { $in: groupIds.groups },
@@ -89,8 +86,6 @@ async function GetAllGroupsHandler(req, res) {
 
 async function GetGroupByIdHandler(req, res) {
   try {
-    // populate the group with the owner and tags
-    // as owner and tags are stored as references
 
     const group = await Group.findById(req.params.id).populate([
       {
@@ -436,13 +431,6 @@ async function GetGroupLectureNotesByIdHandler(req, res) {
 }
 
 const CreateCommentHandler = async (req, res) => {
-  /**
-   * 1. Check if the note exists
-   * 2. Check if the user is a member of the group
-   * 3. Create the comment
-   * 4. Add the comment to the note
-   * 5. Return the comment
-   */
   const noteId = req.params.id;
   const userId = req.userId;
   const note = await LectureNote.findById(noteId);
@@ -473,14 +461,6 @@ const CreateCommentHandler = async (req, res) => {
 };
 
 const UpvoteHandler = async (req, res) => {
-  /**
-   * 1. Check if the note exists
-   * 2. Check if the user is a member of the group
-   * 3. Check if the user has already upvoted the note, if so, remove the upvote
-   * 4. Check if the user has downvoted the note, if so, remove the downvote and add the upvote
-   * 5. Add the upvote
-   * 6. Return the message
-   */
   try {
     const noteId = req.params.id;
     const note = await LectureNote.findById(noteId);
@@ -529,9 +509,6 @@ const UpvoteHandler = async (req, res) => {
   }
 };
 const DownvoteHandler = async (req, res) => {
-  /**
-   * similar to the upvote handler
-   */
     try {
       const noteId = req.params.id;
       const note = await LectureNote.findById(noteId);
@@ -580,10 +557,6 @@ const DownvoteHandler = async (req, res) => {
   };
 
 const GetAllDatesByGroupIdHandler = async (req, res) => {
-  /**
-   * 1. Check if the group exists
-   * 2. Return the dates
-   */
   try {
     const dates = await LectureDate.find({ group: req.params.id });
     res.status(200).json(dates);

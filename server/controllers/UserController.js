@@ -2,10 +2,6 @@ const bcrypt = require('bcrypt');
 const User = require('../models/UserModel');
 const {GenerateToken,ValidateToken} = require('../utils/GenerateToken');
 async function SignUpHandler(req, res){
-    /**
-     * hash the password before storing it in the database
-     * the datbase do not store the password in plain text
-     */
     const {email, password, firstName, lastName} = req.body;
     const hasedPassword = await bcrypt.hash(password, 10);
     try {
@@ -26,11 +22,6 @@ async function SignUpHandler(req, res){
 }
 
 async function LoginHandler(req, res){
-    /**
-     * check if the user exists in the database
-     * if the user exists, compare the password with the hashed password
-     * if the password is correct, generate a token and send it to the client
-     */
     const {email, password} = req.body;
     const user = await User.findOne({email: email});
     if (!user) {
@@ -60,9 +51,6 @@ async function LoginHandler(req, res){
 }
 
 const AuthenticatedHandler = (req, res) => {
-    /**
-     * This function let user to verify if the token is valid without sending the password
-     */
     const token = req.headers.authorization.split(" ")[1];
     const {email, userId} = ValidateToken(token);
     const user = User.findOne({email: email, _id: userId});
