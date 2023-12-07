@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Button } from '@material-tailwind/react';
 import GroupCard from './GroupCard';
 import { GetAllGroupsService } from '../services/GroupServices';
+/**
+ * Functional component representing a section for displaying groups.
+ */
 
 export default function GroupSection() {
     const [groups, setGroups] = useState([]);
@@ -15,7 +18,11 @@ export default function GroupSection() {
     const handleCreateGroupClick = () => {
         window.location.href = "/createGroup";
     };
-
+    
+    /**
+     * GroupSection component
+     * Displays a list of groups and provides a button to create a new group.
+     */
     return (
         <div className="bg-white p-8 rounded-lg ">
             <div className="flex items-center justify-between mb-4">

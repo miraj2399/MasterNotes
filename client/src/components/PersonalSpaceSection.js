@@ -4,6 +4,9 @@ import PersonalNoteCard from './PersonalNoteCard';
 import { GetAllNotesService } from '../services/SpaceService';
 import { Link } from 'react-router-dom';
 
+/**
+ * Functional component representing the personal space section.
+ */
 export default function PersonalSpaceSection() {
     const handleCreateNoteClick = () => {
         window.location.href = '/createPersonalNote';
@@ -18,7 +21,11 @@ export default function PersonalSpaceSection() {
         }
         getNotes();
     }, []);
-
+    
+    /**
+     * PersonalSpaceSection component
+     * Displays a section for personal space with the option to create a new note and a grid of existing personal notes.
+     */
     return (
         <div className="bg-white p-8 rounded-lg ">
             <div className="flex items-center justify-between mb-4">
