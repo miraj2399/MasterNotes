@@ -1,3 +1,5 @@
+// Importing necessary components and dependencies
+
 import { CreateNoteService } from '../services/SpaceService';
 import React, { useEffect, useState } from "react";
 import { Tabs, Tab, Typography } from "@mui/material";
@@ -8,9 +10,11 @@ import { Grid } from "@mui/material";
 import { Snackbar } from "@mui/material";
 import AllowTab from '../utilities/AllowTabinTextArea';
 import remarkGfm from 'remark-gfm'
+// Function to render a custom tab panel
+
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
-  
+
 
   return (
     <div
@@ -28,6 +32,7 @@ function CustomTabPanel(props) {
     </div>
   );
 }
+// Function to manage accessibility props for tabs
 
 function a11yProps(index) {
   return {
@@ -35,49 +40,57 @@ function a11yProps(index) {
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
+// Main component for creating a personal note
 
 export default function CreatePersonalNote() {
-  const [value,setValue] = useState(0);
+  const [value, setValue] = useState(0);
   const [text, setText] = useState("");
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
+  // Function to handle tab change
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
- 
 
 
+
+  // Function to manage buttons for Cancel and Publish
 
   const ButtonBar = () => {
     const handleCancel = () => {
-        window.history.back();
-      };
+      window.history.back();
+    };
     const handlePublish = () => {
-        CreateNoteService({content:text}).then((data) => {
-            if(data.error) {
-                setMessage(data.error);
-                setOpen(true);
-                setTimeout(() => {
-                    window.location.href = "/dashboard";
-                }, 1000);
-            }
-            else {
-                setMessage(data.message);
-                setOpen(true);
-                window.history.back();
-            }
-        }
-        );
-        };
+      // Create a personal note using the service
 
-        
+      CreateNoteService({ content: text }).then((data) => {
+        if (data.error) {
+          // Display error message in the Snackbar
+          setMessage(data.error);
+          setOpen(true);
+          setTimeout(() => {
+            window.location.href = "/dashboard";
+          }, 1000);
+        }
+        else {
+          // Display success message in the Snackbar and navigate back
+          setMessage(data.message);
+          setOpen(true);
+          window.history.back();
+        }
+      }
+      );
+    };
+
+
     return (
       <div className="flex justify-end gap-2">
-        
-        <button className="bg-red-500 hover:bg-red-700 text-white font-light py-2 px-4 rounded" onClick={handleCancel}>
+
+        <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick={handleCancel}>
           Cancel
         </button>
-        <button className="bg-green-500 hover:bg-green-700 text-white font-light py-2 px-4 rounded" onClick={handlePublish}>
+        <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" onClick={handlePublish}>
           Publish
         </button>
       </div>
@@ -85,15 +98,16 @@ export default function CreatePersonalNote() {
   };
 
 
+  // JSX structure for rendering the UI
 
   return (
     <Box sx={{ width: "100%" }}>
-        <h1 className="text-4xl font-regular text-green-700 tracking-wide text-center mt-10 mb-2">Create Personal Note</h1>
-        <p className="text-gray-600 text-center font-light text-lg">Write your note here</p>
-        <br />
+      <h1 className="text-4xl font-extrabold text-green-700 tracking-wide text-center">Create Personal Note</h1>
+      <p className="text-gray-500 text-center">Write your note here</p>
+      <br />
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
-            value={value}
+          value={value}
           onChange={handleChange}
           aria-label="basic tabs example"
         >
@@ -112,7 +126,7 @@ export default function CreatePersonalNote() {
           onChange={(e) => {
             setText(e.target.value);
           }}
-        onKeyDown={e=>AllowTab(e)}
+          onKeyDown={e => AllowTab(e)}
           value={text}
         />
         <ButtonBar />
@@ -125,7 +139,7 @@ export default function CreatePersonalNote() {
             overflow: "auto",
           }}
         >
-          <Markdown className="prose-lg" 
+          <Markdown className="prose-lg"
             remarkPlugins={[remarkGfm]}
           >{text}</Markdown>
         </Box>
@@ -149,7 +163,7 @@ export default function CreatePersonalNote() {
               />
             </Grid>
             <Grid item xs={6}>
-              <Markdown className="prose" 
+              <Markdown className="prose"
                 remarkPlugins={[remarkGfm]}
               >{text}</Markdown>
             </Grid>
@@ -166,7 +180,7 @@ export default function CreatePersonalNote() {
           setOpen(false);
         }}
         message={message}
-        />
+      />
     </Box>
   );
 }
