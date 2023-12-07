@@ -1,43 +1,32 @@
-// Import necessary modules and functions
-
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { GetPersonalNoteByIdService, EditNoteService } from '../services/SpaceService';
-// Define EditPersonalNote component
-
+import { GetPersonalNoteByIdService, EditNoteService} from '../services/SpaceService';
 export default function EditPersonalNote() {
-  // Get the 'id' parameter from the URL
   const { id } = useParams();
-  // State variables to store note details and content
   const [note, setNote] = useState({});
   const [content, setContent] = useState("");
-  // Fetch note details when the component mounts or 'id' changes
   useEffect(() => {
     async function getNote() {
-      const noteRecieved = await GetPersonalNoteByIdService(id); // Fetch note by ID
-      setNote(noteRecieved); // Set the fetched note
-      setContent(noteRecieved.content); // Set the content of the note
+      const noteRecieved = await GetPersonalNoteByIdService(id);
+      setNote(noteRecieved);
+      setContent(noteRecieved.content);
     }
-    getNote(); // Invoke the function to fetch note details
-  }, [id]); // Trigger the effect when 'id' changes
-  // Function to handle form submission for editing the note
+    getNote();
+  }, [id]);
   async function handleSubmit(e) {
     e.preventDefault();
     const newNote = {
-      content: content, // Updated content of the note
-      owner: note.owner // Keeping the owner information unchanged
+      content: content,
+      owner: note.owner
     };
-    // Send a request to edit the note using EditNoteService
     const response = await EditNoteService(id, newNote).then((data) => {
-      window.location.href = `/personalNote/${id}`; // Redirect to the edited note's page
+      window.location.href = `/personalNote/${id}`;
     }
     ).catch((err) => {
-      console.log(err); // Log any errors that occur during the editing process
+      console.log(err);
     });
 
   }
-  // JSX for the EditPersonalNote component
-
   return (
     <div className="flex flex-col items-center justify-center">
       <div className="flex flex-row gap-2 items-center justify-center">
