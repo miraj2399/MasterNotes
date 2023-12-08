@@ -6,8 +6,20 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { Box } from "@mui/material";
 
+/**
+ * Functional component representing a card for displaying information about a group.
+ * 
+ * @param {Object} props - The properties passed to the component.
+ *   @param {Object} group - The group object containing details about the group.
+ */
 export default function GroupCard(props) {
     const group = props.group
+    /**
+     * GroupCard component
+     * Displays information about the group, such as name, course, members, schedule, location, and duration.
+     * Navigates to the group page on click.
+     */
+
     return (
 
         <Card className="w-128 h-64 m-4 bg-green-100 hover:bg-green-300" onClick={

@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { GetAllNotificationsService } from "../services/NotificationServices";
 import GroupInviteNotification from "./Notification/GroupInviteNotification";
+/**
+ * Functional component representing the notification center.
+ */
 export default function NotificationCenter() {
     const [readNotifications, setReadNotifications] = useState([]);
     const [unreadNotifications, setUnreadNotifications] = useState([]);
@@ -12,7 +15,11 @@ export default function NotificationCenter() {
         });
     }
     , []);
-
+    
+    /**
+     * NotificationCenter component
+     * Displays a list of unread and read notifications, including the GroupInviteNotification component.
+     */
     return (
 
         <div className="flex flex-col items-center m-8 divide-y">

@@ -3,6 +3,13 @@ import Popup from 'reactjs-popup';
 import Modal from "react-modal";
 import { Button, Input } from "@material-tailwind/react";
 import { InviteJoinGroupService } from "../services/GroupServices";
+/**
+ * Functional component representing a button to invite people to join a group.
+ * 
+ * @param {Object} props - The properties passed to the component.
+ *   @param {Object} group - The group object for which invitations are being sent.
+ */
+
 export default function InviteJoinGroup(props){
     const {group} = props;
     const [emails, setEmails] = useState([]);
@@ -29,7 +36,10 @@ export default function InviteJoinGroup(props){
         setIsOpen(false);
     }
 
-
+    /**
+     * InviteJoinGroup component.
+     * Displays a button to open the invitation modal and allows users to invite others to join the group.
+     */
     return (
         <div className="text-center">
         <div>

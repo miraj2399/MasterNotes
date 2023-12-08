@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 
+/**
+ * Functional component representing a Frequently Asked Questions (FAQ) section.
+ */
 export default function FAQSection() {
   // State to track which questions are open/collapsed
   const [openQuestions, setOpenQuestions] = useState([]);
@@ -36,7 +39,10 @@ export default function FAQSection() {
     },
   ];
   
-
+/**
+ * FAQ section component.
+ * Displays a list of frequently asked questions along with their answers.
+ */
   return (
     <div className="faq-section">
         <h2 className="text-3xl font-bold mb-4">Frequently Asked Questions</h2>
