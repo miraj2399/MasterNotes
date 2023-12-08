@@ -32,7 +32,7 @@ import { Drawer } from "@mui/material";
 
 
 
-
+//establishes the routes for React for the entire application
 function App() {
  
 

@@ -27,6 +27,7 @@ const Main = styled(Box,{ shouldForwardProp: (prop) => prop !== 'drawerOpen' })(
   }),
 }));
 
+//this React component represents a protected route that requires authentication. It includes a persistent drawer for navigation and user-related actions. It sets up the drawer and the styling of the pages with protected routes
 export default function ProtectedRoute() {
   const drawerStatusFromLocalStorage = localStorage.getItem('drawerOpen');
   const [drawerOpen, setDrawerOpen] = useState(drawerStatusFromLocalStorage? drawerStatusFromLocalStorage==='true':false);
