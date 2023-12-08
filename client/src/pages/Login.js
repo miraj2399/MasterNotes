@@ -6,18 +6,22 @@ import { validateEmail, validatePassword, validatePasswordMatch } from "../utili
 import Cookies from "js-cookie";
 
 export default function Login() {
+  // Initial state for form data, open status of Snackbar, and message
+
   const emptyUser = {
-    email:"",
-    password:""
+    email: "",
+    password: ""
   }
-  const [data,setData] = useState(emptyUser);
+  const [data, setData] = useState(emptyUser);
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("")
 
+  // Function to handle changes in form input
   const changeHandler = e => {
-    setData({...data,[e.target.name]:e.target.value});
+    setData({ ...data, [e.target.name]: e.target.value });
   }
 
+  // Function to handle form submission
   const submitHandler = e => {
     e.preventDefault();
     if (!validateEmail(data.email)) {
@@ -30,7 +34,9 @@ export default function Login() {
       setMessage("Password must be at least 8 characters long with at least 1 number and 1 character");
       return;
     }
+    // LoginService for user login
     LoginService(data).then((res) => {
+      // On successful login, set token in cookies, display success message, and redirect to dashboard
       Cookies.set("token", res.data.token);
       localStorage.setItem("user_id", res.data.user_id);
       localStorage.setItem("email", res.data.email);
@@ -40,28 +46,34 @@ export default function Login() {
       setMessage("User Logged In");
       window.location.href = "/dashboard";
 
-      
+
     }).catch((err) => {
+      // On login failure, display error message
+
       setOpen(true);
       setMessage("User Login Failed, message: " + err.message);
     });
+    // Clear form data after submission
+
     setData(emptyUser);
   }
 
 
   return (
     <>
+      {/* Login form */}
+
       <div className="bg-zinc-200 min-h-screen flex flex-col">
-          <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
-            <a href="/" className="animate-text bg-gradient-to-r from-teal-500 via-purple-500 to-orange-500 bg-clip-text text-transparent text-5xl font-black mb-10 hover:text-blue-900">RU Notes</a>
-          <input 
+        <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
+          <a href="/" className="animate-text bg-gradient-to-r from-teal-500 via-purple-500 to-orange-500 bg-clip-text text-transparent text-5xl font-black mb-10 hover:text-blue-900">RU Notes</a>
+          <input
             type="email"
             className="block border border-gray-100 w-full p-3 rounded"
             name="email"
             value={data.email}
             onChange={changeHandler}
             placeholder="Email" />
-          
+
           <input
             type="password"
             className="block border border-gray-100 w-full p-3 rounded mt-4 mb-4"
@@ -69,7 +81,8 @@ export default function Login() {
             value={data.password}
             onChange={changeHandler}
             placeholder="Password" />
-          
+          {/* Button to submit form */}
+
           <button
             type="submit"
             className="w-full text-center py-3 rounded bg-green-500 text-white hover:bg-green-700 focus:outline-none my-1"
@@ -80,13 +93,14 @@ export default function Login() {
             <Link className="no-underline border-b  border-blue-700 text-blue" to="/signup">
               Create an account
             </Link>.
-        
-          <Snackbar
-            open={open}
-            autoHideDuration={6000}
-            onClose={() => setOpen(false)}
-            message={message}
-          />
+            {/* Snackbar for displaying messages */}
+
+            <Snackbar
+              open={open}
+              autoHideDuration={6000}
+              onClose={() => setOpen(false)}
+              message={message}
+            />
 
           </div>
         </div>

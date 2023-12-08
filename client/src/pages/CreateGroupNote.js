@@ -8,15 +8,17 @@ import Markdown from "react-markdown";
 import { Chip, Grid } from "@mui/material";
 import { Autocomplete, TextField } from "@mui/material";
 import { useParams } from "react-router-dom";
-import { GetGroupByIdService, CreateGroupLectureNoteService} from "../services/GroupServices";
+import { GetGroupByIdService, CreateGroupLectureNoteService } from "../services/GroupServices";
 import { Snackbar } from "@mui/material";
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import Fab from '@mui/material/Fab';
 import Modal from "react-modal";
 import remarkGfm from "remark-gfm";
+// Function to render a custom tab panel
+
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
-  
+
 
   return (
     <div
@@ -34,6 +36,7 @@ function CustomTabPanel(props) {
     </div>
   );
 }
+// Function to manage accessibility props for tabs
 
 function a11yProps(index) {
   return {
@@ -41,8 +44,11 @@ function a11yProps(index) {
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
+// Main component for creating a group note
 
 export default function CreateGroupNote() {
+  // State variables initialization using useState hooks
+
   const [value, setValue] = useState(0);
   const [text, setText] = useState("");
   const [group, setGroup] = useState({});
@@ -52,6 +58,8 @@ export default function CreateGroupNote() {
   const [message, setMessage] = useState("");
   const [tags, setTags] = useState([]);
   const { group: groupId } = useParams();
+  // Fetch group information by ID on component mount
+
   useEffect(() => {
     GetGroupByIdService(groupId).then((data) => {
       setGroup(data);
@@ -62,157 +70,167 @@ export default function CreateGroupNote() {
       );
     });
   }, [groupId]);
+  // Function to handle tab change
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  // Functions to handle opening and closing of the modal
 
   const [modalIsOpen, setIsOpen] = useState(false);
 
   function openModal() {
     setIsOpen(true);
-}
+  }
 
-function closeModal() {
+  function closeModal() {
     setIsOpen(false);
-}
+  }
+  // Styles for the modal
 
-const customStyles = {
-  content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    width: '60vw',
-    height: '80vw',
-    marginRight: '-50%',
-    maxHeight: '500px',
-    transform: 'translate(-50%, -50%)',
-  },
-};
+  const customStyles = {
+    content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      width: '60vw',
+      height: '80vw',
+      marginRight: '-50%',
+      maxHeight: '500px',
+      transform: 'translate(-50%, -50%)',
+    },
+  };
+  // Function to manage buttons for Cancel and Publish
 
   const ButtonBar = () => {
     const handleCancel = () => {
-        window.history.back();
-      };
-    
-        const handlePublish = () => {
-            if (text.length < 20) {
-                setMessage("Note must be at least 20 characters long");
-                setOpen(true);
-                return;
-            }
-            if (date === "") {
-                setMessage("Date is required");
-                setOpen(true);
-                return;
-            }
-            const lectureDate = group.dates.find((d) => {
-                return new Date(d.date).toDateString() === date;
-            });
-            CreateGroupLectureNoteService(group._id, lectureDate._id, text, tags).then((data) => {
-                window.location.href = `/group/${group._id}`;
-            });
-        };
+      window.history.back();
+    };
+    // Handlers for Cancel and Publish buttons
+
+    const handlePublish = () => {
+      // Validation before publishing the note
+
+      if (text.length < 20) {
+        setMessage("Note must be at least 20 characters long");
+        setOpen(true);
+        return;
+      }
+      if (date === "") {
+        setMessage("Date is required");
+        setOpen(true);
+        return;
+        // Fetch lecture date and create the group lecture note
+
+      }
+      const lectureDate = group.dates.find((d) => {
+        return new Date(d.date).toDateString() === date;
+      });
+      CreateGroupLectureNoteService(group._id, lectureDate._id, text, tags).then((data) => {
+        window.location.href = `/group/${group._id}`;
+      });
+    };
     return (
       <>
-      <div className="flex justify-end gap-2">
-        <Autocomplete
-          id="tags-outlined"
-          options={dates}
-          value={date}
-          defaultValue={[dates[0]]}
-          freeSolo
-          style={{ minWidth: 200 }}
-          renderInput={(params) => (
-            <TextField {...params} variant="filled" placeholder="Date" />
-          )}
+        <div className="flex justify-end gap-2">
+          <Autocomplete
+            id="tags-outlined"
+            options={dates}
+            value={date}
+            defaultValue={[dates[0]]}
+            freeSolo
+            style={{ minWidth: 200 }}
+            renderInput={(params) => (
+              <TextField {...params} variant="filled" placeholder="Date" />
+            )}
             onChange={(e, value) => {
-                setDate(value);
+              setDate(value);
             }}
-        />
-        
-        
-        <Autocomplete
-          id="tags-outlined"
-          options={group.tags}
-          style={{ minWidth: 200 }}
+          />
 
-          getOptionLabel={(option) => option.name}
-          filterSelectedOptions
-          renderInput={(params) => (
-            <TextField {...params} variant="filled" placeholder="Tags" />
-          )}
-          onChange={(e, value) => {
-            // if tag already exists, remove it
-            if (tags.find((tag) => tag._id === value._id)) {
-              setTags(tags.filter((tag) => tag._id !== value._id));
-            } else {
-              setTags([...tags, value]);
-            }
-          }}
-          
-        />
 
-        <button className="bg-red-500 hover:bg-red-700 text-white font-light py-2 px-4 rounded" onClick={handleCancel}>
-          Cancel
-        </button>
-        <button className="bg-green-500 hover:bg-green-700 text-white font-light py-2 px-4 rounded" onClick={handlePublish}>
-          Publish
-        </button>
-        
-      </div>
-      <div>
-        <Fab aria-label="question" onClick={openModal}>
-          <QuestionMarkIcon />
-        </Fab>
-        <Modal
+          <Autocomplete
+            id="tags-outlined"
+            options={group.tags}
+            style={{ minWidth: 200 }}
+
+            getOptionLabel={(option) => option.name}
+            filterSelectedOptions
+            renderInput={(params) => (
+              <TextField {...params} variant="filled" placeholder="Tags" />
+            )}
+            onChange={(e, value) => {
+              // if tag already exists, remove it
+              if (tags.find((tag) => tag._id === value._id)) {
+                setTags(tags.filter((tag) => tag._id !== value._id));
+              } else {
+                setTags([...tags, value]);
+              }
+            }}
+
+          />
+
+          <button className="bg-red-500 hover:bg-red-700 text-white font-light py-2 px-4 rounded" onClick={handleCancel}>
+            Cancel
+          </button>
+          <button className="bg-green-500 hover:bg-green-700 text-white font-light py-2 px-4 rounded" onClick={handlePublish}>
+            Publish
+          </button>
+
+        </div>
+        <div>
+          <Fab aria-label="question" onClick={openModal}>
+            <QuestionMarkIcon />
+          </Fab>
+          <Modal
             isOpen={modalIsOpen}
             onRequestClose={closeModal}
             contentLabel="Information"
             style={customStyles}
-        >
-          <div className="font-bold text-center">Markdown Instructions</div><br />
-          <div className="text-center">
-          <b># Heading 1</b> <br />
-          <b>## Heading 2</b> <br />
-          <b>### Heading 3</b> <br />
-          <b>Bold </b>	**bold text**<br />
-          <b>Italic	</b>*italicized text*<br />
-          <b> Autolink literals</b>
-          <br />
-          www.example.com, https://example.com, and contact@example.com.
-          <br />
-          <b>Footnote</b>
-          <br />
-          A note[^1]
-          <br />
-          [^1]: Big note.
-          <br />
-          <b>Strikethrough</b>
-          <br />
-          ~one~ or ~~two~~ tildes.
-          <br />
-          <b>Table</b> 
-          <br />
-          | a | b  |  c |  d  |
-          | - | :- | -: | :-: |
-          <br />
-          <b>Tasklist</b>
-          <br />
-          * [ ] to do
-          <br />
-          * [x] done
-          </div>
+          >
+            <div className="font-bold text-center">Markdown Instructions</div><br />
+            <div className="text-center">
+              <b># Heading 1</b> <br />
+              <b>## Heading 2</b> <br />
+              <b>### Heading 3</b> <br />
+              <b>Bold </b>	**bold text**<br />
+              <b>Italic	</b>*italicized text*<br />
+              <b> Autolink literals</b>
+              <br />
+              www.example.com, https://example.com, and contact@example.com.
+              <br />
+              <b>Footnote</b>
+              <br />
+              A note[^1]
+              <br />
+              [^1]: Big note.
+              <br />
+              <b>Strikethrough</b>
+              <br />
+              ~one~ or ~~two~~ tildes.
+              <br />
+              <b>Table</b>
+              <br />
+              | a | b  |  c |  d  |
+              | - | :- | -: | :-: |
+              <br />
+              <b>Tasklist</b>
+              <br />
+              * [ ] to do
+              <br />
+              * [x] done
+            </div>
           </Modal>
-      </div>
-      <div className="flex justify-end gap-2">
-        {tags.map((tag) => (
-          <Chip
-            label={tag.name}
-            sx={{ background: tag.color, color: "white" }}
-          />
-        ))}
-      </div>
+        </div>
+        <div className="flex justify-end gap-2">
+          {tags.map((tag) => (
+            <Chip
+              label={tag.name}
+              sx={{ background: tag.color, color: "white" }}
+            />
+          ))}
+        </div>
       </>
     );
   };
@@ -220,7 +238,7 @@ const customStyles = {
   function GroupInfo(group) {
     return (
       <div className="flex justify-center items-center gap-2 mt-5">
-       <div class="text-center">
+        <div class="text-center">
           <h1
             color="blue-gray"
             className="hover:text-gray-600 text-gray-800 text-4xl text-center font-extralight mb-3"
@@ -311,7 +329,7 @@ const customStyles = {
           setOpen(false);
         }}
         message={message}
-        />
+      />
     </Box>
   );
 }

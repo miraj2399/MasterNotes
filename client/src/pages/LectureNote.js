@@ -1,13 +1,14 @@
-import {  useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { GetGroupLectureNotesByIdService,
+import {
+  GetGroupLectureNotesByIdService,
   DeleteGroupLectureNoteService,
   UpvoteService,
   DownvoteService,
   AddNoteToPersonalBranchService,
- } from "../services/GroupServices";
+} from "../services/GroupServices";
 
- import { CreateNoteService } from "../services/SpaceService";
+import { CreateNoteService } from "../services/SpaceService";
 import CircleIcon from "@mui/icons-material/Circle";
 import CommentIcon from "@mui/icons-material/Comment";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
@@ -20,7 +21,7 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import Edit from "@mui/icons-material/Edit";
 import Delete from "@mui/icons-material/Delete";
 import CommentSection from "../components/CommentSection";
-import {Chip, Snackbar} from "@mui/material";
+import { Chip, Snackbar } from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 
@@ -28,6 +29,7 @@ import Markdown from "react-markdown";
 import { Button, IconButton, Typography } from "@mui/material";
 
 
+// Component for Focus Mode Button
 
 const FocusModeButton = (props) => {
   const { focusMode, setFocusMode } = props;
@@ -37,7 +39,7 @@ const FocusModeButton = (props) => {
     }>
       <CircleIcon sx={{ fontSize: 15, color: "green" }} />
       <Typography variant="h6">Focus Mode</Typography>
-      </div>
+    </div>
   );
 }
 
@@ -53,25 +55,28 @@ export default function LectureNote() {
   const [message, setMessage] = useState("");
 
   const handleAddToPersonalBranch = () => {
-    
+
     AddNoteToPersonalBranchService(id).then((data) => {
       setMessage(data.message);
     })
 
     setShowMoreExpand(false);
-    }
-  
+  }
+  // Handler to add note to space
+
   const handleAddToSpace = () => {
-    CreateNoteService({content:note.content}).then((data) => {
+    CreateNoteService({ content: note.content }).then((data) => {
       setMessage("Note added to space");
     })
     setShowMoreExpand(false);
-    }
+  }
+  // Handler to edit note
 
   const handleEditNote = () => {
     setShowMoreExpand(false);
     window.location.href = `/lectureNote/${id}/edit`;
   }
+  // Handler to delete note
 
   const handleDeleteNote = () => {
     setShowMoreExpand(false);
@@ -79,6 +84,7 @@ export default function LectureNote() {
       window.location.href = "/group/" + note.group;
     })
   }
+  // Handler to upvote note
 
   const handleUpvote = () => {
     UpvoteService(id).then((data) => {
@@ -88,6 +94,7 @@ export default function LectureNote() {
     }
     );
   }
+  // Handler to downvote note
 
   const handleDownvote = () => {
     DownvoteService(id).then((data) => {
@@ -115,115 +122,115 @@ export default function LectureNote() {
         <Typography variant="h6">Exit Focus Mode</Typography>
       </div>
 
-    <Markdown className={"prose-lg"}>{note.content}</Markdown>
+      <Markdown className={"prose-lg"}>{note.content}</Markdown>
     </div>
   ) : (
     <div className="grid md:grid-cols-6 gap-4 p-10">
       <div className="md:col-span-4">
         <div className="mb-8">
-        <Button variant="text" onClick={() => window.location.href = "/group/" + note.group} 
-        startIcon={<ArrowBackIcon/>}
-         >
-          Back to group
-        </Button>
+          <Button variant="text" onClick={() => window.location.href = "/group/" + note.group}
+            startIcon={<ArrowBackIcon />}
+          >
+            Back to group
+          </Button>
         </div>
         <Markdown className={"prose"}>{note.content}</Markdown>
       </div>
       <div className="md:col-span-2 ">
         <div className="grid gap-2 mt-16 ml-2">
-        <FocusModeButton focusMode={focusMode} setFocusMode={setFocusMode} />
-    
-        <div className="flex gap-2 justify-center items-center m-2">
-          <div  className="flex justify-center items-center gap-2">
-          <PersonOutlineIcon />
-          {note.owner&& note.owner.firstName && note.owner.lastName ? `${note.owner.firstName} ${note.owner.lastName}` : "Anonymous"}
+          <FocusModeButton focusMode={focusMode} setFocusMode={setFocusMode} />
+
+          <div className="flex gap-2 justify-center items-center m-2">
+            <div className="flex justify-center items-center gap-2">
+              <PersonOutlineIcon />
+              {note.owner && note.owner.firstName && note.owner.lastName ? `${note.owner.firstName} ${note.owner.lastName}` : "Anonymous"}
+            </div>
+
+            <div className="flex justify-center items-center gap-2">
+              <CalendarTodayIcon />
+              <p>{new Date(note.createdAt).toLocaleDateString()}</p>
+            </div>
           </div>
 
-          <div className="flex justify-center items-center gap-2">
-          <CalendarTodayIcon />
-          <p>{new Date(note.createdAt).toLocaleDateString()}</p>
-        </div>
-        </div>
-
-        {/* Make it a component  later */}
-        <div className="flex  gap-2 justify-center items-center">
-    {
-      note.tags && note.tags.map((tag) => (
-        <div key={tag}>
-          <Chip label={tag.name} sx={{background: tag.color, color:"white" }}/>
-        </div>
-      ))
-    }
-          
-</div>
-
-        {/* Make it a component  later */}
-        <div className="flex gap-2 justify-center items-center">
-          <p>{note.upvotes}</p>
-          <IconButton onClick={handleUpvote}>
+          {/* Make it a component  later */}
+          <div className="flex  gap-2 justify-center items-center">
             {
-              note.upvoted ? <ThumbUpIcon color="primary" /> : <ThumbUpIcon />
-            }
-          </IconButton>
-          <p className="ml-8">{note.downvotes}</p>
-          <IconButton onClick={handleDownvote}>
-            {note.downvoted ? <ThumbDownIcon color="primary" /> : <ThumbDownIcon />}
-          </IconButton>
-          
-          <p className="ml-8">{note.comments&& note.comments.length}</p>
-          <IconButton>
-            <CommentIcon />
-          </IconButton>
-  
-
-          <IconButton>
-            <MoreVertIcon
-            onClick={() => setShowMoreExpand(!showMoreExpand)}
-            />
-          </IconButton>
-          {
-            showMoreExpand && (
-              // make them abosolute
-              <div className="bg-white rounded-md shadow-md p-2 flex flex-col gap-2">
-                <div className="flex gap-2 justify-center items-center">
-                  <Button variant="text" startIcon={<ImportExportIcon />}
-                  onClick={handleAddToPersonalBranch}
-                  >
-                    Add to Personal branch
-                  </Button>
+              note.tags && note.tags.map((tag) => (
+                <div key={tag}>
+                  <Chip label={tag.name} sx={{ background: tag.color, color: "white" }} />
                 </div>
-                <div className="flex gap-2 justify-center items-center">
-                  <Button variant="text" startIcon={<CollectionsIcon/>}
-                  onClick={handleAddToSpace}
-                  >
-                    Add to space
-                  </Button>
-                  </div>
-              
-                   {note.owner && note.owner._id === localStorage.getItem("user_id") && 
-                (<>
-                  <div className="flex gap-2 justify-center items-center">
-                  <Button variant="text" startIcon={<Edit/>}
-                  onClick={handleEditNote}
-                  >
-                    Edit
-                  </Button>
-                  </div>
-                  <div className="flex gap-2 justify-center items-center">
-                  <Button variant="text" startIcon={<Delete/>}
-                  onClick={handleDeleteNote}
-                  >
-                    Delete
-                  </Button>
-                  </div>
-                </>
-                )}
+              ))
+            }
 
-              </div>
-            )
-          }
           </div>
-        <CommentSection comments={note.comments} noteId={note._id}/>
+
+          {/* Make it a component  later */}
+          <div className="flex gap-2 justify-center items-center">
+            <p>{note.upvotes}</p>
+            <IconButton onClick={handleUpvote}>
+              {
+                note.upvoted ? <ThumbUpIcon color="primary" /> : <ThumbUpIcon />
+              }
+            </IconButton>
+            <p className="ml-8">{note.downvotes}</p>
+            <IconButton onClick={handleDownvote}>
+              {note.downvoted ? <ThumbDownIcon color="primary" /> : <ThumbDownIcon />}
+            </IconButton>
+
+            <p className="ml-8">{note.comments && note.comments.length}</p>
+            <IconButton>
+              <CommentIcon />
+            </IconButton>
+
+
+            <IconButton>
+              <MoreVertIcon
+                onClick={() => setShowMoreExpand(!showMoreExpand)}
+              />
+            </IconButton>
+            {
+              showMoreExpand && (
+                // make them abosolute
+                <div className="bg-white rounded-md shadow-md p-2 flex flex-col gap-2">
+                  <div className="flex gap-2 justify-center items-center">
+                    <Button variant="text" startIcon={<ImportExportIcon />}
+                      onClick={handleAddToPersonalBranch}
+                    >
+                      Add to Personal branch
+                    </Button>
+                  </div>
+                  <div className="flex gap-2 justify-center items-center">
+                    <Button variant="text" startIcon={<CollectionsIcon />}
+                      onClick={handleAddToSpace}
+                    >
+                      Add to space
+                    </Button>
+                  </div>
+
+                  {note.owner && note.owner._id === localStorage.getItem("user_id") &&
+                    (<>
+                      <div className="flex gap-2 justify-center items-center">
+                        <Button variant="text" startIcon={<Edit />}
+                          onClick={handleEditNote}
+                        >
+                          Edit
+                        </Button>
+                      </div>
+                      <div className="flex gap-2 justify-center items-center">
+                        <Button variant="text" startIcon={<Delete />}
+                          onClick={handleDeleteNote}
+                        >
+                          Delete
+                        </Button>
+                      </div>
+                    </>
+                    )}
+
+                </div>
+              )
+            }
+          </div>
+          <CommentSection comments={note.comments} noteId={note._id} />
         </div>
       </div>
       <Snackbar
@@ -231,7 +238,7 @@ export default function LectureNote() {
         autoHideDuration={6000}
         onClose={() => setMessage("")}
         message={message}
-        />
+      />
     </div>
 
   );
