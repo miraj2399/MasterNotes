@@ -6,18 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="0be44892-655a-46c4-b7fb-32193a446e64" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/services/AuthService.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/services/AuthService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/services/AxiosInstance.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/services/AxiosInstance.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/services/DiscussionServices.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/services/DiscussionServices.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/services/GroupServices.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/services/GroupServices.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/services/NotificationServices.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/services/NotificationServices.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/services/SpaceService.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/services/SpaceService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/utilities/AllowTabinTextArea.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/utilities/AllowTabinTextArea.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/utilities/GetDatesInRange.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/utilities/GetDatesInRange.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/utilities/ProtectedRoute.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/utilities/ProtectedRoute.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/utilities/PublicRoute.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/utilities/PublicRoute.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/utilities/ValidateInput.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/utilities/ValidateInput.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
