@@ -1,3 +1,5 @@
+// This code creates a component that displays group information, notes, and options to filter notes by type or leave the group.
+
 import {
   Timeline,
   Button,
@@ -113,12 +115,12 @@ export default function Group() {
           >
             {group.courseTitle}
           </h1>
-          {group.inviteOnly === true && <InviteJoinGroup group={group}/>}
-           {!group.inviteOnly && 
-           <>
-                <ShareGroup group={group}/>
-           </>
-           }
+          {group.inviteOnly === true && <InviteJoinGroup group={group} />}
+          {!group.inviteOnly &&
+            <>
+              <ShareGroup group={group} />
+            </>
+          }
         </div>
       </div>
       <div className="flex justify-center items-center gap-2 mb-10">
@@ -314,7 +316,7 @@ export default function Group() {
                                 personalBranch.notes &&
                                 personalBranch.notes.includes(note._id)
                               }
-                              tags={ tags.filter((tag) => note.tags.includes(tag._id))}
+                              tags={tags.filter((tag) => note.tags.includes(tag._id))}
                             />
                           );
                         }
@@ -343,7 +345,7 @@ export default function Group() {
                                 personalBranch.notes &&
                                 personalBranch.notes.includes(note._id)
                               }
-                              tags={ tags.filter((tag) => note.tags.includes(tag._id))}
+                              tags={tags.filter((tag) => note.tags.includes(tag._id))}
                             />
                           );
                         }
@@ -367,7 +369,7 @@ export default function Group() {
                               }
                               upvotes={note.upvotes.length}
                               downvotes={note.downvotes.length}
-                              tags={ tags.filter((tag) => note.tags.includes(tag._id))}
+                              tags={tags.filter((tag) => note.tags.includes(tag._id))}
                             />
                           );
                         }
@@ -390,7 +392,7 @@ export default function Group() {
                               }
                               upvotes={note.upvotes.length}
                               downvotes={note.downvotes.length}
-                              tags={ tags.filter((tag) => note.tags.includes(tag._id))}
+                              tags={tags.filter((tag) => note.tags.includes(tag._id))}
                             />
                           );
                         }

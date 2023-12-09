@@ -8,9 +8,10 @@ import { Snackbar } from "@mui/material";
 import AllowTab from '../utilities/AllowTabinTextArea';
 import remarkGfm from 'remark-gfm'
 import { CreateDiscussionPostService } from '../services/DiscussionServices';
-import { GetGroupByIdService} from "../services/GroupServices";
+import { GetGroupByIdService } from "../services/GroupServices";
 import { useParams } from "react-router-dom";
 
+// Function to create a custom tab panel
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -31,15 +32,17 @@ function CustomTabPanel(props) {
   );
 }
 
+// Function to provide accessibility props for tabs
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
-
+// Exporting the main functional component for creating discussion posts
 export default function CreateDiscussionPost(props) {
-  const [value,setValue] = useState(0);
+  // State declarations using useState hook
+  const [value, setValue] = useState(0);
   const [text, setText] = useState("");
   const [title, setTitle] = useState("");
   const [open, setOpen] = useState(false);
@@ -47,44 +50,55 @@ export default function CreateDiscussionPost(props) {
   const id = useParams().groupId;
   const { groupId } = useParams();
   const [group, setGroup] = useState({});
+  // useEffect hook for fetching group data by ID
+
 
   useEffect(() => {
-  GetGroupByIdService(groupId).then((data) => {
-    setGroup(data);
-  });
-}, [groupId]);
+    GetGroupByIdService(groupId).then((data) => {
+      setGroup(data);
+    });
+  }, [groupId]);
 
+  // Function to handle tab changes
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  // Component for the button bar including cancel and publish buttons
 
   const ButtonBar = () => {
-    const handleCancel = () => {
-        window.history.back();
-      };
-    const handlePublish = () => {
-        CreateDiscussionPostService(group._id, title, text).then((data) => { // create discussion post service 
-            if(data.error) {
-                setMessage(data.error);
-                setOpen(true);
-                setTimeout(() => {
-                    window.location.href = "/dashboard";
-                }, 1000);
-            }
-            else {
-                setMessage(data.message);
-                setOpen(true);
-                window.history.back();
-            }
-        }
-        );
-        };
+    // Function to handle cancel button click
 
-        
+    const handleCancel = () => {
+      window.history.back();
+    };
+    // Function to handle publish button click
+
+    const handlePublish = () => {
+      CreateDiscussionPostService(group._id, title, text).then((data) => { // create discussion post service 
+        // Calling the CreateDiscussionPostService to create a discussion post
+
+        if (data.error) {
+          setMessage(data.error);
+          setOpen(true);
+          setTimeout(() => {
+            window.location.href = "/dashboard";
+          }, 1000);
+        }
+        else {
+          setMessage(data.message);
+          setOpen(true);
+          window.history.back();
+        }
+      }
+      );
+    };
+
+    // Rendering cancel and publish buttons in a flex container
+
     return (
       <div className="flex justify-end gap-2">
-        
+
         <button className="bg-red-500 hover:bg-red-700 text-white font-light py-2 px-4 rounded" onClick={handleCancel}>
           Cancel
         </button>
@@ -99,22 +113,22 @@ export default function CreateDiscussionPost(props) {
 
   return (
     <Box sx={{ width: "100%" }}>
-        <h1 className="text-4xl font-regular text-green-700 tracking-wide text-center mt-5 mb-2">Create Discussion Post</h1>
-        <p className="text-gray-600 text-center font-light mb-5 text-lg">Write your question here</p>
-        <br />
-        <div className="w-full flex justify-center items-center pl-5 mb-5 pr-5">
-        <Input 
-            label="Title" 
-            onChange={(e) => {
-                setTitle(e.target.value);
-            }}
-            value={title}
+      <h1 className="text-4xl font-regular text-green-700 tracking-wide text-center mt-5 mb-2">Create Discussion Post</h1>
+      <p className="text-gray-600 text-center font-light mb-5 text-lg">Write your question here</p>
+      <br />
+      <div className="w-full flex justify-center items-center pl-5 mb-5 pr-5">
+        <Input
+          label="Title"
+          onChange={(e) => {
+            setTitle(e.target.value);
+          }}
+          value={title}
         />
-        </div>
-       
+      </div>
+
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
-            value={value}
+          value={value}
           onChange={handleChange}
           aria-label="basic tabs example"
         >
@@ -133,7 +147,7 @@ export default function CreateDiscussionPost(props) {
           onChange={(e) => {
             setText(e.target.value);
           }}
-        onKeyDown={e=>AllowTab(e)}
+          onKeyDown={e => AllowTab(e)}
           value={text}
         />
         <ButtonBar />
@@ -146,7 +160,7 @@ export default function CreateDiscussionPost(props) {
             overflow: "auto",
           }}
         >
-          <Markdown className="prose-lg" 
+          <Markdown className="prose-lg"
             remarkPlugins={[remarkGfm]}
           >{text}</Markdown>
         </Box>
@@ -170,7 +184,7 @@ export default function CreateDiscussionPost(props) {
               />
             </Grid>
             <Grid item xs={6}>
-              <Markdown className="prose" 
+              <Markdown className="prose"
                 remarkPlugins={[remarkGfm]}
               >{text}</Markdown>
             </Grid>
@@ -187,7 +201,7 @@ export default function CreateDiscussionPost(props) {
           setOpen(false);
         }}
         message={message}
-        />
+      />
     </Box>
   );
-}
+}  // Return statement containing JSX structure for the discussion post creation form
