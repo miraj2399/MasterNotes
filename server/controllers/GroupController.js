@@ -77,8 +77,8 @@ async function GetAllGroupsHandler(req, res) {
     const groups = await Group.find({
       _id: { $in: groupIds.groups },
     }).populate({
-        path:"notes",
-        select: "content upvotes downvotes comments",
+      path: "notes",
+      select: "content upvotes downvotes comments",
     });
     res.status(200).json(groups);
   } catch (err) {
@@ -328,7 +328,7 @@ async function CreateGroupLectureNoteHandler(req, res) {
       date: date,
       content: content,
       owner: req.userId,
-      tags: tags
+      tags: tags,
     });
     const noteGroup = await Group.findById(group);
     await noteGroup.updateOne({ $push: { notes: lectureNote._id } });
@@ -387,13 +387,10 @@ async function GetGroupLectureNotesByIdHandler(req, res) {
   const lectureNoteId = req.params.id;
 
   try {
-    const lectureNote = await LectureNote.findById(lectureNoteId).populate(
-      {
-        path:"tags",
-        select: "name color _id",
-
-      }
-    );
+    const lectureNote = await LectureNote.findById(lectureNoteId).populate({
+      path: "tags",
+      select: "name color _id",
+    });
     if (!lectureNote) {
       return res.status(404).json({ message: "Lecture note not found" });
     }
@@ -407,26 +404,20 @@ async function GetGroupLectureNotesByIdHandler(req, res) {
       select: "firstName lastName",
     });
     lectureNote.comments = comments;
-    
-
-    
-
 
     if (userIsMemberOfGroup) {
       lectureNote.owner = await getUser(lectureNote.owner);
-       // logic for upvotes and downvotes
-        let lectureNoteObj = lectureNote.toObject();
-        const upvoted = lectureNote.upvotes.includes(req.userId);
-        const downvoted = lectureNote.downvotes.includes(req.userId);
-        lectureNoteObj.upvotes = lectureNote.upvotes.length;
-        lectureNoteObj.downvotes = lectureNote.downvotes.length;
-        lectureNoteObj.upvoted = upvoted;
-        lectureNoteObj.downvoted = downvoted;
+      // logic for upvotes and downvotes
+      let lectureNoteObj = lectureNote.toObject();
+      const upvoted = lectureNote.upvotes.includes(req.userId);
+      const downvoted = lectureNote.downvotes.includes(req.userId);
+      lectureNoteObj.upvotes = lectureNote.upvotes.length;
+      lectureNoteObj.downvotes = lectureNote.downvotes.length;
+      lectureNoteObj.upvoted = upvoted;
+      lectureNoteObj.downvoted = downvoted;
 
       return res.status(200).json(lectureNoteObj);
     }
-
-   
 
     return res.status(401).json({ message: "Unauthorized" });
   } catch (err) {
@@ -493,9 +484,9 @@ const UpvoteHandler = async (req, res) => {
         .json({ message: "You are not a member of this group" });
     }
     const alreadyUpVoted = await LectureNote.findOne({
-        _id: noteId,
-        upvotes: userId,
-        }); 
+      _id: noteId,
+      upvotes: userId,
+    });
 
     if (alreadyUpVoted) {
       await LectureNote.findByIdAndUpdate(noteId, {
@@ -510,7 +501,7 @@ const UpvoteHandler = async (req, res) => {
       _id: noteId,
       downvotes: userId,
     });
-    
+
     if (alreadyDownvoted) {
       await LectureNote.findByIdAndUpdate(noteId, {
         $pull: { downvotes: userId },
@@ -532,52 +523,52 @@ const DownvoteHandler = async (req, res) => {
   /**
    * similar to the upvote handler
    */
-    try {
-      const noteId = req.params.id;
-      const note = await LectureNote.findById(noteId);
-      const userId = req.userId;
-      // check if the user is a member of the group
-      const aMember = await isMember(userId, note.group);
-      if (!aMember) {
-        return res
-          .status(401)
-          .json({ message: "You are not a member of this group" });
-      }
-      // check if the user has already downvoted the note, if so, remove the downvote
-      const alreadyDownVoted = await LectureNote.findOne({
-        _id: noteId,
-        downvotes: userId,
-      });
-      if (alreadyDownVoted) {
-        await LectureNote.findByIdAndUpdate(noteId, {
-          $pull: { downvotes: userId },
-        });
-        return res.status(200).json({ message: "Downvote removed" });
-      }
-  
-      // check if the user has upvoted the note, if so, remove the upvote and add the downvote
-      const alreadyUpvoted = await LectureNote.findOne({
-        _id: noteId,
-        upvotes: userId,
-      });
-      
-      if (alreadyUpvoted) {
-        await LectureNote.findByIdAndUpdate(noteId, {
-          $pull: { upvotes: userId },
-          $push: { downvotes: userId },
-        });
-        return res.status(200).json({ message: "Downvote added" });
-      } else {
-        await LectureNote.findByIdAndUpdate(noteId, {
-          $push: { downvotes: userId },
-        });
-        return res.status(200).json({ message: "Downvote added" });
-      }
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ message: error.message });
+  try {
+    const noteId = req.params.id;
+    const note = await LectureNote.findById(noteId);
+    const userId = req.userId;
+    // check if the user is a member of the group
+    const aMember = await isMember(userId, note.group);
+    if (!aMember) {
+      return res
+        .status(401)
+        .json({ message: "You are not a member of this group" });
     }
-  };
+    // check if the user has already downvoted the note, if so, remove the downvote
+    const alreadyDownVoted = await LectureNote.findOne({
+      _id: noteId,
+      downvotes: userId,
+    });
+    if (alreadyDownVoted) {
+      await LectureNote.findByIdAndUpdate(noteId, {
+        $pull: { downvotes: userId },
+      });
+      return res.status(200).json({ message: "Downvote removed" });
+    }
+
+    // check if the user has upvoted the note, if so, remove the upvote and add the downvote
+    const alreadyUpvoted = await LectureNote.findOne({
+      _id: noteId,
+      upvotes: userId,
+    });
+
+    if (alreadyUpvoted) {
+      await LectureNote.findByIdAndUpdate(noteId, {
+        $pull: { upvotes: userId },
+        $push: { downvotes: userId },
+      });
+      return res.status(200).json({ message: "Downvote added" });
+    } else {
+      await LectureNote.findByIdAndUpdate(noteId, {
+        $push: { downvotes: userId },
+      });
+      return res.status(200).json({ message: "Downvote added" });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
+  }
+};
 
 const GetAllDatesByGroupIdHandler = async (req, res) => {
   /**
@@ -594,68 +585,73 @@ const GetAllDatesByGroupIdHandler = async (req, res) => {
 };
 
 const GetPersonBranchHandler = async (req, res) => {
-    try {
-        const group = await Group.findById(req.params.id);
-        if (!group) {
-        return res.status(404).json({ message: "Group not found" });
-        }
-        const noteref = await PersonalBranch.findOne({user: req.userId, group: req.params.id});
-        if (!noteref) {
-            const newNoteRef = await PersonalBranch.create({
-                user: req.userId,
-                group: req.params.id,
-                notes: [],
-            });
-            return res.status(201).json(newNoteRef);
-        }
-        return res.status(200).json(noteref);
-    } catch (err) {
-        console.log(err);
-        res.status(500).json({ message: err.message });
+  try {
+    const group = await Group.findById(req.params.id);
+    if (!group) {
+      return res.status(404).json({ message: "Group not found" });
     }
+    const noteref = await PersonalBranch.findOne({
+      user: req.userId,
+      group: req.params.id,
+    });
+    if (!noteref) {
+      const newNoteRef = await PersonalBranch.create({
+        user: req.userId,
+        group: req.params.id,
+        notes: [],
+      });
+      return res.status(201).json(newNoteRef);
     }
+    return res.status(200).json(noteref);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: err.message });
+  }
+};
 
 const AddNoteToPersonalBranchHandler = async (req, res) => {
-   const noteId = req.params.id
-    try {
-        const note = await LectureNote.findById(noteId);
-        if (!note) {
-        return res.status(404).json({ message: "Note not found" });
-        }
-        const groupId = note.group;
-        const group = await Group.findById(groupId);
-        if (!group) {
-        return res.status(404).json({ message: "Group not found" });
-        }
-        const noteref = await PersonalBranch.findOne({user: req.userId, group: groupId});
-        if (!noteref) {
-            const newNoteRef = await PersonalBranch.create({
-                user: req.userId,
-                group: groupId,
-                notes: [noteId],
-            });
-            return res.status(201).json(newNoteRef);
-        }
-        else {
-            // check if the note is already in the branch
-            const isNoteInBranch = noteref.notes.includes(noteId);
-            if (isNoteInBranch) {
-                // remove the note from the branch
-                await noteref.updateOne({$pull: {notes: noteId}});
-                return res.status(200).json({message: "Note removed from branch"});
-            }
-            await noteref.updateOne({$push: {notes: noteId}});
-            return res.status(200).json({message: "Note added to branch"});
-        }
-    } catch (err) {
-        console.log(err);
-        res.status(500).json({ message: err.message });
+  const noteId = req.params.id;
+  try {
+    const note = await LectureNote.findById(noteId);
+    if (!note) {
+      return res.status(404).json({ message: "Note not found" });
     }
+    const groupId = note.group;
+    const group = await Group.findById(groupId);
+    if (!group) {
+      return res.status(404).json({ message: "Group not found" });
     }
+    const noteref = await PersonalBranch.findOne({
+      user: req.userId,
+      group: groupId,
+    });
+    if (!noteref) {
+      const newNoteRef = await PersonalBranch.create({
+        user: req.userId,
+        group: groupId,
+        notes: [noteId],
+      });
+      return res.status(201).json(newNoteRef);
+    } else {
+      // check if the note is already in the branch
+      const isNoteInBranch = noteref.notes.includes(noteId);
+      if (isNoteInBranch) {
+        // remove the note from the branch
+        await noteref.updateOne({ $pull: { notes: noteId } });
+        return res.status(200).json({ message: "Note removed from branch" });
+      }
+      await noteref.updateOne({ $push: { notes: noteId } });
+      return res.status(200).json({ message: "Note added to branch" });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: err.message });
+  }
+};
 
 const AddTagToGroupHander = async (req, res) => {
   const groupId = req.params.id;
-  
+
   try {
     const { name, color } = req.body;
     const group = await Group.findById(groupId);
@@ -679,7 +675,7 @@ const AddTagToGroupHander = async (req, res) => {
     console.log(err);
     res.status(500).json({ message: err.message });
   }
-}
+};
 
 const DeleteTagFromGroupHandler = async (req, res) => {
   const groupId = req.params.id;
@@ -697,13 +693,11 @@ const DeleteTagFromGroupHandler = async (req, res) => {
     await group.updateOne({ $pull: { tags: tagId } });
     const deletedTag = await Tag.findByIdAndDelete(tagId);
     return res.status(200).json({ message: "Tag deleted" });
-
-  }
-  catch (err) {
+  } catch (err) {
     console.log(err);
     res.status(500).json({ message: err.message });
   }
-}
+};
 
 async function EditGroupInviteOnlyHandler(req, res) {
   const groupId = req.params.id;
@@ -713,23 +707,30 @@ async function EditGroupInviteOnlyHandler(req, res) {
   console.log("EditGroupInviteOnlyHandler - inviteOnly:", inviteOnly);
 
   try {
-    const group = await Group.findByIdAndUpdate(groupId, { inviteOnly: inviteOnly }, { new: true });
+    const group = await Group.findByIdAndUpdate(
+      groupId,
+      { inviteOnly: inviteOnly },
+      { new: true }
+    );
 
     if (!group) {
       return res.status(404).json({ message: "Group not found" });
     }
 
-    return res.status(200).json({ message: "Group is now " + (group.inviteOnly ? "invite-only. Only invited users can join the group" : "public. Anyone with the link can join the group") });
+    return res
+      .status(200)
+      .json({
+        message:
+          "Group is now " +
+          (group.inviteOnly
+            ? "invite-only. Only invited users can join the group"
+            : "public. Anyone with the link can join the group"),
+      });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ message: err.message });
   }
 }
-
-
-
-
-
 
 module.exports = {
   CreateGroupHandler,
@@ -746,10 +747,10 @@ module.exports = {
   CreateCommentHandler,
   GetAllDatesByGroupIdHandler,
   UpvoteHandler,
-DownvoteHandler,
-GetPersonBranchHandler,
-AddNoteToPersonalBranchHandler,
-AddTagToGroupHander,
-DeleteTagFromGroupHandler,
-EditGroupInviteOnlyHandler,
+  DownvoteHandler,
+  GetPersonBranchHandler,
+  AddNoteToPersonalBranchHandler,
+  AddTagToGroupHander,
+  DeleteTagFromGroupHandler,
+  EditGroupInviteOnlyHandler,
 };
