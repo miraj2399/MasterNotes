@@ -6,7 +6,6 @@ import { GetGroupLectureNotesByIdService,
   DownvoteService,
   AddNoteToPersonalBranchService,
  } from "../services/GroupServices";
-
  import { CreateNoteService } from "../services/SpaceService";
 import CircleIcon from "@mui/icons-material/Circle";
 import CommentIcon from "@mui/icons-material/Comment";
@@ -22,12 +21,8 @@ import Delete from "@mui/icons-material/Delete";
 import CommentSection from "../components/CommentSection";
 import {Chip, Snackbar} from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-
-
 import Markdown from "react-markdown";
 import { Button, IconButton, Typography } from "@mui/material";
-
-
 
 const FocusModeButton = (props) => {
   const { focusMode, setFocusMode } = props;
@@ -40,10 +35,6 @@ const FocusModeButton = (props) => {
       </div>
   );
 }
-
-
-
-
 
 export default function LectureNote() {
   const id = useParams().id;
@@ -118,8 +109,8 @@ export default function LectureNote() {
     <Markdown className={"prose-lg"}>{note.content}</Markdown>
     </div>
   ) : (
-    <div className="grid md:grid-cols-6 gap-4 p-10">
-      <div className="md:col-span-4">
+    <div className="grid md:grid-cols-6 p-10">
+      <div className="md:col-span-4 ml-10">
         <div className="mb-8">
         <Button variant="text" onClick={() => window.location.href = "/group/" + note.group} 
         startIcon={<ArrowBackIcon/>}
@@ -143,8 +134,7 @@ export default function LectureNote() {
           <CalendarTodayIcon />
           <p>{new Date(note.createdAt).toLocaleDateString()}</p>
         </div>
-        </div>
-
+      </div>
         {/* Make it a component  later */}
         <div className="flex  gap-2 justify-center items-center">
     {
@@ -181,10 +171,11 @@ export default function LectureNote() {
             onClick={() => setShowMoreExpand(!showMoreExpand)}
             />
           </IconButton>
+          </div>
           {
             showMoreExpand && (
               // make them abosolute
-              <div className="bg-white rounded-md shadow-md p-2 flex flex-col gap-2">
+              <div className="bg-white rounded-md shadow-md p-2 flex flex-row flex-wrap justify-center gap-2">
                 <div className="flex gap-2 justify-center items-center">
                   <Button variant="text" startIcon={<ImportExportIcon />}
                   onClick={handleAddToPersonalBranch}
@@ -222,7 +213,6 @@ export default function LectureNote() {
               </div>
             )
           }
-          </div>
         <CommentSection comments={note.comments} noteId={note._id}/>
         </div>
       </div>
