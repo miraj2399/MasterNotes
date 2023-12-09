@@ -1,3 +1,4 @@
+//this function allows the insertion of a tab character ('\t') when the 'Tab' key is pressed in a text input or textarea element. Take e as its parameter keyboard event
 export default function AllowTab (e) {
     const { value } = e.target;
 

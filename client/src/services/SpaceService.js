@@ -1,5 +1,6 @@
 import AxiosInstance from "./AxiosInstance";
 
+//Creates a new note by sending a POST request to the "spaces/notes" endpoint
 async function CreateNoteService(note) {
     try {
         const response = await AxiosInstance.post("spaces/notes", note);
@@ -9,6 +10,7 @@ async function CreateNoteService(note) {
     }
     }
 
+// Retrieves all notes by sending a GET request to the "spaces/notes" endpoint
 async function GetAllNotesService() {
     try {
         const response = await AxiosInstance.get("spaces/notes");
@@ -18,6 +20,7 @@ async function GetAllNotesService() {
     }
 }
 
+//Retrieves a specific note by its ID by sending a GET request to the "spaces/notes/{id}" endpoint
 async function GetPersonalNoteByIdService(id) {
     try {
         const response = await AxiosInstance.get(`spaces/notes/${id}`);
@@ -27,6 +30,7 @@ async function GetPersonalNoteByIdService(id) {
     }
 }
 
+//Edits the content of a specific note by sending a PUT request
 async function EditNoteService(id, note) {
     try {
         const response = await AxiosInstance.put(`spaces/notes/${id}`, note);
@@ -38,6 +42,7 @@ async function EditNoteService(id, note) {
     }
 }
 
+//Deletes a specific note by sending a DELETE request to the "spaces/notes/{id}" endpoint
 async function DeleteNoteService(id) {
     try {
         const response = await AxiosInstance.delete(`spaces/notes/${id}`);
