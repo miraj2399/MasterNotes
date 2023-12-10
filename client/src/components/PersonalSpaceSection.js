@@ -29,7 +29,7 @@ export default function PersonalSpaceSection() {
     return (
         <div className="bg-white p-8 rounded-lg ">
             <div className="flex items-center justify-between mb-4">
-                <h1 className="hover:text-blue-500 text-gray-800 text-4xl text-center font-extralight">Personal Space</h1>
+                <h1 className="hover:text-cyan-600 text-gray-800 text-4xl text-center font-extralight">Personal Space</h1>
                 <Button
                     color="blue"
                     onClick={handleCreateNoteClick}

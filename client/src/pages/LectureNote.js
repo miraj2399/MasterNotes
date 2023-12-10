@@ -43,10 +43,6 @@ const FocusModeButton = (props) => {
   );
 }
 
-
-
-
-
 export default function LectureNote() {
   const id = useParams().id;
   const [note, setNote] = useState({});
@@ -104,8 +100,6 @@ export default function LectureNote() {
     }
     );
   }
-
-
 
   useEffect(() => {
     GetGroupLectureNotesByIdService(id).then((data) => {
@@ -188,10 +182,11 @@ export default function LectureNote() {
                 onClick={() => setShowMoreExpand(!showMoreExpand)}
               />
             </IconButton>
+            </div>
             {
               showMoreExpand && (
                 // make them abosolute
-                <div className="bg-white rounded-md shadow-md p-2 flex flex-col gap-2">
+                <div className="bg-white rounded-md shadow-md p-2 flex flex-row flex-wrap justify-center gap-2">
                   <div className="flex gap-2 justify-center items-center">
                     <Button variant="text" startIcon={<ImportExportIcon />}
                       onClick={handleAddToPersonalBranch}
@@ -229,7 +224,6 @@ export default function LectureNote() {
                 </div>
               )
             }
-          </div>
           <CommentSection comments={note.comments} noteId={note._id} />
         </div>
       </div>

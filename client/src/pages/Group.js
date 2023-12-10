@@ -19,6 +19,7 @@ import {
   GetGroupByIdService,
   LeaveGroupService,
   GetPersonBranchService,
+  JoinGroupService
 } from "../services/GroupServices";
 import { useEffect, useState } from "react";
 import InviteJoinGroup from "../components/InviteJoinGroup";
@@ -61,6 +62,7 @@ export default function Group() {
     GetPersonBranchService(id).then((data) => {
       setPersonalBranch(data);
     });
+    JoinGroupService(id);
   }, []);
 
   useEffect(() => {
@@ -98,6 +100,12 @@ export default function Group() {
       setPersonalNotes(personalNotes);
     }
   }, [branch]);
+
+  useEffect(() => {
+     if (!(selectedTags[0])){
+      setTagNotes([]);
+     }
+  }, [selectedTags]);
 
   return (
     <div className="grid">
